@@ -20,8 +20,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
-    
+}
+
+#subtitulo{
+    margin-top: -2vw;
 }
 
 #header_inovaworks{
@@ -38,7 +40,7 @@ width: 40%;
 display: flex;
 align-items: center;
 justify-content: space-between;
-margin-left: 2vw;
+margin-left: 1vw;
 
 }
 
@@ -47,7 +49,6 @@ margin-left: 2vw;
     background-color: transparent;
     color: white;
     font-family: 'Montserrate';
-   
 }
 
 button:hover{
@@ -79,10 +80,10 @@ margin-left: 10%;
    #img_user{
     display: inline;
     color: white;
-    margin-top: 0.8vw;
-    margin-right: -0.3vw;
+    margin-top: 0.6vw;
     width: 15%;
     height: 15%;
+
    }
 #link_user{
     color:white;
@@ -92,8 +93,8 @@ margin-left: 10%;
 }
 
 #imagem{
-height: 1.5vw;
-width: 1.5vw;
+height: 1vw;
+width: 1vw;
 }
 
 a{
@@ -154,11 +155,12 @@ body {
 }
 
 #s2{
-    margin-top: -1vw;
+    margin-top: 3vw;
 }
 div {
     font-size: 0.6vw;
     color: white;
+    background-color: black;
     padding: 0.7vw;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -182,8 +184,17 @@ div {
     color: black;
 }
 
-#vh1 {
 
+#vh1 {
+    
+}
+
+#vh2 {
+    margin-left: 19vw;
+}
+
+#vh3 {
+    margin-left: 18vw;
 }
 
 
@@ -192,7 +203,6 @@ div {
 }
 
 #Formulario {
-    
     color: black;
     border-radius: 0.5vw;
     background-color: white;
@@ -205,6 +215,7 @@ div {
 #lab1 {
     display: block;
     margin-top: 2vw;
+    margin-left: 1.4%;
 }
 
 #Cabecalho {
@@ -225,6 +236,7 @@ hr {
     padding: 0.4vw;
     border: none;
     margin-left: 0.74vw;
+   
 }
 
 #geral {
@@ -242,27 +254,28 @@ hr {
 }
 
 label {
-    color: black;    
+    color: black;
+    
 }
 
 #obs-wrapper {
-    width: 60%;
+    width: 100%;
     height: 10vw;
     display: block;
     overflow: hidden;
     position: relative;
-    background-color: transparent;    
+    background-color: transparent;
+    
 }
 
 #obs {
-    width: 73%;
-    height: 60%;
+    width: 95%;
+    height: 100%;
     overflow-y: scroll;
     resize: none;
     scrollbar-width: none; 
     border: none;
     margin: 0px;
-    
     
 }
 
@@ -343,13 +356,28 @@ label {
  
 }
 
-.campo {
+.campo{
+
     display: flex;
     flex-direction: column;
     margin-right: 1vw;
     background-color: white;
     font-size: medium;
     width: 15%;
+
+}
+
+#OBS_a {
+   
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    display: inline;
+    font-size: 1vw;
+    margin-left: 80%;
+    margin-top: 6%;
+
 }
 
 select{
@@ -362,88 +390,8 @@ select{
 
 
 footer{
+    position: absolute;
     height: 100%;
-    width: 100%;
-    margin-top: -2vw; 
-}
-
-
-#fot{
-    width: 100%;
-  
-
-}
-
-#OBS_a {
-    background: rgba(218, 66, 0, 1);
-    border-radius: 0.5vw;
-    padding: 0.6vw;
-    border: none;
-    font-size: 1vw;
-    margin-left: 40%; 
-}
-
-#OBS_b {
-    background: rgba(218, 66, 0, 1);
-    border-radius: 0.5vw;
-    padding: 0.6vw;
-    border: none;
-    font-size: 1vw; 
-    margin-left: 1vw;
-
-  
-}
-
-#OBS_c {
-    background: rgba(218, 66, 0, 1);
-    border-radius: 0.5vw;
-    padding: 0.6vw;
-    border: none;
-    font-size: 1vw; 
-    margin-left: 1vw;
-}
-
-#dates {
-    display: flex;
-    background-color: white;
-}
-
-#data_inicio{
-   margin-top: -1.5vw;  
-}
-
-#data_entrega{
-    margin-top: -1.5vw;  
- }
- 
-
-#teste{
-    margin-left: -2vw;
-    display: flex;
-}
-
-#lab_descricao{
-    
-
-}
-
-#lab_quantidade{
-  margin-left: 10vw;
-}
-
-#lab_valor{
-   
-}
-
-#lab_desconto{
- 
-}
-
-#testando{
-   
-    display: flex;
-}
-
-.copia{
-    margin-left: 10vw;
+    width: 60%;
+    margin-top: -1vw;
 }

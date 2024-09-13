@@ -11,6 +11,8 @@ export const validarUser = async (codigo_empresa, cpf) => {
         return count; 
 }
 
+
+
 export const login = async (cod, nome, senha) => {
  
     try {
@@ -51,7 +53,7 @@ export const getUser = async (res) => {
     }
 };
 export const setUser = async ({ nome, email, senha, cpf, codigo_empresa }) => {
-    const con = await conexao(); // Certifique-se que a função conexao() está funcionando corretamente
+    const con = await conexao();
 
     try {
         const [result] = await con.execute(
@@ -67,6 +69,21 @@ export const setUser = async ({ nome, email, senha, cpf, codigo_empresa }) => {
 };
 
 
+export const avaliacao = async ({ nome, sugestao, nota, profissao }) => {
+    const con = await conexao();
+
+    try {
+        const [result] = await con.execute(
+            'INSERT INTO sugestoes (nome, sugestao, avaliacao, profissao) VALUES (?, ?, ?, ?)',
+            [nome, sugestao, nota, profissao] 
+        );
+        return result;
+    } catch (error) {
+        console.error('Erro ao inserir usuário:', error.message);
+        console.error("Nome: " + nome, "Sugestão: " + sugestao, "Avaliação: " + avaliacao_number, "Profissão: " + profissao);
+        throw error;
+    }
+};
 
 export const delUser = async(valor,nome)=>{
     try{

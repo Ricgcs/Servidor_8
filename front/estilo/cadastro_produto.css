@@ -34,7 +34,7 @@
 
 #header_links{
 
-width: 30%;
+width: 40%;
 display: flex;
 align-items: center;
 justify-content: space-between;
@@ -78,7 +78,7 @@ margin-left: 10%;
    #img_user{
     display: inline;
     color: white;
-    margin-top: -0,6vw;
+    margin-top: 0.6vw;
     width: 15%;
     height: 15%;
 
@@ -182,25 +182,19 @@ div {
     color: black;
 }
 
-#vh1 {
 
+#vh1 {
+    
 }
 
 #vh2 {
-    margin-left: 4vw;
+    margin-left: 19vw;
 }
 
 #vh3 {
-    margin-left: 10vw;
+    margin-left: 16vw;
 }
 
-#vh4 {
-    margin-left: 6vw;
-}
-
-#vh5 {
-    margin-left: 8vw;
-}
 
 #menu {
     margin: 0 0 5vw 0;
@@ -359,13 +353,15 @@ label {
  
 }
 
-.campo {
+.campo{
+
     display: flex;
     flex-direction: column;
     margin-right: 1vw;
     background-color: white;
     font-size: medium;
     width: 15%;
+
 }
 
 #OBS_a {

@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import fileUpload from 'express-fileupload';
-import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes } from "../back/controle/usuario.js";
-import { setProd, getProd, procurarProd, atualizarProd, delProd } from "../back/controle/produtos.js";
+import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao } from "../back/controle/usuario.js";
+import { setProd, getProd, procurarProd, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
 import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
@@ -56,6 +56,30 @@ app.post('/usuario', async (req, res) => {
         res.status(500).send('Erro ao criar usuário.');
     }
 });
+
+app.post('/usuario/avaliacao/:nome/:sugestao/:nota/:profissao', async (req, res) => {
+    const { nome, sugestao, profissao } = req.params;
+    let { nota } = req.params;
+
+    nota = Number(nota);
+
+    if (isNaN(nota)) {
+        return res.status(400).send('Avaliação deve ser um número válido.');
+    }
+
+    const userData = { nome, sugestao, nota, profissao };
+
+    try {
+        await avaliacao(userData);
+        console.log("funcionou",userData);
+        
+        res.status(200).send('Comentário feito com sucesso, muito obrigado pelo apoio');
+    } catch (error) {
+        console.error('Oooops algo errado:', error);
+        res.status(500).send('Oooops algo errado');
+    }
+});
+
 
 app.get('/usuario/mostrar', async (req, res) => {
     const { valor, nome} = req.body; 
@@ -153,6 +177,21 @@ app.get('/produto/mostrar/:pesq', async (req, res) => {
     }
 });
 
+app.get('/produto/mostrar_nome/:nome/:cod', async (req, res) => {
+    const nome = req.params.nome;
+    const cod = req.params.cod;
+    console.log(`Nome: ${nome}, Código: ${cod}`);
+    
+    try {
+        const resultado = await getnomeprod({ nome, cod });
+        res.status(200).json({ data: resultado });
+        console.log("Resultado:", resultado);
+        return resultado;
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar o produto", error: error.message });
+        console.error("Erro:", error.message);
+    }
+});
 
 app.post('/produto/atualizar', async (req, res) => {
     const { valor, nome, tipo, ent} = req.body; 
@@ -160,8 +199,11 @@ console.log(valor, nome,tipo, ent)
     try {
         const resultado = await atualizarProd(valor, nome, tipo, ent)
         res.status(200).json({ data: resultado });
+        console.log(resultado)
     } catch (error) {
         res.status(500).json({ message: "Erro ao atualizar o produto", error: error.message });
+        console.log("erro")
+
     }
 });
 
