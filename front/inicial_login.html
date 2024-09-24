@@ -67,47 +67,39 @@
 
 <script type="text/javascript">
  document.addEventListener('DOMContentLoaded', () => {
-  const saveToLocalStorage = () => {
-    const params = new URLSearchParams(window.location.search);
-    const nomeUser = params.get('nome') || '';
-    const empresaUser = params.get('cod_empresa');
-  
-    
-    if (nomeUser.trim() !== '') { 
-      localStorage.setItem('nome_user', nomeUser);
-      localStorage.setItem('cod_empresa',empresaUser)
-
-    }
-  };
-
-
-  
 
   const loadFromLocalStorage = () => {
-    const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
+    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const senhaUser = localStorage.getItem('senha');
+    const codUser = localStorage.getItem('cod') ;
+
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "/front/inicial_login.html"
+   }
+
 
    
     const nomeCadastroElement = document.getElementById('nome_cadastrado');
+
     if (nomeCadastroElement) {
       nomeCadastroElement.innerHTML = `Bem-vindo ${nomeUser}`;
     }
 
     const nomeUserElement = document.getElementById('nome_user');
+
     if (nomeUserElement) {
       const primeiroNome = nomeUser.split(" ")[0];
       nomeUserElement.innerHTML = `${primeiroNome}`;
     }
 
     const imgUserElement = document.getElementById('img_user');
+
     if (imgUserElement) {
       imgUserElement.src = "/img/imagem_user.png";
     }
   };
 
-
-  saveToLocalStorage();
-
-  
   loadFromLocalStorage();
 
  
@@ -155,7 +147,7 @@
     }
   };
 
-  // Busca e exibe os dados dos usuários
+  
   fetchUsuarios().then(displayUsuarios).catch(error => {
     console.error('Erro ao executar fetchUsuarios:', error);
   });

@@ -130,19 +130,19 @@ app.post('/usuario/logar', async (req, res) => {
     const cod = Number(req.body.cod);
     const nome = req.body.nome;
     const senha = req.body.senha;
-    const cod_empresa = Number(req.body.Cod_empresa);
     let envio = { cod, nome, senha };
+
     const nc = await qtd_clientes();
 
     try {
         let teste = await login(envio.cod, envio.nome, envio.senha);
-        if (teste == 1) {
-            const inicial = path.join(__dirname, 'front', 'inicial_login.html');
-        
-            const queryParams = `?nome=${encodeURIComponent(nome)}&cod_empresa=${encodeURIComponent(cod)}}`;
-            res.redirect(`/inicial_login.html${queryParams}`);
+        if (teste == 1){
+
+            const queryParams = `?nome=${encodeURIComponent(nome)}&cod_empresa=${encodeURIComponent(cod)}&senha=${encodeURIComponent(senha)}`;
+            res.redirect(`/tela_processo.html${queryParams}`);
             return;
-        } else {
+        } 
+        else {
             res.status(401).send('usuário não encontrado');
         }
     } catch (err) {
