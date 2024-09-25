@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/img/logo_inteiro.png">
-    <link rel="stylesheet" href="/estilo/inicial_login.css">
+    <link rel="icon" href="/front/img/logo_inteiro.png">
+    <link rel="stylesheet" href="/front/estilo/inicial_login.css">
     <title id="titulo"></title>
 </head>
 <body>
@@ -13,11 +13,11 @@
 <h1 id="header_inovaworks">InovaWorks</h1>
 
 <div id="header_links">
-<a href="/inicial_login.html"><img id="imagem" src="/img/home.png" alt="menu"><button id="header_button"> Home</button></a>
-<a href="/index.html"><img id="imagem" src="/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-<a href="/estoque.html"><img id="imagem" src="/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
-<a href="#"><img id="imagem" src="/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
-<a href="#"><img id="imagem" src="/img/flecha.png" alt="log_out"><button id="header_button">Log out</button></a>
+<a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"> Home</button></a>
+<a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+<a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+<a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+<a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button">Log out</button></a>
 </div>
 
 <div id="header_user">
@@ -35,21 +35,21 @@
 <div id="centro">
 <section id="s1">
 <h1 id="texto_s1"> Outras opções</h1>
-<a href="#"><button id="fluxo_caixa_button"><h1 id="texto_fluxo_caixa">Fluxo de caixa</h1><img id="imagem_canto_logado" src="/img/acoes.png" alt="fluxo_caixa"></button></a>
+<a href="#"><button id="fluxo_caixa_button"><h1 id="texto_fluxo_caixa">Fluxo de caixa</h1><img id="imagem_canto_logado" src="/front/img/acoes.png" alt="fluxo_caixa"></button></a>
 
-<a href="/index.html"><button id="servico_button">Serviços<img id="imagem_canto_logado" src="/img/martelinho.png" alt="Serviços"></button></a>
+<a href="/front/index.html"><button id="servico_button">Serviços<img id="imagem_canto_logado" src="/front/img/martelinho.png" alt="Serviços"></button></a>
 
-<a href="/avaliacao.html"><button id="entrega_button">Avaliação<img id="imagem_canto_logado" src="/img/frete.png" alt="Avaliação"></button></a>
+<a href="/front/avaliacao.html"><button id="entrega_button">Avaliação<img id="imagem_canto_logado" src="/front/img/frete.png" alt="Avaliação"></button></a>
 
-<a href="/orcamento.html"><button id="orcamento_button">Orçamentos<img id="imagem_canto_logado" src="/img/calc.png" alt="Orçamentos"></button></a>
+<a href="/front/orcamento.html"><button id="orcamento_button">Orçamentos<img id="imagem_canto_logado" src="/front/img/calc.png" alt="Orçamentos"></button></a>
 
-<a href="/estoque.html"><button id="estoque_button">Estoque<img id="imagem_canto_logado" src="/img/armazen.png" alt="estoque"></button></a>
+<a href="/front/estoque.html"><button id="estoque_button">Estoque<img id="imagem_canto_logado" src="/front/img/armazen.png" alt="estoque"></button></a>
 
 </section>
 
 
 <section id="s2">
-    <img id="imagem_logo_cadastrado" src="/img/logo_inteiro.png" alt="logo">
+    <img id="imagem_logo_cadastrado" src="/front/img/logo_inteiro.png" alt="logo">
 <h1 id="nome_cadastrado"></h1>
 </section>
 
@@ -60,48 +60,46 @@
 
 
     </div>
-    <a href="/agenda.html" id="link_agenda"><button id="agenda_button">agenda</button></a>
+    <a href="/front/agenda.html" id="link_agenda"><button id="agenda_button">agenda</button></a>
 </section>
 </div>
 
 
 <script type="text/javascript">
- document.addEventListener('DOMContentLoaded', () => {
 
+ document.addEventListener('DOMContentLoaded', () => {
+ 
   const loadFromLocalStorage = () => {
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cod') ;
-
+ 
    if(!nomeUser || !senhaUser || !codUser){
     alert("faça o login");
     window.location.href = "/front/inicial_login.html"
    }
-
-
    
     const nomeCadastroElement = document.getElementById('nome_cadastrado');
-
+ 
     if (nomeCadastroElement) {
       nomeCadastroElement.innerHTML = `Bem-vindo ${nomeUser}`;
     }
-
+ 
     const nomeUserElement = document.getElementById('nome_user');
-
+ 
     if (nomeUserElement) {
       const primeiroNome = nomeUser.split(" ")[0];
       nomeUserElement.innerHTML = `${primeiroNome}`;
     }
-
+ 
     const imgUserElement = document.getElementById('img_user');
-
+ 
     if (imgUserElement) {
-      imgUserElement.src = "/img/imagem_user.png";
+      imgUserElement.src = "/front/img/imagem_user.png";
     }
   };
-
+ 
   loadFromLocalStorage();
-
  
   const fetchUsuarios = async () => {
     try {
@@ -116,26 +114,26 @@
       console.error('Erro ao buscar os dados:', error);
     }
   };
-
+ 
   const displayUsuarios = (usuarios) => {
     const tamanho = usuarios.length;
     const antigos_usuarios = document.getElementById('ultimos_clientes');
     antigos_usuarios.innerHTML = '';
-
+ 
     if (tamanho > 0) {
       usuarios.forEach(usuario => {
         const div = document.createElement('div');
         div.classList.add('clientes');
-
+ 
         const img = document.createElement('img');
         img.classList.add('imagem_teste');
-        img.src = usuario.foto ? "/img/imagem_user.png" : "/img/imagem_user.png"; 
+        img.src = usuario.foto ? "/front/img/imagem_user.png" : "/front/img/imagem_user.png"; 
         img.alt = usuario.Nome || "Imagem do usuário";
-
+ 
         const nomeCliente = document.createElement('p');
         const nomeFiltrado = usuario.Nome.split(" ")[0];
         nomeCliente.textContent = nomeFiltrado;
-
+ 
         div.appendChild(nomeCliente);
         div.appendChild(img);
         antigos_usuarios.appendChild(div);
@@ -152,6 +150,7 @@
     console.error('Erro ao executar fetchUsuarios:', error);
   });
 });
+
   </script>
 
 </body>

@@ -125,27 +125,21 @@ app.get('/usuario/mostrar_todos', async (req, res) => {
       res.status(500).json({ message: "Erro ao buscar todos os usuários", error: error.message });
     }
   });
-
-app.post('/usuario/logar', async (req, res) => {
-    const cod = Number(req.body.cod);
-    const nome = req.body.nome;
-    const senha = req.body.senha;
+  app.get('/usuario/logar/:cod/:nome/:senha', async (req, res) => {
+    const cod = Number(req.params.cod);
+    const nome = req.params.nome;
+    const senha = req.params.senha;
     let envio = { cod, nome, senha };
 
-    const nc = await qtd_clientes();
-
     try {
-        let teste = await login(envio.cod, envio.nome, envio.senha);
-        if (teste == 1){
-
-            const queryParams = `?nome=${encodeURIComponent(nome)}&cod_empresa=${encodeURIComponent(cod)}&senha=${encodeURIComponent(senha)}`;
-            res.redirect(`/tela_processo.html${queryParams}`);
-            return;
-        } 
-        else {
-            res.status(401).send('usuário não encontrado');
+        const teste = await login(envio.cod, envio.nome, envio.senha);
+        
+        if (teste == 0) {
+            res.status(200).json({ result: 0 }); 
+            res.status(200).json({ result: 1 }); 
         }
-    } catch (err) {
+    } 
+    catch (err) {
         console.log(err);
         res.status(500).send('Erro no servidor');
     }

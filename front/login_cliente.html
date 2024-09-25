@@ -15,47 +15,80 @@
 
 <div id="div_link_header">
     <a href="#"><h1 id="Links_header">COMPRE AGORA</h1></a>
-    <a href="#"><h1 id="Links_header">PROGRAMA</h1></a>
-    <a href="#"><h1 id="Links_header">VALORES</h1></a>
-    <a href="#"><h1 id="Links_header">CONTATE-NOS</h1></a>
+        <a href="#"><h1 id="Links_header">PROGRAMA</h1></a>
+            <a href="#"><h1 id="Links_header">VALORES</h1></a>
+        <a href="#"><h1 id="Links_header">CONTATE-NOS</h1></a>
     <a href="sobre_nos.html"><h1 id="Links_header">SOBRE NÓS</h1></a>
 </div>
 
 
 <div id="div_img_header">
     <a href="twiter"><img src="img/twiter.png" alt="twiter"></a>
-    <a href="linkedin"><img src="img/linkedin.png" alt="linkedin"></a>
+        <a href="linkedin"><img src="img/linkedin.png" alt="linkedin"></a>
     <a href="instaram"><img id="logo_instagram" src="img/instagram-removebg-preview (2).png" alt="instagram"></a>
 </div>
+
 </header>
 
 <div id="corpo">
-    <img id="img_form" src="img/logo_inteiro.png" alt="logo">
+      <img id="img_form" src="img/logo_inteiro.png" alt="logo">
     <h1 id="Nome_img">InovaWorks</h1>
 
-
-<form action="http://localhost:3000/usuario/logar" method="post">
-    <input type="number" placeholder="codigo empresa" name="cod"  required>
-    <input type="text" placeholder="Nome" name="nome"  required>
-    <input type="password" placeholder="Senha" name="senha" required>
-    <button type="submit" id="corpo_button_cadastrar" onclick="cadastro()">Login</button>
-    
+<form>
+     <input id="cod" type="number" placeholder="codigo empresa" required>
+     <input id="nome" type="text" placeholder="Nome" required>
+     <input id="senha" type="password" placeholder="Senha" required>
+     <button type="submit" id="corpo_button_cadastrar">Login</button>    
 </form>
+
 </div>
 
-    </div>
-    <script>
-        function cadastro() {
-            const nome = document.getElementById("nome").value;
-            const senha = document.getElementById("senha").value;
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById("corpo_button_cadastrar");
 
-            if (nome && senha) {
-                localStorage.setItem("nome_cliente", nome);
-                localStorage.setItem("senha_cliente", senha);
-            } else {
-                console.error("Nome ou senha não podem estar vazios.");
+        button.addEventListener('click', async (event) => {
+
+
+            const cod = document.getElementById('cod').value;
+            const nome = document.getElementById('nome').value;
+            const senha = document.getElementById('senha').value;
+if(!cod || !nome || !senha){
+    alert("Preencha todos os campos");
+}
+
+else{
+            try {
+                localStorage.setItem("cod",cod);
+                localStorage.setItem("nome",nome);
+                localStorage.setItem("senha",senha);
+
+
+
+                const response = await fetch(`http://localhost:3000/usuario/logar/${cod}/${nome}/${senha}`, {
+                    method: 'GET', 
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json(); 
+
+                if (data.result == 1) {
+                    window.location.href = "/front/inicial_login.html"
+                }
+                else{
+                    alert("Credenciais inválidas!");
+                } 
+
+            } catch (error) {
+                alert("Erro na requisição.");
             }
-        }
-    </script>
+}
+        });
+    });
+
+</script>
 </body>
 </html>
