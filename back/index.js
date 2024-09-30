@@ -129,19 +129,26 @@ app.get('/usuario/mostrar_todos', async (req, res) => {
     const cod = Number(req.params.cod);
     const nome = req.params.nome;
     const senha = req.params.senha;
+
+    if (!cod || !nome || !senha) {
+        return res.status(400).json({ message: 'Parâmetros inválidos' });
+    }
+
     let envio = { cod, nome, senha };
 
     try {
         const teste = await login(envio.cod, envio.nome, envio.senha);
         
-        if (teste == 0) {
-            res.status(200).json({ result: 0 }); 
-            res.status(200).json({ result: 1 }); 
+        if (teste == 1) {
+            return res.status(200).json({ result: 1 });
+        }
+        else{
+            return res.status(200).json({ result: 0 })
         }
     } 
     catch (err) {
-        console.log(err);
-        res.status(500).send('Erro no servidor');
+        console.error(err);
+        return res.status(500).send('Erro no servidor');
     }
 });
 

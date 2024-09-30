@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/estilo/orcamento.css">
-    <link rel="icon" href="/img/logo_inteiro.png">
+    <link rel="stylesheet" href="/front/estilo/orcamento.css">
+    <link rel="icon" href="/front/img/logo_inteiro.png">
     <title>Novo Orçamento</title>
     <!-- Adiciona jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -14,11 +14,11 @@
         <h1 id="header_inovaworks">InovaWorks</h1>
         
         <div id="header_links">
-            <a href="/inicial_login.html"><img id="imagem" src="/img/home.png" alt="menu"><button id="header_button">Home</button></a>
-            <a href="/index.html"><img id="imagem" src="/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-            <a href="/estoque.html"><img id="imagem" src="/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
-            <a href="#"><img id="imagem" src="/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
-            <a href="#"><img id="imagem" src="/img/flecha.png" alt="log_out"><button id="header_button">Log out</button></a>
+            <a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button">Home</button></a>
+            <a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+            <a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+            <a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+            <a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
         </div>
         
         <div id="header_user">
@@ -84,6 +84,11 @@
     </div>
 
     <script>
+        function logOut(){
+  localStorage.clear();
+  window.location.href = './login_cliente.html';
+}
+
         document.addEventListener('DOMContentLoaded', () => {
             const saveToLocalStorage = () => {
                 const params = new URLSearchParams(window.location.search);
@@ -106,7 +111,7 @@
 
                 const imgUserElement = document.getElementById('img_user');
                 if (imgUserElement) {
-                    imgUserElement.src = "/img/imagem_user.png";
+                    imgUserElement.src = "/front/img/imagem_user.png";
                 }
             };
 

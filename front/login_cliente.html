@@ -49,46 +49,44 @@
         const button = document.getElementById("corpo_button_cadastrar");
 
         button.addEventListener('click', async (event) => {
-
+            event.preventDefault(); // Previne o comportamento padrão do botão/formulário
 
             const cod = document.getElementById('cod').value;
             const nome = document.getElementById('nome').value;
             const senha = document.getElementById('senha').value;
-if(!cod || !nome || !senha){
-    alert("Preencha todos os campos");
-}
 
-else{
-            try {
-                localStorage.setItem("cod",cod);
-                localStorage.setItem("nome",nome);
-                localStorage.setItem("senha",senha);
-
-
-
-                const response = await fetch(`http://localhost:3000/usuario/logar/${cod}/${nome}/${senha}`, {
-                    method: 'GET', 
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
-
-                const data = await response.json(); 
-
-                if (data.result == 1) {
-                    window.location.href = "/front/inicial_login.html"
-                }
-                else{
-                    alert("Credenciais inválidas!");
-                } 
-
-            } catch (error) {
-                alert("Erro na requisição.");
+            if (!cod || !nome || !senha) {
+                alert("Preencha todos os campos");
+                return; 
             }
-}
+
+            try {
+                
+
+                localStorage.setItem("cod", cod);
+                localStorage.setItem("nome", nome);
+                localStorage.setItem("senha", senha);
+
+                
+
+                const response = await fetch(`http://localhost:3000/usuario/logar/${cod}/${nome}/${senha}`);
+
+                     const data = await response.json();
+
+                    if (data.result == 1) {
+                        window.location.href = "/front/inicial_login.html";
+                    
+                    }
+                     else {
+                        alert("Oops algo errado");
+                    }
+            }
+            catch (error) {
+                alert("Erro na requisição: " + error.message);
+            }
         });
     });
-
 </script>
+
 </body>
 </html>
