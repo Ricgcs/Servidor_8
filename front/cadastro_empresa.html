@@ -4,67 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/logo_inteiro.png">
- <link rel="stylesheet" href="/front/estilo/c_empresa.css">
+    <link rel="stylesheet" href="/front/estilo/c_empresa.css">
     <title>Cadastro empresa</title>
 </head>
 <body>
 
     <div id="menu">
-<header>
-    <a><h1 id="Nome_header"><a id="link_menu"href="inicial.html">InovaWorks</a></h1></a>
+        <header>
+            <a><h1 id="Nome_header"><a id="link_menu" href="inicial.html">InovaWorks</a></h1></a>
 
-<div id="div_link_header">
-    <a href="#"><h1 id="Links_header">COMPRE AGORA</h1></a>
-    <a href="#"><h1 id="Links_header">PROGRAMA</h1></a>
-    <a href="#"><h1 id="Links_header">VALORES</h1></a>
-    <a href="#"><h1 id="Links_header">CONTATE-NOS</h1></a>
-    <a href="sobre_nos.html"><h1 id="Links_header">SOBRE NÓS</h1></a>
-</div>
+            <div id="div_link_header">
+                <a href="#"><h1 id="Links_header">COMPRE AGORA</h1></a>
+                <a href="#"><h1 id="Links_header">PROGRAMA</h1></a>
+                <a href="#"><h1 id="Links_header">VALORES</h1></a>
+                <a href="#"><h1 id="Links_header">CONTATE-NOS</h1></a>
+                <a href="sobre_nos.html"><h1 id="Links_header">SOBRE NÓS</h1></a>
+            </div>
 
+            <div id="div_img_header">
+                <a href="twiter"><img src="img/twiter.png" alt="twiter"></a>
+                <a href="linkedin"><img src="img/linkedin.png" alt="linkedin"></a>
+                <a href="instaram"><img id="logo_instagram" src="img/instagram-removebg-preview (2).png" alt="instagram"></a>
+            </div>
+        </header>
 
-<div id="div_img_header">
-    <a href="twiter"><img src="img/twiter.png" alt="twiter"></a>
-    <a href="linkedin"><img src="img/linkedin.png" alt="linkedin"></a>
-    <a href="instaram"><img id="logo_instagram" src="img/instagram-removebg-preview (2).png" alt="instagram"></a>
-</div>
-</header>
+        <div id="corpo">
+            <img id="img_form" src="img/logo_inteiro.png" alt="logo">
+            <h1 id="Nome_img">InovaWorks</h1>
 
-<div id="corpo">
-    <img id="img_form" src="img/logo_inteiro.png" alt="logo">
-    <h1 id="Nome_img">InovaWorks</h1>
+            <form>
+                <input id="nome_fantasia" type="text" placeholder="Nome fantasia" name="Nome_fantasia" required>
+                <input id="razao_social" type="text" placeholder="Razão social" name="Razao_social" required>
+                <input id="email" type="email" placeholder="Email" name="Email" required>
+                <input id="cnpj" type="number" placeholder="CNPJ" name="CNPJ" required>
+                <input id="senha" type="password" placeholder="Senha" name="Senha" required>
+                <button id="corpo_button_cadastrar" type="submit">Cadastrar</button>
+            </form>
+            <h6 id="cliente_add"><a href="cadastro_cliente.html">É um cliente? Cadastre-se aqui!</a></h6>
+        </div>
+    </div>
 
-     <!-- action="http://localhost:3000/empresa" method="post"-->
-<form>
-   
-    <input id="nome_fantasia" type="text" placeholder="Nome_fantasia" name="Nome_fantasia" required>
-    <input id="razao_social" type="text" placeholder="Razao_social" name="Razao_social" required>
-    <input id="email" type="email" placeholder="Email" name="Email" required>
-    <input id="cnpj" type="number" placeholder="CNPJ" name="CNPJ" required>
-    <input id="senha" type="password" placeholder="Senha" name="Senha" required>
-    <button id="corpo_button_cadastrar">Cadastrar</button>
-    
-</form>
-<h6 id="cliente_add"><a href="cadastro_cliente.html">É um cliente ? Cadastre-se aqui !</a></h6>
-</div>
-  </div>
-  <script>
-    //document.addEventListener('DOMContentLoaded',()=>{
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('corpo_button_cadastrar');
 
-    const button = document.getElementById('corpo_button_cadastrar');
-        button.addEventListener('click', async (event) => {
-    
-    const Nome_fantasia = document.getElementById('nome_fantasia').value;
-    const Razao_social = document.getElementById('razao_social').value;
-    const Email = document.getElementById('email').value;
-    const cnpj = document.getElementById('cnpj').value;
-    const Senha = document.getElementById('senha').value;
-        
+            button.addEventListener('click', async (event) => {
+                event.preventDefault(); 
 
-    const response = fetch(`http://localhost:3000/empresa/${Nome_fantasia}/${Razao_social}/${Email}/${cnpj}/${Senha}`)
+                const Nome_fantasia = document.getElementById('nome_fantasia').value;
+                const Razao_social = document.getElementById('razao_social').value;
+                const Email = document.getElementById('email').value;
+                const cnpj = document.getElementById('cnpj').value;
+                const Senha = document.getElementById('senha').value;
 
-    
-})
-//})
-  </script>
+                if (!Nome_fantasia || !Razao_social || !Email || !cnpj || !Senha) {
+                    alert("Preencha todos os campos");
+                    return;
+                }
+             
+                    const response = await fetch(`http://localhost:3000/empresa/${Nome_fantasia}/${Razao_social}/${Email}/${cnpj}/${Senha}`);
+                    const data = await response.json();
+                    //console.log("cadastrado com sucesso");
+                    alert("Cadastro realizado com sucesso!");
+             
+            });
+        });
+    </script>
 </body>
 </html>

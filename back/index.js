@@ -226,17 +226,19 @@ app.get('/produto/mostrar_todos', async (req, res) => {
 //-----------------------------------------------Empresa------------------------------------------------------------\\
 
 app.get('/empresa/:Nome_fantasia/:Razao_social/:Email/:CNPJ/:Senha', async (req, res) => {
-
+    console.log("chegou aqui")
     let nome = req.params.Nome_fantasia;
     let RS = req.params.Razao_social;
     let email = req.params.Email;
     let CNPJ = Number(req.params.CNPJ);
     let Senha = req.params.Senha;
-    let Foto = req.params.Foto;
-console.log({nome,RS,email,CNPJ,Senha,Foto});
+
+console.log({nome,RS,email,CNPJ,Senha});
     try {
-        const resultado = await setEmpr(nome, RS, email, CNPJ, Senha, Foto);
-        console.log("recebi")
+        const resultado = await setEmpr(nome, RS, email, CNPJ, Senha);
+        console.log("recebi");
+        return res.status(200).json({ result: 1 });
+        
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar a empresa", error: error.message });
         console.log("recebi, mas deu erro")

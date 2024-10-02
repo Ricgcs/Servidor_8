@@ -42,7 +42,8 @@
 
         <section id="s2">
             <div id="valores">
-                <label id="lab_descricao">Descrição</label>
+
+                <label id="lab_descricao">Código produto</label>
                 
                 <label class="copia">Quantidade</label>
                 
@@ -55,17 +56,26 @@
 
         <section id="s3">
             <div id="testando">
-                <input id="descricao" type="text" placeholder="Digite a descrição">
+                <input id="descricao" type="text" placeholder="Digite o código do produto">
                 <input id="quantidade" type="number" min="1" placeholder="Digite a quantidade">
                 <input id="valor" type="number" step="0.01" min="0" placeholder="Digite o valor">
                 <input id="desconto" type="number" step="0.01" min="0" placeholder="Digite o desconto">
             </div>
             <div id="dates">
-                <label for="data_inicio">Data início</label>
-                <input id="data_inicio" type="date">
+                <div id="data">
+            <div id="datas1">
+                <label for="data_inicio">Data início</label>               
                 
                 <label for="data_entrega">Data entrega</label>
+            </div>
+
+            <div id="datas2">
+                <input id="data_inicio" type="date">
+
+
                 <input id="data_entrega" type="date">
+            </div>
+        </div>
             </div>
         </section>
 

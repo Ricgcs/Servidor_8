@@ -196,15 +196,16 @@ div {
     color: black;
     border-radius: 0.5vw;
     background-color: white;
-    padding: 2.6vw;
+    padding: 2vw;
     width: 60%;
-    height: 80%;
+    height: 100%;
+    overflow: scroll;
     
 }
 
 #lab1 {
     display: block;
-    margin-top: 2vw;
+   
 }
 
 #Cabecalho {
@@ -370,7 +371,6 @@ footer{
 
 #fot{
     width: 100%;
-  
 
 }
 
@@ -409,13 +409,29 @@ footer{
 }
 
 #data_inicio{
-   margin-top: -1.5vw;  
+    display: flex;
+    flex-direction: row;
 }
 
 #data_entrega{
-    margin-top: -1.5vw;  
+    display: flex;
+    flex-direction: row;    
  }
  
+ #datas1{
+    display: flex;
+    flex-direction: row;
+    width: 77%;
+    
+    justify-content: space-between;
+ 
+ }
+
+ #datas2{
+    display: flex;
+    flex-direction: row;
+    
+ }
 
 #teste{
     margin-left: -2vw;
