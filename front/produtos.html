@@ -64,18 +64,15 @@
 
 
     document.addEventListener('DOMContentLoaded', () => {
-     const saveToLocalStorage = () => {
-       const params = new URLSearchParams(window.location.search);
-       const nomeUser = params.get('nome') || '';
-       const empresaUser = params.get('cod_empresa');
-      
-    
-       if (nomeUser.trim() !== '') { 
-         localStorage.setItem('nome_user', nomeUser);
-         localStorage.setItem('cod_empresa',empresaUser)
-   
-       }
-     };
+     
+    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const senhaUser = localStorage.getItem('senha');
+    const codUser = localStorage.getItem('cod') ;
+ 
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "./login_cliente.html"
+   }
    
      
      const loadFromLocalStorage = () => {
@@ -94,10 +91,7 @@
        }
      };
     });
-     // Salva os dados da URL no localStorage
-     saveToLocalStorage();
-   
-     // Carrega os dados do localStorage e atualiza o DOM
+     
      loadFromLocalStorage();
     </script>
 

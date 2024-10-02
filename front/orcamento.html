@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/front/estilo/orcamento.css">
     <link rel="icon" href="/front/img/logo_inteiro.png">
     <title>Novo Orçamento</title>
-    <!-- Adiciona jsPDF -->
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
@@ -90,17 +90,17 @@
 }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const saveToLocalStorage = () => {
-                const params = new URLSearchParams(window.location.search);
-                const nomeUser = params.get('nome') || '';
-                const empresaUser = params.get('cod_empresa') || '';
-
-                if (nomeUser.trim() !== '') {
-                    localStorage.setItem('nome_user', nomeUser);
-                    localStorage.setItem('cod_empresa', empresaUser);
-                }
-            };
-
+          
+    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const senhaUser = localStorage.getItem('senha');
+    const codUser = localStorage.getItem('cod') ;
+ 
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "./login_cliente.html"
+   }
+   
+   
             const loadFromLocalStorage = () => {
                 const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
                 const nomeUserElement = document.getElementById('nome_user');
@@ -115,7 +115,7 @@
                 }
             };
 
-            saveToLocalStorage();
+          
             loadFromLocalStorage();
 
             const obsInput = document.getElementById('obs');
@@ -164,11 +164,11 @@
             };
 
             const gerarPDF = () => {
-                // Importando o jsPDF
+               
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
 
-                // Captura os valores dos inputs
+                
                 const nomeCliente = document.getElementById('nome_cliente').value;
                 const descricao = document.getElementById('descricao').value;
                 const quantidade = document.getElementById('quantidade').value;
@@ -178,7 +178,7 @@
                 const dataEntrega = document.getElementById('data_entrega').value;
                 const observacoes = document.getElementById('obs').value;
 
-                // Adiciona conteúdo ao PDF
+                
                 doc.text(`Cliente: ${nomeCliente}`, 10, 10);
                 doc.text(`Descrição: ${descricao}`, 10, 20);
                 doc.text(`Quantidade: ${quantidade}`, 10, 30);
@@ -188,7 +188,7 @@
                 doc.text(`Data Entrega: ${dataEntrega}`, 10, 70);
                 doc.text(`Observações: ${observacoes}`, 10, 80);
 
-                // Gera o PDF e baixa
+               
                 doc.save('orcamento.pdf');
             };
 

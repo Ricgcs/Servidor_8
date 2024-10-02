@@ -78,17 +78,12 @@
 }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const saveToLocalStorage = () => {
-                const params = new URLSearchParams(window.location.search);
-                const nomeUser = params.get('nome') || '';
-                const empresaUser = params.get('cod_empresa') || '';
-
-                if (nomeUser.trim() !== '') {
-                    localStorage.setItem('nome_user', nomeUser);
-                    localStorage.setItem('cod_empresa', empresaUser);
-                }
-            };
-
+            
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "./login_cliente.html"
+   }
+   
             const loadFromLocalStorage = () => {
                 const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
                 const nomeUserElement = document.getElementById('nome_user');
@@ -103,7 +98,6 @@
                 }
             };
 
-            saveToLocalStorage();
             loadFromLocalStorage();
 
             const obsInput = document.getElementById('obs');

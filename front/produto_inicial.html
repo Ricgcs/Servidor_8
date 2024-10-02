@@ -65,6 +65,16 @@
 
   document.addEventListener('DOMContentLoaded', () => {
   
+    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const senhaUser = localStorage.getItem('senha');
+    const codUser = localStorage.getItem('cod') ;
+ 
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "./login_cliente.html"
+   }
+   
+   
     const loadFromLocalStorage = () => {
       const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
   
