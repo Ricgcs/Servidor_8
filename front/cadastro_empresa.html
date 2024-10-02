@@ -32,20 +32,39 @@
 <div id="corpo">
     <img id="img_form" src="img/logo_inteiro.png" alt="logo">
     <h1 id="Nome_img">InovaWorks</h1>
-<form action="http://localhost:3000/empresa" method="post">
+
+     <!-- action="http://localhost:3000/empresa" method="post"-->
+<form>
    
-    <input type="text" placeholder="Nome_fantasia" name="Nome_fantasia" required>
-    <input type="text" placeholder="Razao_social" name="Razao_social" required>
-    <input type="email" placeholder="Email" name="Email" required>
-    <input type="number" placeholder="CNPJ" name="CNPJ" required>
-    <input type="password" placeholder="Senha" name="Senha" required>
-    <button type="submit" id="corpo_button_cadastrar">Cadastrar</button>
+    <input id="nome_fantasia" type="text" placeholder="Nome_fantasia" name="Nome_fantasia" required>
+    <input id="razao_social" type="text" placeholder="Razao_social" name="Razao_social" required>
+    <input id="email" type="email" placeholder="Email" name="Email" required>
+    <input id="cnpj" type="number" placeholder="CNPJ" name="CNPJ" required>
+    <input id="senha" type="password" placeholder="Senha" name="Senha" required>
+    <button id="corpo_button_cadastrar">Cadastrar</button>
     
 </form>
 <h6 id="cliente_add"><a href="cadastro_cliente.html">É um cliente ? Cadastre-se aqui !</a></h6>
 </div>
+  </div>
+  <script>
+    //document.addEventListener('DOMContentLoaded',()=>{
 
-    </div>
-  
+    const button = document.getElementById('corpo_button_cadastrar');
+        button.addEventListener('click', async (event) => {
+    
+    const Nome_fantasia = document.getElementById('nome_fantasia').value;
+    const Razao_social = document.getElementById('razao_social').value;
+    const Email = document.getElementById('email').value;
+    const cnpj = document.getElementById('cnpj').value;
+    const Senha = document.getElementById('senha').value;
+        
+
+    const response = fetch(`http://localhost:3000/empresa/${Nome_fantasia}/${Razao_social}/${Email}/${cnpj}/${Senha}`)
+
+    
+})
+//})
+  </script>
 </body>
 </html>

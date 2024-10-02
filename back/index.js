@@ -41,7 +41,7 @@ app.get('/teste', async (req, res) => {
 });
 
 app.post('/usuario', async (req, res) => {
-    // [nome, email, senha, cpf, codigo_empresa]
+
     const { nome, email, senha, cpf, codigo_empresa } = req.body;
   
 
@@ -225,20 +225,22 @@ app.get('/produto/mostrar_todos', async (req, res) => {
 });
 //-----------------------------------------------Empresa------------------------------------------------------------\\
 
-app.post('/empresa', async (req, res) => {
+app.get('/empresa/:Nome_fantasia/:Razao_social/:Email/:CNPJ/:Senha', async (req, res) => {
 
-    let nome = req.body.Nome_fantasia;
-    let RS = req.body.Razao_social;
-    let email = req.body.Email;
-    let CNPJ = Number(req.body.CNPJ);
-    let Senha = req.body.Senha;
-    let Foto = req.body.Foto;
+    let nome = req.params.Nome_fantasia;
+    let RS = req.params.Razao_social;
+    let email = req.params.Email;
+    let CNPJ = Number(req.params.CNPJ);
+    let Senha = req.params.Senha;
+    let Foto = req.params.Foto;
 console.log({nome,RS,email,CNPJ,Senha,Foto});
     try {
         const resultado = await setEmpr(nome, RS, email, CNPJ, Senha, Foto);
-        res.status(201).json({ message: "Empresa criada com sucesso", data: resultado });
+        console.log("recebi")
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar a empresa", error: error.message });
+        console.log("recebi, mas deu erro")
+
     }
 });
 

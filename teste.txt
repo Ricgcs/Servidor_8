@@ -96,4 +96,6 @@ achei isso interessante:
   <input type="button" value="Start machine" accesskey="s" />
 </form>
 
-okok, o ivan me ajudou muito, sessões foi a ideia, e usar o localstorage 
+okok, o ivan me ajudou muito, sessões foi a ideia, e usar o localstorage. 
+
+eu de novo o localstorage foi um sucesso, o Ivan é um gênio.
