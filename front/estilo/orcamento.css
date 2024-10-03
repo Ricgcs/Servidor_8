@@ -70,6 +70,12 @@ margin-left: 10%;
     color: white;
 }
 
+#nome_cliente{
+    height: 45%;
+    margin-bottom: 1.5vw;
+    width: 10vw;
+}
+
 #header_user{
     display: flex;
     margin-right:-2vw;

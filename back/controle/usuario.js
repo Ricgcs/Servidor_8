@@ -97,22 +97,20 @@ console.log("valor deletado com sucesso", envio)
     }
 }
 
-export const procurar = async (what,valor, nome ) => {
-    const con = await conexao();
-
-
-    
-    try {
+export const procurar = async (what,valor,nome ) => {
+    const con = await conexao();    
+    try
+    {
         const [rows] = await con.query(
             `SELECT ${what} FROM cliente WHERE ${valor} = ?`,
-            [nome]
-        );
-       
+        [nome]
+    );       
         return rows;
-    } catch (error) {
-        console.error('Erro ao procurar usuário:', error.message);
-        throw error;
-    }
+    } 
+            catch (error) {
+                console.error('Erro ao procurar usuário:', error.message);
+            throw error;
+        }
 };
 
 

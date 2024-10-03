@@ -36,7 +36,7 @@
         <section id="s1">
             <div id="s1b">
                 <label id="s1l">Cliente</label>
-                <input id="nome_cliente" type="text" placeholder="Digite o nome do cliente">
+                <select name="nome_cliente" id="nome_cliente"></select>
             </div>
         </section>
 
@@ -94,6 +94,7 @@
     </div>
 
     <script>
+const button = document.getElementById('OBS_c')
         function logOut(){
   localStorage.clear();
   window.location.href = './login_cliente.html';
@@ -134,26 +135,30 @@
                     obsInput.scrollTop = obsInput.scrollHeight;
                 });
             }
-
-            const adicionarProduto = async () => {
+            
+                button.addEventListener('click',async (event)=>{
+                     
                 const nomeCliente = document.getElementById('nome_cliente').value;
                 const descricao = document.getElementById('descricao').value;
                 const quantidade = document.getElementById('quantidade').value;
                 const valor = document.getElementById('valor').value;
                 const desconto = document.getElementById('desconto').value;
                 const dataInicio = document.getElementById('data_inicio').value;
-                const dataEntrega = document.getElementById('data_entrega').value;
-                const codEmpr = localStorage.getItem('cod_empresa');
+                const dataEntrega = document.getElementById('data_entrega').value;            
+                const codEmpr = localStorage.getItem('cod');
                 const codEmprLimpo = parseInt(codEmpr.replace(/[^0-9]/g, ''), 10);
 
+                
                 if (!nomeCliente || !descricao || !quantidade || !valor || !dataInicio || !dataEntrega) {
                     alert('Preencha todos os campos obrigatórios.');
                     return;
                 }
 
-                const url = `/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${codEmprLimpo}`;
-
+                const url = `http://localhost:3000/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${codEmprLimpo}`;
+                
+               
                 try {
+                 
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: {
@@ -164,16 +169,24 @@
                     if (response.ok) {
                         const result = await response.json();
                         alert(result.message); 
-                    } else {
-                        alert('Erro ao adicionar orçamento');
+                    } 
+                    else {
+                        console.log(response)
+                        alert('Erro ao adicionar orçamento:');
                     }
-                } catch (error) {
-                    console.error('Erro na requisição:', error);
-                    alert('Erro ao adicionar orçamento');
-                }
-            };
 
-            const gerarPDF = () => {
+                } catch (error) {
+                    console.log('Erro na requisição:', error);
+                    alert('Erro ao adicionar do lado do servidor');
+                }
+            
+        });
+
+
+
+
+
+                const gerarPDF = () => {
                
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
@@ -207,6 +220,15 @@
 
             const buttonGerarPDF = document.getElementById('OBS_b');
             buttonGerarPDF.addEventListener('click', gerarPDF);
+
+
+
+             const nomes_de_clientes = async()=>{
+                //const codEmpr = localStorage.getItem('cod');
+                const response = fetch('http://localhost:3000//usuario/mostrar', )
+             }
+
+        
         });
     </script>
 </body>

@@ -82,10 +82,10 @@ app.post('/usuario/avaliacao/:nome/:sugestao/:nota/:profissao', async (req, res)
 
 
 app.get('/usuario/mostrar', async (req, res) => {
-    const { valor, nome} = req.body; 
+    const { what,valor, nome} = req.body; 
 console.log(valor, nome)
     try {
-        const resultado = await procurar({ valor, nome});
+        const resultado = await procurar({ what, valor, nome});
         res.status(200).json({ data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao procurar usuário", error: error.message });
@@ -394,7 +394,7 @@ app.get('/funcionario/mostrar_todos', async (req, res) => {
 //--------------------------------------------------Orçamento--------------------------------------------------\\
 
 app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa', async (req, res) => {
-    
+    console.log("chegou aqui")
     const { Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa } = req.params;
     
     console.log(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa);
@@ -402,9 +402,8 @@ app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entreg
     try {
        
         const resultado = await setOrcamento(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa);
-        
-        
-        res.status(201).json({ message: "Orçamento criado com sucesso", data: resultado });
+        console.log(resultado)
+
     } catch (error) {
        
         
@@ -412,7 +411,18 @@ app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entreg
     }
 });
 
+app.get('/orcamento/mostrarTodos', async(req,res) =>{
+    try{
+        const response = getOrcamento();
+        res.json({data:response})
 
+    }
+    catch(err){
+        console.log("erro servidor, /orcamento/mostrarTodos")
+    }
+})
+
+//------------------------------------------------Servidor-----------------------------------------------------------\\
 app.listen(porta, host,  () => {
     console.log("servidor rodando");
 });
