@@ -57,15 +57,12 @@
 </div>
 
 <script type="text/javascript">
-function logOut(){
-  localStorage.clear();
+function logOut(){  
   if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
     window.location.href = './login_cliente.html';
   } 
 }
-
-
-
     document.addEventListener('DOMContentLoaded', () => {
      
     const nomeUser = localStorage.getItem('nome') || 'Usuário';

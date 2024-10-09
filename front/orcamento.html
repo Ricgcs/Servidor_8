@@ -95,9 +95,9 @@
 
     <script>
 const button = document.getElementById('OBS_c')
-function logOut(){
-  localStorage.clear();
+function logOut(){  
   if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
     window.location.href = './login_cliente.html';
   } 
 }
