@@ -52,18 +52,18 @@ export const getUser = async (res) => {
         }
     }
 };
-export const setUser = async ({ nome, email, senha, cpf, codigo_empresa }) => {
+export const setUser = async ({ nome, email, senha, cpf, cod }) => {
     const con = await conexao();
 
     try {
         const [result] = await con.execute(
             'INSERT INTO cliente (Nome, Email, Senha, CPF, Empresa_Cod_empresa) VALUES (?, ?, ?, ?, ?)',
-            [nome, email, senha, cpf, codigo_empresa]
+            [nome, email, senha, cpf, cod]
         );
         return result;
     } catch (error) {
         console.error('Erro ao inserir usuário:', error.message);
-        console.error("Nome: " + nome, "Email: " + email, "Senha: " + senha, "CPF: " + cpf, "Empresa: " + codigo_empresa);
+        console.error("Nome: " + nome, "Email: " + email, "Senha: " + senha, "CPF: " + cpf, "Empresa: " + cod);
         throw error;
     } 
 };

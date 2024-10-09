@@ -40,13 +40,15 @@ app.get('/teste', async (req, res) => {
     }
 });
 
-app.post('/usuario', async (req, res) => {
-
-    const { nome, email, senha, cpf, codigo_empresa } = req.body;
-  
-
-    let userData = { nome, email, senha, cpf, codigo_empresa };
-
+app.get('/usuario/:nome/:email/:senha/:cpf/:cod', async (req, res) => {
+    const nome = req.params.nome;
+    const email = req.params.email;
+    const senha = req.params.senha;
+    const cpf = req.params.cpf;
+    const cod = Number(req.params.cod);
+    
+    let userData = { nome, email, senha, cpf, cod };
+     
     try {
         await setUser(userData);
         console.log(userData)
