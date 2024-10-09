@@ -58,10 +58,13 @@
 
 </div>
 <script type="text/javascript">
-  function logOut(){
+function logOut(){
   localStorage.clear();
-  window.location.href = './login_cliente.html';
+  if(confirm("Tem certeza que deseja sair da conta?")){
+    window.location.href = './login_cliente.html';
+  } 
 }
+
 
   document.addEventListener('DOMContentLoaded', () => {
   

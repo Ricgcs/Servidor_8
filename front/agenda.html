@@ -80,9 +80,12 @@
 <div id="modalBackDrop"></div>
 </div>
 <script>
-  function logOut(){
-  localStorage.clear();
-  window.location.href = './login_cliente.html';
+function logOut(){
+  
+  if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
+    window.location.href = './login_cliente.html';
+  } 
 }
 
     document.addEventListener('DOMContentLoaded', () => {
