@@ -1,0 +1,10 @@
+ok, planos e ideia:
+
+-O maps para a parte de entregas
+-o chat para a parte de ajuda
+-Tentar fazer o orçamento puxar o valor, o nome, ou codigo
+-Arrumar a parte do produto
+-arrumar o pdf
+-tentar fazer a parte do cliente, só tentar, eu tenho umas ideias
+-aprender sobre o multer
+-aprender sobre o maps
