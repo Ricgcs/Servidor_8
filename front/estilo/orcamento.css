@@ -17,6 +17,7 @@
     
     background-color: black;
     width: 100%;
+    height: 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,7 +65,9 @@ margin-left: 10%;
 
 
 }
-
+#nomes_de_clientes{
+    height: 20%;
+}
 #nome_user{
     font-size: 1vw;
     color: white;
@@ -145,7 +148,7 @@ input, textarea {
     font-size: 1vw;
     padding: 0.3vw;
     background-color: #E7E7E7;
-    margin: 0 1vw 2vw 0;
+    margin: 0 1vw 0 0;
 }
 
 body {
@@ -204,13 +207,12 @@ div {
     background-color: white;
     padding: 2vw;
     width: 60%;
-    height: 100%;
-    overflow: scroll;
+    height: 90%;
     
 }
 
 #lab1 {
-    display: block;
+   
    
 }
 
@@ -224,6 +226,8 @@ hr {
 }
 #s3{
     margin-left: -0.59vw;
+    padding: 0px;
+ 
 
 }
 #Adicionar_itens {
@@ -253,22 +257,28 @@ label {
 }
 
 #obs-wrapper {
-    width: 60%;
-    height: 10vw;
-    display: block;
-    overflow: hidden;
-    position: relative;
-    background-color: transparent;    
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;   
+    padding: 0px;
+    width: 100%;
+    height: 30%;
 }
 
 #obs {
-    width: 73%;
-    height: 60%;
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     resize: none;
     scrollbar-width: none; 
     border: none;
     margin: 0px;
+    
     
     
 }
@@ -377,6 +387,9 @@ footer{
 
 #fot{
     width: 100%;
+    float: right;
+    display: flex;
+    justify-content: right;
 
 }
 
@@ -386,7 +399,7 @@ footer{
     padding: 0.6vw;
     border: none;
     font-size: 1vw;
-    margin-left: 40%; 
+    
 }
 
 #OBS_b {
@@ -427,8 +440,7 @@ footer{
  #datas1{
     display: flex;
     flex-direction: row;
-    width: 77%;
-    
+    width: 77%;    
     justify-content: space-between;
  
  }
@@ -461,11 +473,31 @@ footer{
  
 }
 
-#testando{
-   
+#testando{   
     display: flex;
 }
 
 .copia{
     margin-left: 10vw;
+}
+
+#pseudo_calc{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    
+    
+   
+}
+
+#corpo_pseudo_calc{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin-top: 1.8vw;
+}
+
+#barra{
+    border:solid black 0.1vw;
 }

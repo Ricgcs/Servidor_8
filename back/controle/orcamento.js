@@ -13,12 +13,12 @@ export const getOrcamento = async () => {
         res.status(500).json({ error: "Erro ao obter as orcamento" });
     }
 };
-export const setOrcamento = async (Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) => {
+export const setOrcamento = async (Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs) => {
     const con = await conexao(); 
     try {
         const [result] = await con.execute(
-            'INSERT INTO Orcamento (Nome_cliente, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa]
+            'INSERT INTO Orcamento (Nome_cliente, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs]
         );
         
         return result;

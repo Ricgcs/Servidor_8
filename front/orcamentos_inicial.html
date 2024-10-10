@@ -67,7 +67,25 @@ function logOut(){
   } 
 }
     document.addEventListener('DOMContentLoaded', () => {
+      const loadFromLocalStorage = () => {
      
+     const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
+     
+    
+      const nomeUserElement = document.getElementById('nome_user');
+     if (nomeUserElement) {
+       const primeiroNome = nomeUser.split(" ")[0];
+       nomeUserElement.innerHTML = `${primeiroNome}`;
+     }
+     const imgUserElement = document.getElementById('img_user');
+     if (imgUserElement) {
+       imgUserElement.src = "/front/img/imagem_user.png";
+     }
+   };
+   loadFromLocalStorage();
+
+
+
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cod') ;
@@ -78,28 +96,12 @@ function logOut(){
    }
    
      
-     const loadFromLocalStorage = () => {
      
-       const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
-       
-      
-        const nomeUserElement = document.getElementById('nome_user');
-       if (nomeUserElement) {
-         const primeiroNome = nomeUser.split(" ")[0];
-         nomeUserElement.innerHTML = `${primeiroNome}`;
-       }
-       const imgUserElement = document.getElementById('img_user');
-       if (imgUserElement) {
-         imgUserElement.src = "/front/img/imagem_user.png";
-       }
-     };
-
-
 const todas = fetch("http://localhost:3000/orcamento/mostrarTodos")
 
     });
      
-     loadFromLocalStorage();
+     
 
 
 

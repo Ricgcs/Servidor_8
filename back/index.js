@@ -395,15 +395,15 @@ app.get('/funcionario/mostrar_todos', async (req, res) => {
 
 //--------------------------------------------------Orçamento--------------------------------------------------\\
 
-app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa', async (req, res) => {
+app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa/:obs', async (req, res) => {
     console.log("chegou aqui")
-    const { Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa } = req.params;
+    const { Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs } = req.params;
     
-    console.log(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa);
+    console.log(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs);
     
     try {
        
-        const resultado = await setOrcamento(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa);
+        const resultado = await setOrcamento(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs);
         console.log(resultado)
 
     } catch (error) {

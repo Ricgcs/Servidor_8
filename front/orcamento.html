@@ -36,7 +36,11 @@
         <section id="s1">
             <div id="s1b">
                 <label id="s1l">Cliente</label>
-                <select name="nome_cliente" id="nome_cliente"></select>
+                <input list="nome_cliente_list" id="nomes_de_clientes" name="nome_cliente">
+
+                <datalist id="nome_cliente_list">
+                 
+                </datalist>
             </div>
         </section>
 
@@ -75,8 +79,26 @@
 
                 <input id="data_entrega" type="date">
             </div>
-        </div>
+        </div>  
+
+        <div id="pseudo_calc">
+            <div id="corpo_pseudo_calc">
+                <h1 id="calc_desconto">
+                    
+                </h1>
+
+                <h1 id="calc_valor_liquido">
+                    
+                </h1>
+                <h1 id="barra"><!--Barra--></h1>
+                <h1 id="calc_valor_final">
+                    
+                </h1>
             </div>
+        </div>     
+
+            </div>
+           
         </section>
 
         <footer>
@@ -103,7 +125,29 @@ function logOut(){
 }
 
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded',async () => {
+            const calcDescontoElement = document.getElementById('calc_desconto');
+    const calcValorLiquidoElement = document.getElementById('calc_valor_liquido');
+    const calcValorFinalElement = document.getElementById('calc_valor_final');
+
+    const inputValor = document.getElementById('valor');
+    const inputDesconto = document.getElementById('desconto');
+
+    function updateCalculations() {
+        
+        const valor = parseFloat(inputValor.value) || 0;
+        const desconto = parseFloat(inputDesconto.value) || 0;
+
+        const valorLiquido = valor - desconto;
+        const valorFinal = valorLiquido;
+
+        calcDescontoElement.textContent = desconto?`Desconto: R$ ${desconto.toFixed(2)}`:'Desconto: xxxx';
+        calcValorLiquidoElement.textContent = valor?`Valor : R$ ${valor.toFixed(2)}`:"Valor:xxxx";
+        calcValorFinalElement.textContent = `Valor Final: R$ ${valorFinal.toFixed(2)}`;
+    }
+    updateCalculations();
+    inputValor.addEventListener('input', updateCalculations);
+    inputDesconto.addEventListener('input', updateCalculations);
           
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
@@ -113,7 +157,28 @@ function logOut(){
     alert("faça o login");
     window.location.href = "./login_cliente.html"
    }
+
+
+   const nomes_cadastrado = async () => {
    
+  const nomes = 'http://localhost:3000/usuario/mostrar_todos';
+  const caixa_nome = document.getElementById('nome_cliente_list');
+  
+  try {
+    const users = await fetch(nomes); 
+    const nome_usuario = await users.json();
+    console.log(nome_usuario);
+    
+    nome_usuario.forEach((nome_usuario) => {
+      const option = document.createElement('option'); 
+      option.text = nome_usuario.Nome; 
+      caixa_nome.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Erro ao buscar os usuários:", error); 
+  }
+    };
+    await nomes_cadastrado();
    
             const loadFromLocalStorage = () => {
                 const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
@@ -138,7 +203,7 @@ function logOut(){
                     obsInput.scrollTop = obsInput.scrollHeight;
                 });
             }
-            
+
                 button.addEventListener('click',async (event)=>{
                      
                 const nomeCliente = document.getElementById('nome_cliente').value;
@@ -147,21 +212,22 @@ function logOut(){
                 const valor = document.getElementById('valor').value;
                 const desconto = document.getElementById('desconto').value;
                 const dataInicio = document.getElementById('data_inicio').value;
-                const dataEntrega = document.getElementById('data_entrega').value;            
+                const dataEntrega = document.getElementById('data_entrega').value;        
+                const obs = document.getElementById('obs').value;    
                 const codEmpr = localStorage.getItem('cod');
                 const codEmprLimpo = parseInt(codEmpr.replace(/[^0-9]/g, ''), 10);
-
                 
+
                 if (!nomeCliente || !descricao || !quantidade || !valor || !dataInicio || !dataEntrega) {
                     alert('Preencha todos os campos obrigatórios.');
                     return;
                 }
 
-                const url = `http://localhost:3000/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${codEmprLimpo}`;
+                const url = `http://localhost:3000/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${codEmprLimpo}/${obs}`;
                 
-               
+                
                 try {
-                 
+                    
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: {
@@ -227,7 +293,7 @@ function logOut(){
 
 
              const nomes_de_clientes = async()=>{
-                //const codEmpr = localStorage.getItem('cod');
+                
                 const response = fetch('http://localhost:3000//usuario/mostrar', )
              }
 
