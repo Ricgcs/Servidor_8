@@ -39,21 +39,21 @@
 <a id ="a1" href="/front/orcamento.html"><button id = "i2">Novo orçamento</button></a>
     </div>
 <div id="regua">
-    <h1 id="campos">Data</h1>
-    <h1 id="campos">Código</h1>
-    <h1 id="campos">Situação</h1>
-    <h1 id="campos">Fornecedor</h1>
+    <h1 id="campos">Nome</h1>
+    <h1 id="campos">Valor</h1>
+    <h1 id="campos">Datapedido</h1>
+    <h1 id="campos">Data entrega</h1>
 
 </div>
 
 <div id="valores">
-<div id="modelo">
+<!-- <div id="modelo">
     <h1 id="modelo_valores">02/04/2024</h1>
     <h1 id="modelo_valores">NF_000001</h1>
     <h1 id="modelo_valores">PAGO</h1>
     <h1 id="modelo_valores">Bosch</h1>
    
-</div>
+</div> -->
 </div>
 </div>
 
@@ -66,45 +66,80 @@ function logOut(){
     window.location.href = './login_cliente.html';
   } 
 }
-    document.addEventListener('DOMContentLoaded', () => {
-      const loadFromLocalStorage = () => {
-     
-     const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
-     
-    
-      const nomeUserElement = document.getElementById('nome_user');
-     if (nomeUserElement) {
-       const primeiroNome = nomeUser.split(" ")[0];
-       nomeUserElement.innerHTML = `${primeiroNome}`;
-     }
-     const imgUserElement = document.getElementById('img_user');
-     if (imgUserElement) {
-       imgUserElement.src = "/front/img/imagem_user.png";
-     }
-   };
-   loadFromLocalStorage();
-
-
+document.addEventListener('DOMContentLoaded', async () => {
+    const loadFromLocalStorage = () => {
+        const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
+        const nomeUserElement = document.getElementById('nome_user');
+        if (nomeUserElement) {
+            const primeiroNome = nomeUser.split(" ")[0];
+            nomeUserElement.innerHTML = `${primeiroNome}`;
+        }
+        const imgUserElement = document.getElementById('img_user');
+        if (imgUserElement) {
+            imgUserElement.src = "/front/img/imagem_user.png";
+        }
+    };
+    loadFromLocalStorage();
 
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
-    const codUser = localStorage.getItem('cod') ;
- 
-   if(!nomeUser || !senhaUser || !codUser){
-    alert("faça o login");
-    window.location.href = "./login_cliente.html"
-   }
+    const codUser = localStorage.getItem('cod');
    
-     
-     
-const todas = fetch("http://localhost:3000/orcamento/mostrarTodos")
+    if (!nomeUser || !senhaUser || !codUser) {
+        alert("faça o login");
+        window.location.href = "./login_cliente.html";
+        return;
+    }
+   
+    try {
+        const response = await fetch("http://localhost:3000/orcamento/mostrarTodos");
+        const resposta = await response.json();
 
-    });
-     
-     
+        // Log a resposta completa para depuração
+        console.log('Resposta do banco de dados:', resposta);
 
+        // Verificar se a resposta é um array
+        if (!Array.isArray(resposta)) {
+            console.error('A resposta não é um array:', resposta);
+            alert('Erro: a resposta não é um array.');
+            return;
+        }
 
+            
+        resposta.forEach((orcamento) => {
+            const div = document.createElement('div');
+            div.classList.add('modelo');
 
+            const nome_cliente = document.createElement('h1');
+            nome_cliente.classList.add('modelo_valores');
+            nome_cliente.textContent = orcamento.Nome_cliente;
+
+            const valor = document.createElement('h1');
+            valor.classList.add('modelo_valores');
+            valor.textContent = orcamento.Valor;
+
+            const data1 = document.createElement('h1');
+            data1.classList.add('modelo_valores');
+            data1.textContent = orcamento.Data_inicio;
+
+            const data2 = document.createElement('h1');
+            data2.classList.add('modelo_valores');
+            data2.textContent = orcamento.Data_entrega;
+
+            div.appendChild(nome_cliente);
+            div.appendChild(valor);
+            div.appendChild(data1);
+            div.appendChild(data2);
+
+            // Anexa o div ao container com id "valores"
+            document.getElementById('valores').appendChild(div);
+        });
+
+    } catch (error) {
+        console.error('Erro ao buscar os orçamentos:', error);
+        alert('Erro ao buscar os orçamentos. Tente novamente mais tarde.');
+    }
+}); 
     </script>
 
 </body>

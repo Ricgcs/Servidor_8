@@ -113,13 +113,12 @@ text-decoration: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 #items{
     height: 90%;
     width: 50%;
-
- 
 }
 
 #ps{
@@ -195,7 +194,7 @@ font-family: "Montserrate";
    
 }
 
-#modelo{
+.modelo{
     display: flex;
     width: 100%;
     background-color: white;
@@ -203,10 +202,12 @@ font-family: "Montserrate";
     font-family: 'Montserrate';
     height: 10%;
     border-radius: 0.7vw;
+    margin-bottom: 1vw;
 }
 
-#modelo_valores{
+.modelo_valores{
     margin-left: 2vw;
+
     width: 25%;
     display: flex;
     align-items: center;

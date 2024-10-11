@@ -20,8 +20,7 @@
     height: 10%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-   
+    align-items: center; 
     
 }
 
@@ -59,9 +58,9 @@ button:hover{
 .imagem_teste{
     display: inline;
     color: white;
-margin-top: -0,6vw;
-width: 15%;
-margin-left: 10%;
+    margin-top: -0,6vw;
+    width: 15%;
+    margin-left: 10%;
 
 
 }
@@ -96,8 +95,7 @@ margin-left: 10%;
 #link_user{
     color:white;
 }
-#header_config{
-    
+#header_config{   
 }
 
 #imagem{
@@ -165,6 +163,8 @@ body {
 #s2{
     margin-top: -1vw;
 }
+
+
 div {
     font-size: 0.6vw;
     color: white;
@@ -192,7 +192,6 @@ div {
 }
 
 #vh1 {
-
 }
 
 
@@ -303,6 +302,7 @@ label {
 
 #s1 {
     display: flex;
+    margin-bottom: 1vw;
     margin-top: -2vw;
 }
 
@@ -491,7 +491,7 @@ footer{
 }
 
 #corpo_pseudo_calc{
-    width: 30%;
+    width: 45%;
     display: flex;
     flex-direction: column;
     color: black;

@@ -5,20 +5,23 @@ const con = await conexao();
 export const getOrcamento = async () => {
     try {
         const sql = "SELECT * FROM orcamento";
-        const rows = await con.query(sql);
-        console.log("Consulta realizada com sucesso:", rows);
+        const [rows] = await con.query(sql);
+    
+        return rows
         
     } catch (error) {
         console.error("Erro no select orcamento", error);
         res.status(500).json({ error: "Erro ao obter as orcamento" });
     }
 };
-export const setOrcamento = async (Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs) => {
+                
+                    //orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa/
+export const setOrcamento = async (Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) => {
     const con = await conexao(); 
     try {
         const [result] = await con.execute(
-            'INSERT INTO Orcamento (Nome_cliente, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-            [Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs]
+            'INSERT INTO Orcamento (Nome_cliente, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa]
         );
         
         return result;
@@ -40,14 +43,14 @@ console.log("Orcamento deletada com sucesso", envio)
     }
 }
 
-export const procOrcamento = async ({ proc, valor, nome }) => {
+export const procOrcamento = async ({ valor, nome }) => {
     const con = await conexao();
    
     try {
-        let sql = `SELECT ${proc} FROM orcamento WHERE ${valor} = ?`;
+        let sql = `SELECT * FROM orcamento WHERE ${valor} = ?`;
 
         const [rows] = await con.query(sql,[nome]);
-        return rows[0][proc];
+        return rows;
     } catch (error) {
         console.error('Erro ao procurar empresa:', error.message,`valor:${valor}`);
         

@@ -395,16 +395,16 @@ app.get('/funcionario/mostrar_todos', async (req, res) => {
 
 //--------------------------------------------------Orçamento--------------------------------------------------\\
 
-app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa/:obs', async (req, res) => {
-    console.log("chegou aqui")
-    const { Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs } = req.params;
+app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa/', async (req, res) => {
+   
+    const { Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa} = req.params;
     
-    console.log(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs);
+    console.log(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa);
     
     try {
        
-        const resultado = await setOrcamento(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa, obs);
-        console.log(resultado)
+        const resultado = await setOrcamento(Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa);
+       
 
     } catch (error) {
        
@@ -415,8 +415,9 @@ app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entreg
 
 app.get('/orcamento/mostrarTodos', async(req,res) =>{
     try{
-        const response = getOrcamento();
-        res.json({data:response})
+        const response =await getOrcamento();       
+       // res.json({data:response})
+       res.status(200).json(response)
 
     }
     catch(err){
