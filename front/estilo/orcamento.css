@@ -70,38 +70,32 @@ button:hover{
 #nome_user{
     font-size: 1vw;
     color: white;
-}
-
-#nome_cliente{
-    height: 45%;
-    margin-bottom: 1.5vw;
-    width: 10vw;
-}
-
-#header_user{
+    }
+    
+    #header_user{
     display: flex;
     margin-right:-2vw;
-
-   }
-
-   #img_user{
+    }
+    
+    #img_user{
     display: inline;
     color: white;
-    margin-top: 0.8vw;
-    margin-right: -0.3vw;
+    margin-top: 1vw;
     width: 15%;
     height: 15%;
-   }
-#link_user{
+    }
+    
+    #link_user{
     color:white;
-}
-#header_config{   
-}
-
-#imagem{
-height: 1.5vw;
-width: 1.5vw;
-}
+    }
+    
+    #header_config{    
+    }
+    
+    #imagem{
+    height: 1.5vw;
+    width: 1.5vw;
+    }
 
 a{
 display: flex;
@@ -425,6 +419,7 @@ footer{
 #dates {
     display: flex;
     background-color: white;
+    margin-top: -1vw;
 }
 
 #data_inicio{
@@ -484,9 +479,7 @@ footer{
 #pseudo_calc{
     width: 100%;
     display: flex;
-    justify-content: right;
-    
-    
+    justify-content: right;    
    
 }
 
@@ -495,7 +488,6 @@ footer{
     display: flex;
     flex-direction: column;
     color: black;
-    margin-top: 1.8vw;
 }
 
 #barra{

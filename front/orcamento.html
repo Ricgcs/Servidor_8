@@ -229,7 +229,6 @@ function logOut(){
                     alert('Preencha todos os campos obrigatórios.');
                     return;
                 }
-                        //                         /orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa/
                                                     
                 const url = `http://localhost:3000/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${codEmprLimpo}`;
                 
@@ -261,33 +260,49 @@ function logOut(){
 
 
 
-                const gerarPDF = () => {
-               
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
+        const gerarPDF = () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-                
-                const nomeCliente = document.getElementById('nomes_de_cliente').value;
-                const descricao = document.getElementById('obs').value;
-                const quantidade = document.getElementById('quantidade').value;
-                const valor = document.getElementById('valor').value;
-                const desconto = document.getElementById('desconto').value;
-                const dataInicio = document.getElementById('data_inicio').value;
-                const dataEntrega = document.getElementById('data_entrega').value;
-                
+    const nomeCliente = document.getElementById('nomes_de_cliente').value;
+    const descricao = document.getElementById('obs').value;
+    const quantidade = document.getElementById('quantidade').value;
+    const valor = document.getElementById('valor').value;
+    const desconto = document.getElementById('desconto').value;
+    const dataInicio = document.getElementById('data_inicio').value;
+    const dataEntrega = document.getElementById('data_entrega').value;
 
-                
-                doc.text(`Cliente: ${nomeCliente}`, 10, 10);
-                doc.text(`Descrição: ${descricao}`, 10, 20);
-                doc.text(`Quantidade: ${quantidade}`, 10, 30);
-                doc.text(`Valor: ${valor}`, 10, 40);
-                doc.text(`Desconto: ${desconto}`, 10, 50);
-                doc.text(`Data Início: ${dataInicio}`, 10, 60);
-                doc.text(`Data Entrega: ${dataEntrega}`, 10, 70);               
+    const descricao_format = doc.splitTextToSize(descricao, 180);
 
-               
-                doc.save('orcamento.pdf');
-            };
+    const img = new Image();
+    img.src = '/front/img/logo_inteiro.png';
+
+    
+    doc.text("Inova Works", 88, 6);
+    doc.addImage(img, 'PNG', 85, 20, 40, 40);
+    doc.text("______________________________________________________________________________", 0, 60);
+
+
+    doc.text(`Nome do cliente: ${nomeCliente}`, 10, 70);
+    doc.text("______________________________________________________________________________", 0, 82);
+
+    
+    doc.text(`Quantidade: ${quantidade}`, 10, 90);
+    doc.text(`Valor: ${valor}`, 90, 90);
+    doc.text(`Desconto: ${desconto}`, 170, 90);
+    doc.text("______________________________________________________________________________", 0, 100);
+
+    
+    doc.text(`Data Início: ${dataInicio}`, 10, 109);
+    doc.text(`Data Entrega: ${dataEntrega}`, 170, 109);
+    doc.text("______________________________________________________________________________", 0, 120);
+
+    
+    doc.text("Descrição do orçamento:", 10, 127);
+    doc.text(descricao_format, 10, 135); 
+
+    doc.save('orcamento.pdf');
+};
 
             const buttonAdicionarProduto = document.getElementById('OBS_c');
             buttonAdicionarProduto.addEventListener('click', buttonAdicionarProduto);

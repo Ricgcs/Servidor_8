@@ -12,3 +12,6 @@ ok, planos e ideia:
 
 
 >>Bug ta tela de orçamento, resolver com gustavo o mr.Web
+>>Arrumar tela de produtos, adicionar obs ao banco
+>>Resolver problema com a hora na tela de orçamento
+>>Fazer a pesquisa da  tela de orçamentos q

@@ -94,7 +94,7 @@ function logOut(){
   
     const fetchProdutos = async () => {
       try {
-        const codEmpresa = localStorage.getItem('cod_empresa');
+        const codEmpresa = localStorage.getItem('cod');
         if (!codEmpresa) {
           console.error('cod_empresa não definido no localStorage.');
           return [];
@@ -147,7 +147,7 @@ function logOut(){
   
     const fetchdiv = async (valor) => {
       try {
-        const codEmpresa = localStorage.getItem('cod_empresa');
+        const codEmpresa = localStorage.getItem('cod');
         if (!codEmpresa) {
           throw new Error('Código da empresa não encontrado no localStorage.');
         }
