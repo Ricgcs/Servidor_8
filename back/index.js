@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import fileUpload from 'express-fileupload';
 import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao } from "../back/controle/usuario.js";
-import { setProd, getProd, procurarProd, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
+import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
 import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
@@ -169,16 +169,20 @@ app.post('/produto/:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:larg
 
 
 app.get('/produto/mostrar/:pesq', async (req, res) => {
-       
-         const pesq = req.params.pesq;
-         console.log(pesq)
+    const pesq = req.params.pesq;  // O código da empresa que você quer pesquisar
+    console.log('Código da empresa:', pesq);
+  
     try {
-        const resultado = await procurarProd(pesq);
-        res.status(200).json({ data: resultado});
+      const resultado = await procurarProd(pesq);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(404).json({ message: 'Nenhum produto encontrado.' });
+      }
     } catch (error) {
-        res.status(500).json({ message: "Erro ao procurar o produto", error: error.message });
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
     }
-});
+  });
 
 app.get('/produto/mostrar_nome/:nome/:cod', async (req, res) => {
     const nome = req.params.nome;
@@ -423,7 +427,21 @@ app.get('/orcamento/mostrarTodos', async(req,res) =>{
     catch(err){
         console.log("erro servidor, /orcamento/mostrarTodos")
     }
-})
+});
+
+app.get('/orcamento/mostrarProdutoNome/:cod_empresa/:cod_produto',async(req,res)=>{
+const empresa = req.params.cod_empresa;
+const produto = req.params.cod_produto;
+try{
+    const response = await procurarProdcod(empresa, produto)
+    console.log(response)
+    res.status(200).json(response)
+}
+catch(error){
+    console.log(error)
+}
+
+});
 
 //------------------------------------------------Servidor-----------------------------------------------------------\\
 app.listen(porta, host,  () => {

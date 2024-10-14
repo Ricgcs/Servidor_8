@@ -67,6 +67,23 @@ export const procurarProd = async (nome) => {
         throw error;
     }
 };
+
+export const procurarProdcod = async (Cod_empresa, Cod_produto) => {
+    const con = await conexao();
+    try {
+        const [rows] = await con.query(
+            `SELECt  * FROM Produto WHERE Empresa_Cod_empresa = ? && Cod_produto = ?`,
+            [Cod_empresa, Cod_produto]
+           
+        );
+
+        return rows;
+    } catch (error) {
+        console.error('Erro ao procurar produto:', error.message);
+        throw error;
+    }
+};
+
 export const atualizarProd = async(valor, elemento, ent, tipo)=>{
 
     try{

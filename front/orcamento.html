@@ -60,11 +60,18 @@
 
         <section id="s3">
             <div id="testando">
-                <input id="descricao" type="text" placeholder="Digite o código do produto">
+                <!-- <div id="cod_nome_cabecalho"> -->
+                <input list="cod_nome" id="cod" type="number" placeholder="Digite o código do produto">
+                
+            <!-- </div> -->
                 <input id="quantidade" type="number" min="1" placeholder="Digite a quantidade">
-                <input id="valor" type="number" step="0.01" min="0" placeholder="Digite o valor">
+                <input list="resultados" id="valor" type="number" step="0.01" min="0" placeholder="Digite o valor">
+                <datalist id="resultados">               
+                </datalist>
+
                 <input id="desconto" type="number" step="0.01" min="0" placeholder="Digite o desconto">
             </div>
+            <h1 id="cod_nome"></h1>
             <div id="dates">
                 <div id="data">
             <div id="datas1">
@@ -185,8 +192,45 @@ function logOut(){
     console.error("Erro ao buscar os usuários:", error); 
   }
     };
+
+    
+
+    const inputCod = document.getElementById('cod');
+
+    inputCod.addEventListener('input', async () => {
+    const inputValor = document.getElementById('valor');
+    const cod_empresa = localStorage.getItem('cod')
+    const cod_produto = inputCod.value; 
+    const valor = document.getElementById('resultados');
+    const cod_nome = document.getElementById('cod_nome');
+    const option_valor = document.createElement('option');
+    const option_cod = document.createElement('option');
+    if(inputCod){
+    try {
+        const response = await fetch(`http://localhost:3000/orcamento/mostrarProdutoNome/${cod_empresa}/${cod_produto}`);
+
+        const produto_value = await response.json();
+      
+       const valor_produto = produto_value[0].Valor;
+     //produto_value[0].Nome
+        cod_nome.textContent = inputCod? produto_value[0].Nome : ' ';
+        option_cod.text = valor_produto || 'Produto não encontrado'; 
+       
+        valor.appendChild(option_cod);             
+        
+    } 
+    
+    catch (error) {
+        console.error(error);
+    }}
+
+});
+
+    
     await nomes_cadastrado();
    
+
+
             const loadFromLocalStorage = () => {
                 const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
                 const nomeUserElement = document.getElementById('nome_user');
@@ -312,9 +356,8 @@ function logOut(){
 
 
 
-             const nomes_de_cliente = async()=>{
-                
-                const response = fetch('http://localhost:3000//usuario/mostrar', )
+             const nomes_de_cliente = async()=>{                
+                const response = fetch('http://localhost:3000//usuario/mostrar')
              }
 
         

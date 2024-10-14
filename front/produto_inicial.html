@@ -51,7 +51,7 @@
 <section id="s2">
     <img id="imagem_logo_cadastrado" src="/front/img/logo_inteiro.png" alt="logo">
 <h1 id="nome_cadastrado"></h1>
-<div><a href="/front/cadastro_produto.html"><button id="btn_footer">Adicionar produto</button></a></div>
+<div><a href="/front/cadastro_produto.html"><button id="btn_footer"><strong>Adicionar produto</strong></button></a></div>
 </section>
 
 
@@ -121,30 +121,34 @@ function logOut(){
   
     const replaceImageWithDiv = (produto) => {
   const imagemLogo = document.getElementById('imagem_logo_cadastrado');
-  
+
   let divProduto = document.getElementById('div_produto');
+  let divCabecalho = document.createElement('div');
+  let btn = document.createElement('button');
+  btn.classList = 'btn';
+  btn.textContent = "Editar produto";
+divCabecalho.classList.add('div_cabecalho');
+divCabecalho.innerHTML = `<h2 style="display:inline; margin:0;">${produto.Nome}<hr></h2>`;
+divCabecalho.appendChild(btn)
   if (!divProduto) {
     divProduto = document.createElement('div');
     divProduto.id = 'div_produto';
-    divProduto.style.fontSize = '24px'; 
-    divProduto.style.textAlign = 'center';
-    divProduto.style.padding = '20px';
-    divProduto.style.backgroundColor = '#f0f0f0'; 
-    divProduto.style.height = '70%';
-    divProduto.style.width = '60%';
+    divProduto.classList = "divP";
+  
     imagemLogo.parentNode.replaceChild(divProduto, imagemLogo);
   }
 
-  divProduto.innerHTML = '';
-  
-  divProduto.innerHTML += `<p><strong>Nome:</strong> ${produto.Nome}</p>`;
-  divProduto.innerHTML += '<p></p>'
-  divProduto.innerHTML += `<p><strong>Valor:</strong> ${produto.Valor}</p>`;
-  divProduto.innerHTML += `<p><strong>Quantidade:</strong> ${produto.Quantidade}</p>`;
-  divProduto.innerHTML += `<p><strong>Altura:</strong> ${produto.Altura}</p>`;
-  divProduto.innerHTML += `<p><strong>Largura:</strong> ${produto.Largura}</p>`;
+  // Limpa o conteúdo anterior
+  divProduto.innerHTML = ''; 
+  divProduto.appendChild(divCabecalho); // Adiciona o cabeçalho ao divProduto
+
+  // Adiciona as informações do produto
+  //divProduto.innerHTML += `<p>Preço:R$ ${produto.valor}</p>`;
+  divProduto.innerHTML += `<p>Quantidade no estoque: ${produto.Quantidade}Un</p>`;
+  divProduto.innerHTML += `Medidas:</p>`;
+  divProduto.innerHTML += `Altura:${produto.Altura} Mts</p>`;
+  divProduto.innerHTML += `<p>Largura: ${produto.largura} Mts</p>`;
 };
-  
     const fetchdiv = async (valor) => {
       try {
         const codEmpresa = localStorage.getItem('cod');
@@ -153,20 +157,22 @@ function logOut(){
         }
         const nome = encodeURIComponent(valor);
   
-        const response = await fetch(`/produto/mostrar_nome/${nome}/${codEmpresa}`);
+        const response = await fetch(`http://localhost:3000/produto/mostrar_nome/${nome}/${codEmpresa}`);
         
         if (!response.ok) {
           throw new Error('Erro na resposta da rede');
         }
   
         const resposta = await response.json();
-        const produtos = resposta.data;
+        const produtos = await resposta.data;
         console.log('Dados recebidos do backend:', produtos);
         console.log('Tipo de dados retornado:', Array.isArray(produtos) ? 'Array' : typeof produtos);
         console.log('Primeiro item do array:', produtos[0]);
   
         return produtos;
-      } catch (error) {
+      } 
+      
+      catch (error) {
         console.error('Erro ao buscar os dados:', error);
         return [];
       }
@@ -175,15 +181,22 @@ function logOut(){
     const displayProdutos = (produtos) => {
       const tamanho = produtos.length;
       const antigos_produtos = document.getElementById('produtos_cadastrados');
+      const texto = document.createElement('h1');
+      texto.classList = 'texto_div_btn'
       antigos_produtos.innerHTML = '';
   
       if (tamanho > 0) {
         produtos.forEach(produto => {
-          const button = document.createElement('button');
-          button.classList.add('pesquisa_div');
-          button.textContent = produto.Nome;
-  
-          // Adiciona um evento de clique ao botão
+         
+            const button = document.createElement('button');
+            button.classList.add('pesquisa_div'); 
+            const div = document.createElement('div');
+            div.classList.add('pesquisa_btn_div');
+            texto.textContent = produto.Nome;
+            button.appendChild(texto)
+            button.appendChild(div); 
+
+           
           button.addEventListener('click', async () => {
   const produtos = await fetchdiv(button.textContent);
   if (produtos.length > 0) {

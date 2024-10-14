@@ -226,19 +226,40 @@ text-decoration: none;
     display: flex;
 }
 
-.pesquisa_div{
+.pesquisa_div {
     border-radius: 0.5vw;
     color: rgb(255, 255, 255);
     background: rgba(56, 56, 56, 1);
     width: 100%;
-    height: 3.6vw;
+    height: 3.6vw; 
     display: flex;
     margin-top: 5%;
-    align-items: center;
-    padding: 2%;
+    flex-direction: column-reverse; 
+    align-items: flex-start;     
     font-size: 150%;
+    
 }
 
+.texto_div_btn{
+    font-size: 1.5vw;
+    margin-bottom: 1vw;
+    margin-left: 1vw;
+    font-family: 'Montserrat';
+  
+}
+
+.pesquisa_btn_div {
+    height: 2vw;
+    width: 100%;
+    background: rgba(215, 101, 11, 1);
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
+    
+        
+}
 #produtos_cadastrados{
     overflow:auto;
    display: flex;
@@ -265,4 +286,41 @@ footer{
     right: 10vw;
     bottom:5vw;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.div_cabecalho {
+    width: 100%;
+    height: auto; /* Ajusta a altura automaticamente */
+    display: flex;
+    justify-content: space-between;
+   
+}
+
+hr {
+    border: 1px solid #000;  
+    margin: 0;
+}
+
+.divP{
+    
+    font-Size:2vw; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding :20px;
+    background-Color:#f0f0f0; 
+    height :70%;
+    width :60%;
+    margin-top: 6vw;
+}
+
+.btn{
+    background: rgba(250, 90, 0, 1);
+    font-size: 1.2vw;
+    border-radius: 1vw;
+    padding: 0.1vw;
+    width: 20%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
