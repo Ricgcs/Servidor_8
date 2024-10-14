@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cargo` (
   `Salario` VARCHAR(45) NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_cargo`),
-  INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
   CONSTRAINT `fk_cargo_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `CPF` INT NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_cliente`),
-  INDEX `fk_Cliente_Empresa_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_Cliente_Empresa_idx` (`Empresa_Cod_empresa` ASC),
   CONSTRAINT `fk_Cliente_Empresa`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -81,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
   `cargo_Cod_cargo` INT NOT NULL,
   `senha` VARCHAR(35) NOT NULL,
   PRIMARY KEY (`Cod_funcionario`),
-  INDEX `fk_funcionario_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
-  INDEX `fk_funcionario_cargo1_idx` (`cargo_Cod_cargo` ASC) VISIBLE,
+  INDEX `fk_funcionario_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_funcionario_cargo1_idx` (`cargo_Cod_cargo` ASC),
   CONSTRAINT `fk_funcionario_cargo1`
     FOREIGN KEY (`cargo_Cod_cargo`)
     REFERENCES `mydb`.`cargo` (`Cod_cargo`),
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`imagem_cliente` (
   `mimetype` VARCHAR(100) NOT NULL,
   `tamanho` BIGINT NOT NULL,
   PRIMARY KEY (`Cliente_Cod_cliente`),
-  INDEX `fk_imagem_cliente_Cliente1_idx` (`Cliente_Cod_cliente` ASC) VISIBLE,
+  INDEX `fk_imagem_cliente_Cliente1_idx` (`Cliente_Cod_cliente` ASC),
   CONSTRAINT `fk_imagem_cliente_Cliente1`
     FOREIGN KEY (`Cliente_Cod_cliente`)
     REFERENCES `mydb`.`cliente` (`Cod_cliente`))
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`imagem_empresa` (
   `data` LONGBLOB NOT NULL,
   `mimetype` VARCHAR(100) NOT NULL,
   `tamanho` BIGINT NOT NULL,
-  INDEX `fk_imagem_cliente_copy1_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_imagem_cliente_copy1_Empresa1_idx` (`Empresa_Cod_empresa` ASC),
   CONSTRAINT `fk_imagem_cliente_copy1_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto` (
   `Produtocol` FLOAT NULL DEFAULT NULL,
   `largura` FLOAT NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`),
-  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC),
   CONSTRAINT `fk_Produto_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`imagem_produto` (
   `data` LONGBLOB NOT NULL,
   `mimetype` VARCHAR(100) NOT NULL,
   `tamanho` BIGINT NOT NULL,
-  INDEX `fk_imagem_empresa_copy1_Produto1_idx` (`Produto_Cod_produto` ASC) VISIBLE,
+  INDEX `fk_imagem_empresa_copy1_Produto1_idx` (`Produto_Cod_produto` ASC),
   CONSTRAINT `fk_imagem_empresa_copy1_Produto1`
     FOREIGN KEY (`Produto_Cod_produto`)
     REFERENCES `mydb`.`produto` (`Cod_produto`))
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`imagem_produto_copy1` (
   `data` LONGBLOB NOT NULL,
   `mimetype` VARCHAR(100) NOT NULL,
   `tamanho` BIGINT NOT NULL,
-  INDEX `fk_imagem_produto_copy1_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) VISIBLE,
+  INDEX `fk_imagem_produto_copy1_funcionario1_idx` (`funcionario_Cod_funcionario` ASC),
   CONSTRAINT `fk_imagem_produto_copy1_funcionario1`
     FOREIGN KEY (`funcionario_Cod_funcionario`)
     REFERENCES `mydb`.`funcionario` (`Cod_funcionario`))
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`orcamento` (
   `Data_entrega` DATE NULL DEFAULT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_orcamento`),
-  INDEX `fk_Orcamento_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_Orcamento_Empresa1_idx` (`Empresa_Cod_empresa` ASC),
   CONSTRAINT `fk_Orcamento_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))

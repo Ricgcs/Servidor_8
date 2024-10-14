@@ -14,12 +14,16 @@ export const getEmpresa = async () => {
     }
 };
 
-export const setEmpr = async (Nome, RS, Email, CNPJ, Senha) => {
+export const setEmpr = async (Nome, RS, Email, CNPJ, Senha, Imagen) => {
     const con = await conexao(); 
+    const img = Imagen ? Imagen.buffer : null;  // Corrija o tratamento da imagem
+
+    console.log("Imagem enviada:", Imagen);
+
     try {
         const [result] = await con.execute(
-            'INSERT INTO Empresa (Nome_fantasia, Razao_social, Email, CNPJ, Senha)VALUES (?, ?, ?, ?, ?)',
-            [Nome, RS, Email, CNPJ, Senha]
+            'INSERT INTO Empresa (Nome_fantasia, Razao_social, Email, CNPJ, Senha, Imagen) VALUES (?, ?, ?, ?, ?, ?)',
+            [Nome, RS, Email, CNPJ, Senha, img]  // Agora a imagem é o 6º parâmetro
         );
         return result;
     } catch (error) {
@@ -56,6 +60,13 @@ export const procurarEmp = async ({ proc, valor, nome }) => {
     }
 };
 
+export const pegarImg = async(cod) =>{
+    const con = await conexao();
+    let sql = "SELECT imagen FROM Empresa WHERE Cod_empresa = ?"
+    const [rows] = await con.query(sql,cod);
+    return rows[0]
+
+}
 
 
 export const atualizarEmp = async(valor, elemento, ent, tipo)=>{

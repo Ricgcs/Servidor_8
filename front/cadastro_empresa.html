@@ -32,12 +32,13 @@
             <img id="img_form" src="img/logo_inteiro.png" alt="logo">
             <h1 id="Nome_img">InovaWorks</h1>
 
-            <form>
+            <form id="form_empresa" enctype="multipart/form-data">
                 <input id="nome_fantasia" type="text" placeholder="Nome fantasia" name="Nome_fantasia" required>
                 <input id="razao_social" type="text" placeholder="Razão social" name="Razao_social" required>
                 <input id="email" type="email" placeholder="Email" name="Email" required>
                 <input id="cnpj" type="number" placeholder="CNPJ" name="CNPJ" required>
                 <input id="senha" type="password" placeholder="Senha" name="Senha" required>
+                <input id="imagem" type="file" placeholder="imagem" name="Imagem" required>
                 <button id="corpo_button_cadastrar" type="submit">Cadastrar</button>
             </form>
             <h6 id="cliente_add"><a href="cadastro_cliente.html">É um cliente? Cadastre-se aqui!</a></h6>
@@ -47,27 +48,32 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const button = document.getElementById('corpo_button_cadastrar');
+            const cod = document.getElementById('cnpj')
 
             button.addEventListener('click', async (event) => {
-                event.preventDefault(); 
+            event.preventDefault(); 
 
-                const Nome_fantasia = document.getElementById('nome_fantasia').value;
-                const Razao_social = document.getElementById('razao_social').value;
-                const Email = document.getElementById('email').value;
-                const cnpj = document.getElementById('cnpj').value;
-                const Senha = document.getElementById('senha').value;
+            const form = document.getElementById('form_empresa');
+            const formData = new FormData(form);  // FormData captura todos os dados, inclusive a imagem
 
-                if (!Nome_fantasia || !Razao_social || !Email || !cnpj || !Senha) {
-                    alert("Preencha todos os campos");
-                    return;
+            try {
+                const response = await fetch('http://localhost:3000/empresa', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await response.json();
+
+                if (data.result === 1) {
+                    alert('Cadastro realizado com sucesso!');
+                    window.location = "/front/Empresa/adm/empresa_login.html"
+                    window.localStorage.setItem(cod)
+                } else {
+                    alert('Erro ao realizar cadastro');
                 }
-             
-                    const response = await fetch(`http://localhost:3000/empresa/${Nome_fantasia}/${Razao_social}/${Email}/${cnpj}/${Senha}`);
-                    const data = await response.json();
-                    //console.log("cadastrado com sucesso");
-                    alert("Cadastro realizado com sucesso!");
-             
-            });
+            } catch (error) {
+                alert('Erro ao conectar com o servidor');
+            }
+        });
         });
     </script>
 </body>

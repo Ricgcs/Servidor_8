@@ -1,22 +1,23 @@
 import express from "express";
 import bodyParser from "body-parser";
-import fileUpload from 'express-fileupload';
 import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
-import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa } from "../back/controle/empresa.js";
+import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa, pegarImg } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { __dirname } from "../nomeArquivo.js";
 import path from 'path';
 import cors from 'cors';
-
+import multer from 'multer';
 
 const app = express();
 const host = "127.0.0.1";
 const porta = 3000;
 
-app.use(fileUpload());
+const storage = multer.memoryStorage();
+const upload  = multer({storage:storage});
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -231,24 +232,36 @@ app.get('/produto/mostrar_todos', async (req, res) => {
 });
 //-----------------------------------------------Empresa------------------------------------------------------------\\
 
-app.get('/empresa/:Nome_fantasia/:Razao_social/:Email/:CNPJ/:Senha', async (req, res) => {
-    console.log("chegou aqui")
-    let nome = req.params.Nome_fantasia;
-    let RS = req.params.Razao_social;
-    let email = req.params.Email;
-    let CNPJ = Number(req.params.CNPJ);
-    let Senha = req.params.Senha;
-
-console.log({nome,RS,email,CNPJ,Senha});
+app.get('/imagem/:cod', async (req, res) => {
+    const cod = req.params.cod;
     try {
-        const resultado = await setEmpr(nome, RS, email, CNPJ, Senha);
-        console.log("recebi");
+        const response = await pegarImg(cod); 
+        if (response && response.imagen) {
+
+            res.send(response.imagen); 
+        } else {
+            res.status(404).send('Imagem não encontrada.');
+        }
+    } catch (error) {
+        res.status(500).send('Erro ao buscar a imagem.');
+    }
+});
+
+app.post('/empresa', upload.single('Imagem'), async (req, res) => {
+    let nome = req.body.Nome_fantasia;
+    let RS = req.body.Razao_social;
+    let email = req.body.Email;
+    let CNPJ = Number(req.body.CNPJ);
+    let Senha = req.body.Senha;
+    const Imagem = req.file; 
+
+    console.log({ nome, RS, email, CNPJ, Senha, Imagem });
+
+    try {
+        const resultado = await setEmpr(nome, RS, email, CNPJ, Senha, Imagem);
         return res.status(200).json({ result: 1 });
-        
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar a empresa", error: error.message });
-        console.log("recebi, mas deu erro")
-
     }
 });
 

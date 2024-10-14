@@ -60,7 +60,7 @@ function logOut(){
    
    
       const loadFromLocalStorage = () => {
-        const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
+        const nomeUser = localStorage.getItem('nome') || 'Usuário';
   
        
         const nomeUserElement = document.getElementById('nome_user');
@@ -74,14 +74,9 @@ function logOut(){
           imgUserElement.src = "/front/img/imagem_user.png";
         }
       };
-  
-      // Salva os dados da URL no localStorage
-      saveToLocalStorage();
       
-      // Carrega os dados do localStorage e atualiza o DOM
+      
       loadFromLocalStorage();
-  
-      // Manipulação de evento para o input de observação
       const obsInput = document.getElementById('obs');
       if (obsInput) {
         obsInput.addEventListener('input', function () {
