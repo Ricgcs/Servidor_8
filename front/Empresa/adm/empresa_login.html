@@ -10,15 +10,11 @@
     <img id="logo-empresa" alt="Logo da Empresa - Nome da Empresa" src="placeholder.png"> <!-- Placeholder para a imagem -->
 
     <script>
-        // Recupera o código do localStorage
+
         const cod = localStorage.getItem('cod');
         
-        // // Função para buscar a imagem
+
         const fetchImage = async () => {
-            // if (!cod) {
-            //     console.error('Código não encontrado no localStorage.');
-            //     return;
-            // }
 
             try {
                 const response = await fetch(`http://localhost:3000/imagem/3`);

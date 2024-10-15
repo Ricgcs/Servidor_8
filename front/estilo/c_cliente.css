@@ -213,5 +213,7 @@ input::placeholder{
     color: rgba(255, 255, 255, 1);
 }
 
-   
-
+#preview_img{
+    height: 8vw;
+    width: 10vw;
+}

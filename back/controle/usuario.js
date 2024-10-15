@@ -52,13 +52,14 @@ export const getUser = async (res) => {
         }
     }
 };
-export const setUser = async ({ nome, email, senha, cpf, cod }) => {
+export const setUser = async ({ nome, email, senha, cpf, cod, img }) => {
     const con = await conexao();
-
+    console.log(cod)
     try {
+        const imagem = img.buffer;
         const [result] = await con.execute(
-            'INSERT INTO cliente (Nome, Email, Senha, CPF, Empresa_Cod_empresa) VALUES (?, ?, ?, ?, ?)',
-            [nome, email, senha, cpf, cod]
+            'INSERT INTO cliente (Nome, Email, Senha, CPF, Empresa_Cod_empresa, imagen ) VALUES (?, ?, ?, ?, ?, ?)',
+            [nome, email, senha, cpf, cod, imagem]
         );
         return result;
     } catch (error) {

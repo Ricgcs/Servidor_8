@@ -31,13 +31,15 @@
         <div id="corpo">
             <img id="img_form" src="img/logo_inteiro.png" alt="logo">
             <h1 id="Nome_img">InovaWorks</h1>
+            <h1 id="local_imagem"></h1>
 
-            <form id="formCliente">
-                <input id="formCadastro" type="text" placeholder="Nome" name="nome" required>
+            <form id="formCliente" enctype="multipart/form-data">
+                <input id="nome" type="text" placeholder="Nome" name="nome" required>
                 <input id="email" type="email" placeholder="Email" name="email" required>
                 <input id="senha" type="password" placeholder="Senha" name="senha" required>
                 <input id="cpf" type="number" placeholder="CPF" name="cpf" required>
-                <input id="cod" type="number" placeholder="Cod_empresa" name="codigo_empresa" required>
+                <input id="cod" type="number" placeholder="Cod_empresa" name="cod" required>
+                <input id="imagem" type="file" placeholder="Arquivo" name="imagem">
                 <button id="corpo_button_cadastrar">Cadastrar</button>
             </form>
 
@@ -49,19 +51,53 @@
         const form = document.getElementById('formCliente');
         const button = document.getElementById("corpo_button_cadastrar");
    
+
+        const img = document.getElementById('imagem');
+            img.addEventListener('change', event=>{
+                const pre = document.getElementById('preview_img');
+                if(pre){
+                    pre.remove();
+                }
+            const reader = new FileReader;
+
+            reader.onload = function (event)
+            {
+            const form = document.getElementById('local_imagem');
+            const imagem = document.createElement('img');
+            //imagem.backGround = '#000';
+            imagem.id = 'preview_img';
+            imagem.src = event.target.result;
+            form.appendChild(imagem);
+            console.log("imagem selecionada");
+            }
+            reader.readAsDataURL(img.files[0]);
+            });
+            
+
+
+
         button.addEventListener("click", async(event) => {
             event.preventDefault(); 
             
 
-            const nome = document.getElementById("formCadastro").value;
+            const nome = document.getElementById("nome").value;
             const email = document.getElementById("email").value;
             const senha = document.getElementById("senha").value;
             const cod = document.getElementById("cod").value;
             const cpf = document.getElementById("cpf").value;
+            const img = document.getElementById('imagem');
+
+            const form = document.getElementById('formCliente');    
+            const formData = new FormData(form)
+            
+
             
             try {
-                //                                                 /usuario/: nome/  :email/:  senha/:  cpf/:  cod
-                const response = await fetch(`http://localhost:3000/usuario/${nome}/${email}/${senha}/${cpf}/${cod}`);
+            
+                const response = await fetch(`http://localhost:3000/usuario`, {
+    method: 'POST',
+    body: formData,
+});
 
                 if (response.ok) {
                     alert("Cliente cadastrado com sucesso");

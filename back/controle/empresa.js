@@ -16,15 +16,14 @@ export const getEmpresa = async () => {
 
 export const setEmpr = async (Nome, RS, Email, CNPJ, Senha, Imagen) => {
     const con = await conexao(); 
-    const img = Imagen ? Imagen.buffer : null;  // Corrija o tratamento da imagem
+    const img = Imagen ? Imagen.buffer : null;  
 
     console.log("Imagem enviada:", Imagen);
 
     try {
         const [result] = await con.execute(
             'INSERT INTO Empresa (Nome_fantasia, Razao_social, Email, CNPJ, Senha, Imagen) VALUES (?, ?, ?, ?, ?, ?)',
-            [Nome, RS, Email, CNPJ, Senha, img]  // Agora a imagem é o 6º parâmetro
-        );
+            [Nome, RS, Email, CNPJ, Senha, img] );
         return result;
     } catch (error) {
         console.error('Erro ao inserir a empresa:', error.message);

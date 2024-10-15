@@ -41,20 +41,27 @@ app.get('/teste', async (req, res) => {
     }
 });
 
-app.get('/usuario/:nome/:email/:senha/:cpf/:cod', async (req, res) => {
-    const nome = req.params.nome;
-    const email = req.params.email;
-    const senha = req.params.senha;
-    const cpf = req.params.cpf;
-    const cod = Number(req.params.cod);
+app.post('/usuario',upload.single('imagem'), async (req, res) => {
+    console.log('teste funciona')
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const senha = req.body.senha;
+    const cpf = req.body.cpf;
+    const img = req.file;
+    const cod = Number(req.body.cod);
+    console.log('teste funciona 2')
     
-    let userData = { nome, email, senha, cpf, cod };
+    let userData = { nome, email, senha, cpf, cod, img };
      
     try {
+    console.log('teste funciona 3')
+
         await setUser(userData);
         console.log(userData)
         res.status(200).send('Usuário criado com sucesso!');
     } catch (error) {
+    console.log('teste funciona 4')
+
         console.error('Erro ao criar usuário:', error);
         res.status(500).send('Erro ao criar usuário.');
     }
