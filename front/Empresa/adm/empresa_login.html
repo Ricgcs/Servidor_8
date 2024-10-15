@@ -14,23 +14,20 @@
         const cod = localStorage.getItem('cod');
         
         // // Função para buscar a imagem
-         const fetchImage = async () => {
-        //     if (!cod) {
-        //         console.error('Código não encontrado no localStorage.');
-        //         return;
-        //     }
+        const fetchImage = async () => {
+            // if (!cod) {
+            //     console.error('Código não encontrado no localStorage.');
+            //     return;
+            // }
 
             try {
                 const response = await fetch(`http://localhost:3000/imagem/3`);
               
                 if (response.ok) {
-                    
-                    const data = await response.blob;
-                   console.log(data)
-                    const base64Image = data.imagen;
+                    const blob = await response.blob();
                     
                     const imgElement = document.getElementById('logo-empresa');
-                    imgElement.src = `data:image/jpeg;base64,${base64Image}`;
+                    imgElement.src = URL.createObjectURL(blob);
                 } else {
                     console.error('Erro ao buscar a imagem.');
                 }

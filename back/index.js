@@ -238,6 +238,7 @@ app.get('/imagem/:cod', async (req, res) => {
         const response = await pegarImg(cod); 
         if (response && response.imagen) {
 
+            res.set('Content-type','image/jpg');
             res.send(response.imagen); 
         } else {
             res.status(404).send('Imagem não encontrada.');
