@@ -98,18 +98,8 @@ function logOut(){
     window.location.href = "./login_cliente.html"
    }
    
-      const saveToLocalStorage = () => {
-        const params = new URLSearchParams(window.location.search);
-        const nomeUser = params.get('nome') || '';
-        const empresaUser = params.get('cod_empresa') || ''; 
-     
+   
 
-        if (nomeUser.trim() !== '') { 
-          localStorage.setItem('nome_user', nomeUser);
-          localStorage.setItem('cod_empresa', empresaUser);
-        }
-      };
-  
         const loadFromLocalStorage = () => {
         const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
   
@@ -121,14 +111,32 @@ function logOut(){
         }
   
         const imgUserElement = document.getElementById('img_user');
-        if (imgUserElement) {
-          imgUserElement.src = "/front/img/imagem_user.png";
-        }
+async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    imgUserElement.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
       };
   
       
       loadFromLocalStorage();
   
+
+     
      
       const obsInput = document.getElementById('obs');
       if (obsInput) {

@@ -92,7 +92,7 @@
  
    
             const loadFromLocalStorage = () => {
-                const nomeUser = localStorage.getItem('nome_user') || 'Usuário';
+                const nomeUser = localStorage.getItem('nome') || 'Usuário';
                 const nomeUserElement = document.getElementById('nome_user');
                 if (nomeUserElement) {
                     const primeiroNome = nomeUser.split(" ")[0];
@@ -100,13 +100,32 @@
                 }
 
                 const imgUserElement = document.getElementById('img_user');
-                if (imgUserElement) {
-                    imgUserElement.src = "/front/img/imagem_user.png";
-                }
+async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    imgUserElement.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
             };
 
             loadFromLocalStorage();
 
+
+
+            
             const obsInput = document.getElementById('obs');
             if (obsInput) {
                 obsInput.addEventListener('input', function () {

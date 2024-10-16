@@ -98,13 +98,31 @@ console.log("valor deletado com sucesso", envio)
     }
 }
 
-export const procurar = async (what,valor,nome ) => {
+export const procurar = async (what) => {
+    const con = await conexao();    
+
+    try
+    {
+       
+        const [rows] = await con.query(`SELECT ${what.what} FROM cliente WHERE ${what.valor} = ?`,[what.nome]);   
+   
+        return rows[0];
+        
+    } 
+            catch (error) {
+                console.error('Erro ao procurar usuário:', error.message)
+           
+            throw error;
+        }
+};
+
+export const procurarImagem_nome_cod = async (nome,cod) => {
     const con = await conexao();    
     try
     {
         const [rows] = await con.query(
-            `SELECT ${what} FROM cliente WHERE ${valor} = ?`,
-        [nome]
+            `SELECT imagen FROM cliente WHERE Nome = ? && Empresa_Cod_empresa = ?`,
+        [nome,cod]
     );       
         return rows;
     } 
@@ -113,8 +131,6 @@ export const procurar = async (what,valor,nome ) => {
             throw error;
         }
 };
-
-
 
 export const qtd_clientes = async () => {
     const con = await conexao();

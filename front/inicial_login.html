@@ -24,7 +24,7 @@
 <img id="img_user" src="" alt="imagem_usuario">
 <div id="header_config">
 <h1 id="nome_user"></h1>
-<a id="link_user" href="#">configuração</a>
+<a id="link_user" href="/front/config.html">configuração</a>
 </div>
 
 
@@ -74,7 +74,7 @@ function logOut(){
 }
 
 
- document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', async () => {
  
 
   const loadFromLocalStorage = () => {
@@ -100,13 +100,33 @@ function logOut(){
       nomeUserElement.innerHTML = `${primeiroNome}`;
     }
  
+
+
+  
     const imgUserElement = document.getElementById('img_user');
- 
-    if (imgUserElement) {
-      imgUserElement.src = "/front/img/imagem_user.png";
+async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
     }
-  };
- 
+  } catch (error) {
+    imgUserElement.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
+}
+
+
+
   loadFromLocalStorage();
  
   const fetchUsuarios = async () => {
@@ -135,8 +155,29 @@ function logOut(){
  
         const img = document.createElement('img');
         img.classList.add('imagem_teste');
-        img.src = usuario.foto ? "/front/img/imagem_user.png" : "/front/img/imagem_user.png"; 
-        img.alt = usuario.Nome || "Imagem do usuário";
+
+
+        async function loadImage(){
+  try {
+    const nomeUser = usuario.Nome;
+    const codUser = usuario.Empresa_Cod_empresa;
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     img.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    img.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage()
  
         const nomeCliente = document.createElement('p');
         const nomeFiltrado = usuario.Nome.split(" ")[0];

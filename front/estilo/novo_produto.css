@@ -70,17 +70,18 @@ margin-left: 10%;
     }
     
     #header_user{
-    display: flex;
-    margin-right:-2vw;
-    }
-    
-    #img_user{
-    display: inline;
-    color: white;
-    margin-top: -0,6vw;
-    width: 15%;
-    height: 15%;
-    }
+        display: flex;
+        margin-right: 2vw;
+        }
+        
+        #img_user{
+        display: inline;
+        color: white;
+        margin-top: 0.8vw;
+        width: 3vw;
+        height: 3vw;
+        border-radius: 2vw;
+        }
     
     #link_user{
     color:white;

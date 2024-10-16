@@ -1,6 +1,6 @@
-import express from "express";
+import express, { response } from "express";
 import bodyParser from "body-parser";
-import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao } from "../back/controle/usuario.js";
+import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
 import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa, pegarImg } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
@@ -40,6 +40,44 @@ app.get('/teste', async (req, res) => {
         res.status(500).send('Erro ao validar usuário.');
     }
 });
+
+
+// app.get('/imagem/:cod', async (req, res) => {
+//     const cod = req.params.cod;
+//     try {
+//         const response = await pegarImg(cod); 
+//         if (response && response.imagen) {
+
+//             res.set('Content-type','image/jpg');
+//             res.send(response.imagen); 
+//         } else {
+//             res.status(404).send('Imagem não encontrada.');
+//         }
+//     } catch (error) {
+//         res.status(500).send('Erro ao buscar a imagem.');
+//     }
+// });
+
+app.get('/usuario/imagem/:nome/:cod', async (req, res) => {
+    const nome = req.params.nome;
+    const cod = req.params.cod;
+    
+    try {
+    
+      const response = await procurarImagem_nome_cod(nome, cod);    
+      
+    
+        res.set('Content-type', 'image/jpg');
+        res.send(response[0].imagen); 
+     
+    } catch (error) {
+      console.log("Erro ao buscar a imagem:", error);
+      console.log("Cod:", cod);
+      console.log("Nome:", nome);
+      
+      res.status(500).send('Erro ao processar a solicitação');
+    }
+  });
 
 app.post('/usuario',upload.single('imagem'), async (req, res) => {
     console.log('teste funciona')
@@ -102,6 +140,24 @@ console.log(valor, nome)
     }
 });
 
+
+app.get('/usuario/mostrar/:what/:valor/:nome', async (req, res) => {
+    const what= req.params.what; 
+    const valor = req.params.valor; 
+    const nome = req.params.nome; 
+
+    try {
+       
+        const resultado = await procurar({ what, valor, nome});
+        const name = resultado.Nome;
+    
+  
+        res.status(200).send(name);
+    } catch (error) {
+
+        res.status(500).json({ message: "Erro ao procurar usuário no servidor", error: error.message });
+    }
+});
 
 app.post('/usuario/atualizar', async (req, res) => {
     const { valor, nome, tipo, ent} = req.body; 

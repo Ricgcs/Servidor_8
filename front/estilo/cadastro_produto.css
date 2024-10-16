@@ -67,20 +67,23 @@ margin-left: 10%;
 #nome_user{
     font-size: 1vw;
     color: white;
+    font-family:Arial, Helvetica, sans-serif;
     }
     
     #header_user{
-    display: flex;
-    margin-right:-2vw;
-    }
-    
-    #img_user{
-    display: inline;
-    color: white;
-    margin-top: 1vw;
-    width: 15%;
-    height: 15%;
-    }
+        display: flex;
+        margin-right: 1.5vw;
+        }
+        
+        #img_user{
+        display: inline;
+        color: white;
+        margin-top: 0.7vw;
+        
+        width: 3vw;
+        height: 3vw;
+        border-radius: 2vw;
+        }
     
     #link_user{
     color:white;

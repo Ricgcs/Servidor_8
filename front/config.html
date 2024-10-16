@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/front/img/logo_inteiro.png">
-    <link rel="stylesheet" href="/front/estilo/produtos.css">
+    <link rel="stylesheet" href="/front/estilo/config.css">
     <title id="titulo"></title>
 </head>
 <body>
@@ -13,7 +13,7 @@
 <h1 id="header_inovaworks">InovaWorks</h1>
 
 <div id="header_links">
-<a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"><img src="/front/img/" alt="">Home</button></a>
+<a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"><img src="/front/img/" alt=""> Home</button></a>
 <a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
 <a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
 <a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
@@ -29,41 +29,24 @@
 </div>
 </header>
 <div id="corpo">
-<div id="items">
-    <div id="ps">
-<input type="text" placeholder="Digite o código do orçamento..." id="i1">
-
-<input type="text" placeholder="Novo orçamento" id="i2">
-    </div>
-<div id="regua">
-    <h1 id="campos">Data</h1>
-    <h1 id="campos">Código</h1>
-    <h1 id="campos">Situação</h1>
-    <h1 id="campos">Fornecedor</h1>
-
-</div>
-
-<div id="valores">
-<div id="modelo">
-    <h1 id="modelo_valores">02/04/2024</h1>
-    <h1 id="modelo_valores">NF_000001</h1>
-    <h1 id="modelo_valores">PAGO</h1>
-    <h1 id="modelo_valores">Bosch</h1>
-   
-</div>
-</div>
+<div id = 'inicio'>
+  <img id="user_alter_image">
+  <div id="nome"></div>
+  <div id="nome_empresa"></div>
 </div>
 
 </div>
 
-<script type="text/javascript">
+<script>
 function logOut(){  
   if(confirm("Tem certeza que deseja sair da conta?")){
     localStorage.clear();
     window.location.href = './login_cliente.html';
   } 
 }
-    document.addEventListener('DOMContentLoaded', () => {
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
      
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
@@ -74,18 +57,19 @@ function logOut(){
     window.location.href = "./login_cliente.html"
    }
    
-     
-     const loadFromLocalStorage = () => {
-     
-       const nomeUser = localStorage.getItem('nome') || 'Usuário';
+   
+      const loadFromLocalStorage = () => {
+        const nomeUser = localStorage.getItem('nome') || 'Usuário';
+  
        
-      
         const nomeUserElement = document.getElementById('nome_user');
-       if (nomeUserElement) {
-         const primeiroNome = nomeUser.split(" ")[0];
-         nomeUserElement.innerHTML = `${primeiroNome}`;
-       }
-       const imgUserElement = document.getElementById('img_user');
+        if (nomeUserElement) {
+          const primeiroNome = nomeUser.split(" ")[0];
+          nomeUserElement.textContent = `${primeiroNome}`; 
+        }
+  
+        const imgUserElement = document.getElementById('img_user');
+        const imgAlt = document.getElementById('user_alter_image')
 async function loadImage(){
   try {
     const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
@@ -93,6 +77,7 @@ async function loadImage(){
     const blob = await response.blob();
     if (response.ok) {
      imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+     imgAlt.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
    
       console.log('funcionou');
     } else {
@@ -105,13 +90,31 @@ async function loadImage(){
   }  
 }
 loadImage();
-     };
+      };
+      
+      
+      loadFromLocalStorage();
+
+      
+      const obsInput = document.getElementById('obs');
+      if (obsInput) {
+        obsInput.addEventListener('input', function () {
+          obsInput.scrollTop = obsInput.scrollHeight;
+        });
+      }
+
+  const nome_cadastrado = document.getElementById('nome');
+try{
+  const nomeUser = localStorage.getItem('nome');
+const response = await fetch(`http://localhost:3000/usuario/mostrar/Nome/Nome/${nomeUser}`);
+console.log(response.Data)
+
+}
+catch(err){
+console.log(err)
+}
     });
-     
-     loadFromLocalStorage();
-
-
-    </script>
+  </script>
 
 </body>
 </html>
