@@ -152,7 +152,9 @@ app.get('/usuario/mostrar/:what/:valor/:nome', async (req, res) => {
         const name = resultado.Nome;
     
   
-        res.status(200).send(name);
+        //res.status(200).json({data:name});
+        res.status(200).send({data:name});
+     
     } catch (error) {
 
         res.status(500).json({ message: "Erro ao procurar usuário no servidor", error: error.message });

@@ -23,16 +23,25 @@
 <div id="header_user">
 <img id="img_user" src="" alt="imagem_usuario">
 <div id="header_config">
+
 <h1 id="nome_user"></h1>
 <a id="link_user" href="#">configuração</a>
 </div>
 </div>
 </header>
+
 <div id="corpo">
 <div id = 'inicio'>
+<div id="img">
   <img id="user_alter_image">
-  <div id="nome"></div>
+</div>
+
+<div id="texto">
+  <h1 id = "nome"></h1>
   <div id="nome_empresa"></div>
+</div>
+
+  
 </div>
 
 </div>
@@ -107,7 +116,9 @@ loadImage();
 try{
   const nomeUser = localStorage.getItem('nome');
 const response = await fetch(`http://localhost:3000/usuario/mostrar/Nome/Nome/${nomeUser}`);
-console.log(response.Data)
+const data = await response.json();
+const nome = data.data;
+nome_cadastrado.textContent = nome;
 
 }
 catch(err){
