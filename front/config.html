@@ -31,11 +31,16 @@
 </header>
 
 <div id="corpo">
-<div id = 'inicio'>
-<div id="img">
-  <img id="user_alter_image">
+
+<div id="comeco">
+  <div id="img">
+    <img id="user_alter_image">    
+  </div>
+  <h4 id="texto_img_user_config">Presione para trocar a imagem</h4>
 </div>
 
+
+<div id = 'inicio'>
 <div id="texto">
   <h1 id = "nome"></h1>
   <div id="nome_empresa"></div>
@@ -78,7 +83,19 @@ function logOut(){
         }
   
         const imgUserElement = document.getElementById('img_user');
-        const imgAlt = document.getElementById('user_alter_image')
+        const imgAlt = document.getElementById('user_alter_image');
+
+imgAlt.addEventListener('mouseover',()=>{
+
+const trocar_imagem = document.createElement('img');
+trocar_imagem.src = '/front/img/trocar_imagem.png'
+trocar_imagem.id = 'trocarImagem';
+
+imgAlt.appendChild(trocar_imagem);
+});
+
+
+
 async function loadImage(){
   try {
     const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/front/estilo/novo_produto.css">
+    <link rel="stylesheet" href="/front/estilo/compras.css">
     <link rel="icon" href="/front/img/logo_inteiro.png">
     <title>Nova_compra</title>
 </head>
@@ -61,7 +61,7 @@
                 <input type="text" placeholder="Digite aqui" id="v2in"/>
                 <input type="text" placeholder="Digite aqui" id="v2in"/>
             </div>
-
+            <button id="Adicionar_itens"><a id="vai">+Adicionar itens</a></button>
         </section>
         <div id="geral">
             <div id="ultl">
@@ -91,21 +91,21 @@
             <div id="obs-wrapper">
                 <textarea id="obs" placeholder="Digite aqui..."></textarea>
             </div>
-            <a id="vai" href="/cadastro_produto.html"><button id="OBS_a">+Adicionar produto</button></a>
-            <a id="vai"><button id="OBS_b">+Adicionar compra</button></a>
+            <button id="OBS_a"><a id="vai">+Adicionar itens</a></button>
+            <button id="OBS_b"><a id="vai">+Adicionar itens</a></button>
         </footer>
     </div>
-</body>
-<script>
-function logOut(){  
+    <script>
+ function logOut(){  
   if(confirm("Tem certeza que deseja sair da conta?")){
     localStorage.clear();
     window.location.href = './login_cliente.html';
   } 
 }
 
+
         document.addEventListener('DOMContentLoaded', () => {
-          
+
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cod') ;
@@ -115,6 +115,8 @@ function logOut(){
     window.location.href = "./login_cliente.html"
    }
    
+   
+          
           const loadFromLocalStorage = () => {
             const nomeUser = localStorage.getItem('nome') || 'Usuário';
       
@@ -122,7 +124,7 @@ function logOut(){
             const nomeUserElement = document.getElementById('nome_user');
             if (nomeUserElement) {
               const primeiroNome = nomeUser.split(" ")[0];
-              nomeUserElement.textContent = `${primeiroNome}`; 
+              nomeUserElement.textContent = `${primeiroNome}`;
             }
       
             const imgUserElement = document.getElementById('img_user');
@@ -145,14 +147,12 @@ async function loadImage(){
   }  
 }
 loadImage();
-          };
-      
+          };         
+          loadFromLocalStorage();  
           
-         
-          loadFromLocalStorage();
-      
           
-         
+          
+          
           const obsInput = document.getElementById('obs');
           if (obsInput) {
             obsInput.addEventListener('input', function () {
@@ -160,11 +160,8 @@ loadImage();
             });
           }
         });
+      </script>
       
-    const obsInput = document.getElementById('obs');
+</body>
 
-    obsInput.addEventListener('input', function () {
-        obsInput.scrollTop = obsInput.scrollHeight;
-    });
-</script>
 </html>

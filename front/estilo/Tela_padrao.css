@@ -70,10 +70,6 @@ margin-left: 10%;
 
 }
 
-#nome{
-    color: white;
-}
-
 #nome_user{
     font-size: 1vw;
     color: white;
@@ -114,11 +110,11 @@ text-decoration: none;
 #corpo{
     height: 100%;
     width: 100%;
-    display: flex;   
-    flex-direction: column;
-    overflow: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
 }
-
 
 #testea{
     height: 20%;
@@ -130,33 +126,5 @@ text-decoration: none;
   height: 20%;
   width: 25%;
   margin-left: 8vw;
- }
-
- #inicio{
-    padding: 2vw;
- }
-
- #texto{
  
- }
-
- #comeco{
-display: flex;
-justify-content: center;
-align-items: center;
-    width: 100%;
-    height: 20vw;
-flex-direction: column;
- }
-
- #user_alter_image{
-    width: 14vw;
-    height: 14vw;
-    border-radius: 8vw;
-    
-}
-
-
-#texto_img_user_config{
-    color: white;
 }

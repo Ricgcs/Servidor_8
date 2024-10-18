@@ -24,9 +24,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`empresa` (
   `Email` VARCHAR(120) NOT NULL,
   `CNPJ` INT NOT NULL,
   `Senha` VARCHAR(45) NOT NULL,
+  `Imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cargo` (
   `Salario` VARCHAR(45) NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_cargo`),
-  INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_cargo_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -57,13 +58,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `Senha` VARCHAR(20) NOT NULL,
   `CPF` INT NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
+  `imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_cliente`),
-  INDEX `fk_Cliente_Empresa_idx` (`Empresa_Cod_empresa` ASC),
+  INDEX `fk_Cliente_Empresa_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Cliente_Empresa`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -81,105 +83,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
   `cargo_Cod_cargo` INT NOT NULL,
   `senha` VARCHAR(35) NOT NULL,
   PRIMARY KEY (`Cod_funcionario`),
-  INDEX `fk_funcionario_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
-  INDEX `fk_funcionario_cargo1_idx` (`cargo_Cod_cargo` ASC),
+  INDEX `fk_funcionario_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_funcionario_cargo1_idx` (`cargo_Cod_cargo` ASC) VISIBLE,
   CONSTRAINT `fk_funcionario_cargo1`
     FOREIGN KEY (`cargo_Cod_cargo`)
     REFERENCES `mydb`.`cargo` (`Cod_cargo`),
   CONSTRAINT `fk_funcionario_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`imagem_cliente`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`imagem_cliente` (
-  `Cliente_Cod_cliente` INT NOT NULL,
-  `nome` VARCHAR(225) NOT NULL,
-  `data` LONGBLOB NOT NULL,
-  `mimetype` VARCHAR(100) NOT NULL,
-  `tamanho` BIGINT NOT NULL,
-  PRIMARY KEY (`Cliente_Cod_cliente`),
-  INDEX `fk_imagem_cliente_Cliente1_idx` (`Cliente_Cod_cliente` ASC),
-  CONSTRAINT `fk_imagem_cliente_Cliente1`
-    FOREIGN KEY (`Cliente_Cod_cliente`)
-    REFERENCES `mydb`.`cliente` (`Cod_cliente`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`imagem_empresa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`imagem_empresa` (
-  `Empresa_Cod_empresa` INT NOT NULL,
-  `nome` VARCHAR(225) NOT NULL,
-  `data` LONGBLOB NOT NULL,
-  `mimetype` VARCHAR(100) NOT NULL,
-  `tamanho` BIGINT NOT NULL,
-  INDEX `fk_imagem_cliente_copy1_Empresa1_idx` (`Empresa_Cod_empresa` ASC),
-  CONSTRAINT `fk_imagem_cliente_copy1_Empresa1`
-    FOREIGN KEY (`Empresa_Cod_empresa`)
-    REFERENCES `mydb`.`empresa` (`Cod_empresa`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`produto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`produto` (
-  `Cod_produto` INT NOT NULL AUTO_INCREMENT,
-  `Nome` VARCHAR(120) NOT NULL,
-  `valor` FLOAT NULL DEFAULT NULL,
-  `Quantidade` INT NOT NULL,
-  `Empresa_Cod_empresa` INT NOT NULL,
-  `Altura` FLOAT NULL DEFAULT NULL,
-  `Produtocol` FLOAT NULL DEFAULT NULL,
-  `largura` FLOAT NULL DEFAULT NULL,
-  PRIMARY KEY (`Cod_produto`),
-  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC),
-  CONSTRAINT `fk_Produto_Empresa1`
-    FOREIGN KEY (`Empresa_Cod_empresa`)
-    REFERENCES `mydb`.`empresa` (`Cod_empresa`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`imagem_produto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`imagem_produto` (
-  `Produto_Cod_produto` INT NOT NULL,
-  `nome` VARCHAR(225) NOT NULL,
-  `data` LONGBLOB NOT NULL,
-  `mimetype` VARCHAR(100) NOT NULL,
-  `tamanho` BIGINT NOT NULL,
-  INDEX `fk_imagem_empresa_copy1_Produto1_idx` (`Produto_Cod_produto` ASC),
-  CONSTRAINT `fk_imagem_empresa_copy1_Produto1`
-    FOREIGN KEY (`Produto_Cod_produto`)
-    REFERENCES `mydb`.`produto` (`Cod_produto`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`imagem_produto_copy1`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`imagem_produto_copy1` (
-  `funcionario_Cod_funcionario` INT NOT NULL,
-  `nome` VARCHAR(225) NOT NULL,
-  `data` LONGBLOB NOT NULL,
-  `mimetype` VARCHAR(100) NOT NULL,
-  `tamanho` BIGINT NOT NULL,
-  INDEX `fk_imagem_produto_copy1_funcionario1_idx` (`funcionario_Cod_funcionario` ASC),
-  CONSTRAINT `fk_imagem_produto_copy1_funcionario1`
-    FOREIGN KEY (`funcionario_Cod_funcionario`)
-    REFERENCES `mydb`.`funcionario` (`Cod_funcionario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -197,12 +108,34 @@ CREATE TABLE IF NOT EXISTS `mydb`.`orcamento` (
   `Data_entrega` DATE NULL DEFAULT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_orcamento`),
-  INDEX `fk_Orcamento_Empresa1_idx` (`Empresa_Cod_empresa` ASC),
+  INDEX `fk_Orcamento_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Orcamento_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 18
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`produto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`produto` (
+  `Cod_produto` INT NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(120) NOT NULL,
+  `valor` FLOAT NULL DEFAULT NULL,
+  `Quantidade` INT NOT NULL,
+  `Empresa_Cod_empresa` INT NOT NULL,
+  `Altura` FLOAT NULL DEFAULT NULL,
+  `Produtocol` FLOAT NULL DEFAULT NULL,
+  `largura` FLOAT NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_produto`),
+  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  CONSTRAINT `fk_Produto_Empresa1`
+    FOREIGN KEY (`Empresa_Cod_empresa`)
+    REFERENCES `mydb`.`empresa` (`Cod_empresa`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
