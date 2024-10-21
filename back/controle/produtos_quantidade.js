@@ -2,9 +2,9 @@ import { conexao } from "../conexao.js";
 
 const con = await conexao();
 
-export const getProd = async () => {
+export const getProd_quantidade = async () => {
     try {
-        const sql = "SELECT * FROM Produto";
+        const sql = "SELECT * FROM Produto_quantidade";
         const [rows] = await con.query(sql); 
         console.log("Consulta realizada com sucesso:", rows);
         
@@ -13,9 +13,9 @@ export const getProd = async () => {
         res.status(500).json({ error: "Erro ao obter os produtos" });
     }
 };
-export const getnomeprod = async ({ nome, cod }) => {
+export const getnomeprod_quantidade = async ({ nome, cod }) => {
     try {
-        const sql = "SELECT * FROM Produto WHERE Nome = ? AND Empresa_Cod_empresa = ?";
+        const sql = "SELECT * FROM Produto_quantidade WHERE Nome = ? AND Empresa_Cod_empresa = ?";
         const [rows] = await con.query(sql, [nome, cod]);
         return rows;
     } catch (error) {
@@ -24,25 +24,25 @@ export const getnomeprod = async ({ nome, cod }) => {
     }
 };
 
-export const setProd = async ({nome, valor, quantidade,cod_empr, altura, comprimento, largura, a, c, l}) => {
+export const setProd_quantidade = async ({nome, valor, quantidade,cod_empr, altura, comprimento, largura, a, l, c}) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO Produto (Nome, Valor, Quantidade, Empresa_Cod_empresa, Altura, Comprimento ,Largura, si_altura, si_comprimento, si_largura)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [nome, valor, quantidade, cod_empr, altura, comprimento, largura, a, c, l ]
+            'INSERT INTO Produto_quantidade (Nome, Valor, Quantidade, Empresa_Cod_empresa, Altura, comprimento ,Largura, si_altura, si_largura, si_comprimento)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [nome, valor, quantidade, cod_empr, altura, comprimento, largura, a, l, c ]
         );
         return result;
     } catch (error) {
         console.error('Erro ao inserir produto:', error.message);
-        console.log(nome, valor, quantidade,cod_empr, altura, comprimento, largura, a, l, c)
+        console.log(nome, valor, quantidade,cod_empr, altura, comprimento, largura)
         throw error;
     }
 };
 
 
-export const delProd = async(valor,nome)=>{
+export const delProd_quantidade = async(valor,nome)=>{
     try{
-const sql = `DELETE FROM Produto WHERE ${valor} = ?`
+const sql = `DELETE FROM Produto_quantidade WHERE ${valor} = ?`
 const envio = await con.query(sql,nome)
 console.log("Produto deletado com sucesso", envio)
     }
@@ -52,11 +52,11 @@ console.log("Produto deletado com sucesso", envio)
     }
 }
 
-export const procurarProd = async (nome) => {
+export const procurarProd_quantidade = async (nome) => {
     const con = await conexao();
     try {
         const [rows] = await con.query(
-            `SELECT * FROM Produto WHERE Empresa_Cod_empresa = ?`,
+            `SELECT * FROM Produto_quantidade WHERE Empresa_Cod_empresa = ?`,
             [nome]
            
         );
@@ -68,11 +68,11 @@ export const procurarProd = async (nome) => {
     }
 };
 
-export const procurarProdcod = async (Cod_empresa, Cod_produto) => {
+export const procurarProdcod_quantidade = async (Cod_empresa, Cod_produto) => {
     const con = await conexao();
     try {
         const [rows] = await con.query(
-            `SELECt  * FROM Produto WHERE Empresa_Cod_empresa = ? && Cod_produto = ?`,
+            `SELECt  * FROM Produto_quantidade WHERE Empresa_Cod_empresa = ? && Cod_produto = ?`,
             [Cod_empresa, Cod_produto]
            
         );
@@ -84,10 +84,10 @@ export const procurarProdcod = async (Cod_empresa, Cod_produto) => {
     }
 };
 
-export const atualizarProd = async(valor, elemento, ent, tipo)=>{
+export const atualizarProd_quantidade = async(valor, elemento, ent, tipo)=>{
 
     try{
-const sql = `UPDATE Produto SET ${valor} = ? where ${elemento} = ?`;
+const sql = `UPDATE Produto_quantidade SET ${valor} = ? where ${elemento} = ?`;
 const upp = await con.query(sql,[ent, tipo]);
 console.log("Produto atualizado",upp);
     }

@@ -6,10 +6,12 @@ import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa, pegarImg } fro
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
+import { setProd_quantidade } from "./controle/produtos_quantidade.js";
 import { __dirname } from "../nomeArquivo.js";
 import path from 'path';
 import cors from 'cors';
 import multer from 'multer';
+
 
 const app = express();
 const host = "127.0.0.1";
@@ -221,16 +223,18 @@ app.get('/usuario/mostrar_todos', async (req, res) => {
 });
 
 //-----------------------------------------------Produto---------------------------------------------------------\\
-app.post('/produto/:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura', async (req, res) => {
-    const { nome, valor, quantidade, cod_empr, altura, comprimento, largura } = req.params; 
+app.post('/produto/:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura/:a/:c/:l', async (req, res) => {
+    const { nome, valor, quantidade, cod_empr, altura, comprimento, largura,a,c,l } = req.params; 
 
     try {
-        const resultado = await setProd({ nome, valor, quantidade, cod_empr, altura, comprimento, largura });
+        const resultado = await setProd({ nome, valor, quantidade, cod_empr, altura, comprimento, largura, a, c, l});
         res.status(201).json({ message: "Produto criado com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar o produto", error: error.message });
     }
 });
+
+
 
 
 
@@ -295,6 +299,84 @@ console.log(valor, nome)
 app.get('/produto/mostrar_todos', async (req, res) => {
  getProd()
 });
+
+
+//-----------------------------------------------Produto_quantidade---------------------------------------------------------\\
+
+// app.post('/produto_quantidade/:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura/:a/:l/:c', async (req, res) => {
+//     const { nome, valor, quantidade, cod_empr, altura, comprimento, largura,a,l,c } = req.params; 
+
+//     try {
+//         const resultado = await setProd({ nome, valor, quantidade, cod_empr, altura, comprimento, largura,a,l,c });
+//         res.status(201).json({ message: "Produto criado com sucesso", data: resultado });
+//     } catch (error) {
+//         res.status(500).json({ message: "Erro ao criar o produto", error: error.message });
+//     }
+// });
+
+
+
+// app.get('/produto/mostrar/:pesq', async (req, res) => {
+//     const pesq = req.params.pesq;  // O código da empresa que você quer pesquisar
+//     console.log('Código da empresa:', pesq);
+  
+//     try {
+//       const resultado = await procurarProd(pesq);
+//       if (resultado.length > 0) {
+//         res.status(200).json({ data: resultado });
+//       } else {
+//         res.status(404).json({ message: 'Nenhum produto encontrado.' });
+//       }
+//     } catch (error) {
+//       res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+//     }
+//   });
+
+// app.get('/produto/mostrar_nome/:nome/:cod', async (req, res) => {
+//     const nome = req.params.nome;
+//     const cod = req.params.cod;
+//     console.log(`Nome: ${nome}, Código: ${cod}`);
+    
+//     try {
+//         const resultado = await getnomeprod({ nome, cod });
+//         res.status(200).json({ data: resultado });
+//         console.log("Resultado:", resultado);
+//         return resultado;
+//     } catch (error) {
+//         res.status(500).json({ message: "Erro ao procurar o produto", error: error.message });
+//         console.error("Erro:", error.message);
+//     }
+// });
+
+// app.post('/produto/atualizar', async (req, res) => {
+//     const { valor, nome, tipo, ent} = req.body; 
+// console.log(valor, nome,tipo, ent)
+//     try {
+//         const resultado = await atualizarProd(valor, nome, tipo, ent)
+//         res.status(200).json({ data: resultado });
+//         console.log(resultado)
+//     } catch (error) {
+//         res.status(500).json({ message: "Erro ao atualizar o produto", error: error.message });
+//         console.log("erro")
+
+//     }
+// });
+
+// app.post('/produto/deletar', async (req, res) => {
+//     const { valor, nome} = req.body; 
+// console.log(valor, nome)
+//     try {
+//         const resultado = await delProd(valor, nome)
+//         res.status(200).json({ data: resultado });
+//     } catch (error) {
+//         res.status(500).json({ message: "Erro ao deletar o produto", error: error.message });
+//     }
+// });
+
+
+// app.get('/produto/mostrar_todos', async (req, res) => {
+//  getProd()
+// });
 //-----------------------------------------------Empresa------------------------------------------------------------\\
 
 app.get('/imagem/:cod', async (req, res) => {

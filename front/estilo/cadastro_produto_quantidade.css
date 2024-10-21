@@ -248,20 +248,8 @@ hr {
 }
 #s3{
     margin-left: -0.59vw;
-    }
 
-#s3_input{
-display: flex;
-height: 40%;
-background-color: transparent;
 }
-
-select {
-    background: rgba(231, 231, 231, 1);
-    border: none !important;
-    font-family: 'Montserrate';
-}
-
 #Adicionar_itens {
     background-color: #DA4200;
     border-radius: 0.6vw;

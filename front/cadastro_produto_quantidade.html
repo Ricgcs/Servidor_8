@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/front/estilo/cadastro_produto.css">
+    <link rel="stylesheet" href="/front/estilo/cadastro_produto_quantidade.css">
     <link rel="icon" href="/front/img/logo_inteiro.png">
     <title>Novo produto</title>
 </head>
@@ -30,8 +30,8 @@
 
     <div id="Formulario">
         <div id="cabecalho_formulario">
-        <h1 id="cabecalho_formulario_texto">Novo produto: medidas</h1>
-        <a href="/front/cadastro_produto_quantidade.html"><button id="cabecalho_button_formulario">Quantidade</button></a>
+        <h1 id="cabecalho_formulario_texto">Novo produto: quantidade</h1>
+        <a href="/front/cadastro_produto.html"><button id="cabecalho_button_formulario">Medidas</button></a>
         </div>
         <section id="s1">
             <div id="s1b">
@@ -48,53 +48,7 @@
             </div>
         </section>
 
-        <section id="s2">
-            <div id="valores">
-                <h1 id="vh1">Altura</h1>
-                <h1 id="vh2">Profundidade</h1>
-                <h1 id="vh3">Largura</h1>
-            </div>
-        </section>
-
-        <section id="s3">
-            <div id="v2">
-
-<div id="s3_input">
-                <input id="altura" type="text" placeholder="Digite a altura">
-            <select name="" id="a">
-                <optgroup label="Medida">
-                    <option value="Mts">Mts</option>
-                    <option value="cms">cm</option>
-                    <option value="mms">mms</option>
-                </optgroup>
-            </select>
-</div>
-
-
-<div id="s3_input">
-                <input id="comprimento" type="text" placeholder="Digite o comprimento">
-            <select name="" id="c">
-                <optgroup label="Medida">
-                    <option value="Mts">Mts</option>
-                    <option value="cms">cm</option>
-                    <option value="mms">mms</option>
-                </optgroup>
-            </select>
-</div>
-
-<div id="s3_input">
-                <input id="largura" type="text" placeholder="Digite a largura">
-            <select name="" id="l">
-                    <optgroup label="Medida">
-                    <option value="Mts">Mts</option>
-                    <option value="cms">cm</option>
-                    <option value="mms">mms</option>
-                </optgroup>
-            </select>
-</div>         
-
-            </div>
-        </section>
+    
 
         <footer>
             <label id="lab1">Observações</label>
@@ -171,24 +125,20 @@ loadImage();
             const button = document.getElementById('OBS_a');
 
             button.addEventListener('click', async () => {
-                
+              
                 const nome = document.getElementById('nome_produto').value;
                 const quantidade = document.getElementById('quantidade').value;
                 const valor = document.getElementById('valor').value;
                 const altura = document.getElementById('altura').value;
-                const comprimento = document.getElementById('comprimento').value;
+                const profundidade = document.getElementById('profundidade').value;
                 const largura = document.getElementById('largura').value;
                 const cod_empr = localStorage.getItem('cod');
-                const a = document.getElementById('a').value;
-                const c = document.getElementById('c').value;
-                const l = document.getElementById('l').value;
-                
-              
-                           if(!nome || ! quantidade || !valor || !altura || !comprimento || !largura || !cod_empr){
+
+                           if(!nome || ! quantidade || !valor || !altura || !profundidade || !largura || !cod_empr){
                             alert("Por favor, insira todos os dados");
                            }       
                              else{           
-                const url = `http://localhost:3000/produto/${nome}/${valor}/${quantidade}/${cod_empr}/${altura}/${comprimento}/${largura}/${a}/${c}/${l}`;
+                const url = `http://localhost:3000/produto/${nome}/${valor}/${quantidade}/${cod_empr}/${altura}/${profundidade}/${largura}`;
 
                 try {
                     const response = await fetch(url, {
