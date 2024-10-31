@@ -10,7 +10,25 @@
 <body>
 <header id = "cabecalho">
 
-<h1 id="header_inovaworks">InovaWorks</h1>
+
+
+<h1 id="header_inovaworks">
+  <div id="menu" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="fecharMenu()">×</a>
+    <a href="#">Home</a>
+    <a href="#">Sobre</a>
+    <a href="#">Serviços</a>
+    <a href="#">Contato</a>
+  </div>
+
+  <div id="main-content">
+    <button class="open-btn" onclick="abrirMenu()">☰</button>
+  </div>
+  InovaWorks
+</h1>
+
+
+
 
 <div id="header_links">
 <a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"> Home</button></a>
@@ -73,7 +91,16 @@ function logOut(){
   } 
 }
 
+ 
+function abrirMenu() {
+      document.getElementById("menu").classList.add("menu-aberto");
+      document.getElementById("main-content").classList.add("conteudo-movido");
+    }
 
+    function fecharMenu() {
+      document.getElementById("menu").classList.remove("menu-aberto");
+      document.getElementById("main-content").classList.remove("conteudo-movido");
+    }
  document.addEventListener('DOMContentLoaded', async () => {
  
 
@@ -124,11 +151,9 @@ async function loadImage(){
 }
 loadImage();
 }
-
-
-
   loadFromLocalStorage();
- 
+
+
   const fetchUsuarios = async () => {
     try {
       const response = await fetch('http://localhost:3000/usuario/mostrar_todos');

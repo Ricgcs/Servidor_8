@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Lateral</title>
+  <style>
+    /* Estilos gerais */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Menu lateral */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #575757;
+    }
+
+    .sidebar .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 36px;
+    }
+
+    /* Conteúdo principal */
+    #main-content {
+      flex: 1;
+      padding: 20px;
+      margin-left: 0;
+      transition: margin-left 0.5s;
+    }
+
+    .open-btn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin-bottom: 20px;
+    }
+
+    /* Menu aberto */
+    .menu-aberto {
+      width: 250px;
+    }
+
+    .conteudo-movido {
+      margin-left: 250px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu lateral -->
+  <div id="menu" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="fecharMenu()">×</a>
+    <a href="#">Home</a>
+    <a href="#">Sobre</a>
+    <a href="#">Serviços</a>
+    <a href="#">Contato</a>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div id="main-content">
+    <button class="open-btn" onclick="abrirMenu()">☰</button>
+  </div>
+
+  <script>
+    function abrirMenu() {
+      document.getElementById("menu").classList.add("menu-aberto");
+      document.getElementById("main-content").classList.add("conteudo-movido");
+    }
+
+    function fecharMenu() {
+      document.getElementById("menu").classList.remove("menu-aberto");
+      document.getElementById("main-content").classList.remove("conteudo-movido");
+    }
+  </script>
+</body>
+</html>
