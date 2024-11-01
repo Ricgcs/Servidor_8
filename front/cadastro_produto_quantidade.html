@@ -110,9 +110,6 @@ loadImage();
             };
 
             loadFromLocalStorage();
-
-
-
             
             const obsInput = document.getElementById('obs');
             if (obsInput) {
@@ -125,20 +122,25 @@ loadImage();
             const button = document.getElementById('OBS_a');
 
             button.addEventListener('click', async () => {
-              
+              ///produto/:cod_empr/:nome/:valor/:quantidade/:obs
+
+              const dataAtual = new Date();
+const data = dataAtual.toISOString().split('T')[0]; // Extrai apenas a parte 'YYYY-MM-DD'
+
+console.log(data); // Exemplo: 2024-11-01
+
                 const nome = document.getElementById('nome_produto').value;
                 const quantidade = document.getElementById('quantidade').value;
                 const valor = document.getElementById('valor').value;
-                const altura = document.getElementById('altura').value;
-                const profundidade = document.getElementById('profundidade').value;
-                const largura = document.getElementById('largura').value;
+                const obs = document.getElementById('obs').value;
+                
                 const cod_empr = localStorage.getItem('cod');
 
-                           if(!nome || ! quantidade || !valor || !altura || !profundidade || !largura || !cod_empr){
+                           if(!nome || ! quantidade || !valor || !obs || !cod_empr){
                             alert("Por favor, insira todos os dados");
                            }       
                              else{           
-                const url = `http://localhost:3000/produto/${nome}/${valor}/${quantidade}/${cod_empr}/${altura}/${profundidade}/${largura}`;
+                const url = `http://localhost:3000/produto_quantidade/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`;
 
                 try {
                     const response = await fetch(url, {

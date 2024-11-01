@@ -106,8 +106,7 @@ async function loadImage(){
 }
 loadImage();
     };        
-    loadFromLocalStorage();
-  
+    loadFromLocalStorage(); 
 
     
     const fetchProdutos = async () => {
@@ -196,6 +195,142 @@ divCabecalho.appendChild(btn)
       }
     };
   
+
+
+
+
+
+
+
+    const fetchProdutos_quantidade = async () => {
+      try {
+        const codEmpresa = localStorage.getItem('cod');
+        if (!codEmpresa) {
+          console.error('cod_empresa não definido no localStorage.');
+          return [];
+        }
+  
+        const response = await fetch(`http://localhost:3000/produto_quantidade/mostrar/${codEmpresa}`);
+        
+        if (!response.ok) {
+          throw new Error('Erro na resposta da rede');
+        }
+  
+        const resposta = await response.json();
+        const produtos = resposta.data;
+        console.log('Dados recebidos do backend:', produtos);
+        console.log('Tipo de dados retornado:', Array.isArray(produtos) ? 'Array' : typeof produtos);
+        console.log('Primeiro item do array:', produtos[0]);
+  
+        return produtos;
+      } catch (error) {
+        console.error('Erro ao buscar os dados:', error);
+        return [];
+      }
+    };
+  
+    const replaceImageWithDiv_quantidade = (produto) => {
+  const imagemLogo = document.getElementById('imagem_logo_cadastrado');
+
+  let divProduto = document.getElementById('div_produto');
+  let divCabecalho = document.createElement('div');
+  let btn = document.createElement('button');
+  btn.classList = 'btn';
+  btn.textContent = "Editar produto";
+divCabecalho.classList.add('div_cabecalho');
+divCabecalho.innerHTML = `<h2 style="display:inline; margin:0;">${produto.Nome}<hr></h2>`;
+divCabecalho.appendChild(btn)
+  if (!divProduto) {
+    divProduto = document.createElement('div');
+    divProduto.id = 'div_produto';
+    divProduto.classList = "divP";
+  
+    imagemLogo.parentNode.replaceChild(divProduto, imagemLogo);
+  }
+
+  divProduto.innerHTML = ''; 
+  divProduto.appendChild(divCabecalho); 
+  divProduto.innerHTML += `<p>Quantidade no estoque: ${produto.Quantidade}Un</p>`;
+  divProduto.innerHTML += `Dados:</p>`;
+  divProduto.innerHTML += `Valor:${produto.valor} Mts</p>`;
+  divProduto.innerHTML += `<p>Obs: ${produto.obs} Mts</p>`;
+  divProduto.innerHTML += `<p>Data: ${produto.data} Mts</p>`;
+};
+    const fetchdiv_quantidade = async (valor) => {
+      try {
+        const codEmpresa = localStorage.getItem('cod');
+        if (!codEmpresa) {
+          throw new Error('Código da empresa não encontrado no localStorage.');
+        }
+        const nome = encodeURIComponent(valor);
+  
+        const response = await fetch(`http://localhost:3000/produto_quantidade/mostrar_nome/${nome}/${codEmpresa}`);
+        
+        if (!response.ok) {
+          throw new Error('Erro na resposta da rede');
+        }
+  
+        const resposta = await response.json();
+        const produtos = await resposta.data;
+        console.log('Dados recebidos do backend:', produtos);
+        console.log('Tipo de dados retornado:', Array.isArray(produtos) ? 'Array' : typeof produtos);
+        console.log('Primeiro item do array:', produtos[0]);
+  
+        return produtos;
+      } 
+      
+      catch (error) {
+        console.error('Erro ao buscar os dados:', error);
+        return [];
+      }
+    };
+
+    const displayProdutos_quantidade = (produtos) => {
+      const tamanho = produtos.length;
+      const antigos_produtos = document.getElementById('produtos_cadastrados');
+      const texto = document.createElement('h1');
+      texto.classList = 'texto_div_btn'
+      antigos_produtos.innerHTML = '';
+  
+      if (tamanho > 0) {
+        produtos.forEach(produto => {
+         
+            const button = document.createElement('button');
+            button.classList.add('pesquisa_div'); 
+            const div = document.createElement('div');
+            div.classList.add('pesquisa_btn_div');
+            texto.textContent = produto.Nome;
+            button.appendChild(texto)
+            button.appendChild(div); 
+
+           
+          button.addEventListener('click', async () => {
+  const produtos = await fetchdiv(button.textContent);
+  if (produtos.length > 0) {
+    replaceImageWithDiv(produtos[0]); // Passa o objeto produto inteiro
+  }
+});
+  
+          antigos_produtos.appendChild(button);
+        });
+      } else {
+        const mensagem = document.createElement('p');
+        mensagem.textContent = 'Nenhum produto cadastrado';
+        antigos_produtos.appendChild(mensagem);
+      }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
     const displayProdutos = (produtos) => {
       const tamanho = produtos.length;
       const antigos_produtos = document.getElementById('produtos_cadastrados');
@@ -231,9 +366,17 @@ divCabecalho.appendChild(btn)
       }
     };
   
-    fetchProdutos().then(displayProdutos).catch(error => {
-      console.error('Erro ao executar fetchProdutos:', error);
-    });
+    fetchProdutos_quantidade()
+  .then(result => {
+    displayProdutos_quantidade(result);
+    return result; // Retorna algo para continuar a cadeia
+  })
+  .then(() => fetchProdutos())
+  .then(displayProdutos)
+  .catch(error => {
+    console.error('Erro ao executar uma das funções:', error);
+  });
+
   
   });
   </script>

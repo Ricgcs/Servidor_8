@@ -24,17 +24,17 @@ export const getnomeprod_quantidade = async ({ nome, cod }) => {
     }
 };
 
-export const setProd_quantidade = async ({nome, valor, quantidade,cod_empr, altura, comprimento, largura, a, l, c}) => {
+export const setProd_quantidade = async ({cod_empr, nome, valor, quantidade, data, obs}) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO Produto_quantidade (Nome, Valor, Quantidade, Empresa_Cod_empresa, Altura, comprimento ,Largura, si_altura, si_largura, si_comprimento)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [nome, valor, quantidade, cod_empr, altura, comprimento, largura, a, l, c ]
+            'INSERT INTO Produto_quantidade ( Empresa_Cod_empresa,Nome, Valor, Quantidade, Data, observacao)VALUES (?, ?, ?, ?, ?, ?)',
+            [ cod_empr, nome, valor, quantidade, data, obs ]
         );
         return result;
     } catch (error) {
         console.error('Erro ao inserir produto:', error.message);
-        console.log(nome, valor, quantidade,cod_empr, altura, comprimento, largura)
+        console.log(nome, valor, quantidade,cod_empr,data)
         throw error;
     }
 };
