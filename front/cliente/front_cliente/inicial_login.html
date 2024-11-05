@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/front/img/logo_inteiro.png">
+    <link rel="stylesheet" href="/front/estilo/inicial_login.css">
+    <title id="titulo"></title>
+</head>
+<body>
+<header id = "cabecalho">
+
+
+
+<h1 id="header_inovaworks">
+  <div id="menu" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="fecharMenu()">×</a>
+    <a href="#">Home</a>
+    <a href="#">Sobre</a>
+    <a href="#">Serviços</a>
+    <a href="#">Contato</a>
+  </div>
+
+  <div id="main-content">
+    <button class="open-btn" onclick="abrirMenu()">☰</button>
+  </div>
+  InovaWorks
+</h1>
+
+
+
+
+<div id="header_links">
+<a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"> Home</button></a>
+<a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+<a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+<a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+<a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
+</div>
+
+<div id="header_user">
+<img id="img_user" src="" alt="imagem_usuario">
+<div id="header_config">
+<h1 id="nome_user"></h1>
+<a id="link_user" href="/front/config.html">configuração</a>
+</div>
+
+
+</a>
+</div>
+
+</header>
+<div id="centro">
+<section id="s1">
+<h1 id="texto_s1"> Outras opções</h1>
+<a href="#"><button id="fluxo_caixa_button"><h1 id="texto_fluxo_caixa">Fluxo de caixa</h1><img id="imagem_canto_logado" src="/front/img/acoes.png" alt="fluxo_caixa"></button></a>
+
+<a href="/front/index.html"><button id="servico_button">Serviços<img id="imagem_canto_logado" src="/front/img/martelinho.png" alt="Serviços"></button></a>
+
+<a href="/front/avaliacao.html"><button id="entrega_button">Avaliação<img id="imagem_canto_logado" src="/front/img/frete.png" alt="Avaliação"></button></a>
+
+<a href="/front/orcamentos_inicial.html"><button id="orcamento_button">Orçamentos<img id="imagem_canto_logado" src="/front/img/calc.png" alt="Orçamentos"></button></a>
+
+<a href="/front/estoque.html"><button id="estoque_button">Estoque<img id="imagem_canto_logado" src="/front/img/armazen.png" alt="estoque"></button></a>
+
+</section>
+
+
+<section id="s2">
+    <img id="imagem_logo_cadastrado" src="/front/img/logo_inteiro.png" alt="logo">
+<h1 id="nome_cadastrado"></h1>
+</section>
+
+
+<section id="s3">
+    <h1 id="texto_cliente">Anotações</h1>
+    <div id="ultimos_clientes">
+
+
+    </div>
+    <a href="/front/agenda.html" id="link_agenda"><button id="agenda_button">agenda</button></a>
+</section>
+</div>
+
+
+<script type="text/javascript">
+function logOut(){  
+  if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
+    window.location.href = './login_cliente.html';
+  } 
+}
+
+ 
+function abrirMenu() {
+      document.getElementById("menu").classList.add("menu-aberto");
+      document.getElementById("main-content").classList.add("conteudo-movido");
+    }
+
+    function fecharMenu() {
+      document.getElementById("menu").classList.remove("menu-aberto");
+      document.getElementById("main-content").classList.remove("conteudo-movido");
+    }
+ document.addEventListener('DOMContentLoaded', async () => {
+ 
+
+  const loadFromLocalStorage = () => {
+    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const senhaUser = localStorage.getItem('senha');
+    const codUser = localStorage.getItem('cod') ;
+ 
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "./login_cliente.html"
+   }
+   
+    const nomeCadastroElement = document.getElementById('nome_cadastrado');
+ 
+    if (nomeCadastroElement) {
+      nomeCadastroElement.innerHTML = `Bem-vindo ${nomeUser}`;
+    }
+ 
+    const nomeUserElement = document.getElementById('nome_user');
+ 
+    if (nomeUserElement) {
+      const primeiroNome = nomeUser.split(" ")[0];
+      nomeUserElement.innerHTML = `${primeiroNome}`;
+    }
+ 
+
+
+  
+    const imgUserElement = document.getElementById('img_user');
+async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    imgUserElement.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
+}
+  loadFromLocalStorage();
+
+
+  const fetchUsuarios = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/usuario/mostrar_todos');
+      if (!response.ok) {
+        throw new Error('Erro na resposta da rede');
+      }
+      const usuarios = await response.json();
+      console.log('Dados recebidos do backend:', usuarios);
+      return usuarios;
+    } catch (error) {
+      console.error('Erro ao buscar os dados:', error);
+    }
+  };
+ 
+  const displayUsuarios = (usuarios) => {
+    const tamanho = usuarios.length;
+    const antigos_usuarios = document.getElementById('ultimos_clientes');
+    antigos_usuarios.innerHTML = '';
+ 
+    if (tamanho > 0) {
+      usuarios.forEach(usuario => {
+        const div = document.createElement('div');
+        div.classList.add('clientes');
+ 
+        const img = document.createElement('img');
+        img.classList.add('imagem_teste');
+
+
+        async function loadImage(){
+  try {
+    const nomeUser = usuario.Nome;
+    const codUser = usuario.Empresa_Cod_empresa;
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     img.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    img.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage()
+ 
+        const nomeCliente = document.createElement('p');
+        const nomeFiltrado = usuario.Nome.split(" ")[0];
+        nomeCliente.textContent = nomeFiltrado;
+ 
+        div.appendChild(nomeCliente);
+        div.appendChild(img);
+        antigos_usuarios.appendChild(div);
+      });
+    } else {
+      const mensagem = document.createElement('p');
+      mensagem.textContent = 'Nenhum usuário cadastrado';
+      antigos_usuarios.appendChild(mensagem);
+    }
+  };
+
+  
+  fetchUsuarios().then(displayUsuarios).catch(error => {
+    console.error('Erro ao executar fetchUsuarios:', error);
+  });
+});
+
+  </script>
+
+</body>
+</html>

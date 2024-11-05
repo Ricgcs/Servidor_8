@@ -2,7 +2,7 @@ import express, { response } from "express";
 import bodyParser from "body-parser";
 import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
-import { setEmpr, procurarEmp, atualizarEmp, delEmpr, getEmpresa, pegarImg } from "../back/controle/empresa.js";
+import { setEmpr, procurarEmp, getEmpresa, procurarImagem_empresa, login_empresa, validarEmpresa } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
@@ -26,6 +26,146 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'front')));
 app.use(cors());
 
+
+
+
+
+//-----------------------------------------------Empresa------------------------------------------------------------\\
+app.get('/teste', async (req, res) => {
+    let cnpj = Number(req.body.cnpj);
+
+    try {
+        const count = await validarEmpresa(cnpj);
+        if (count == 0) {
+            res.send("funciona");
+        } else {
+            res.send(`Empresa já existente: cnpj(${cnpj}) `);
+            console.log(`Empresa já existente: cnpj(${cnpj}) `);
+        }
+    } catch (error) {
+        res.status(500).send('Erro ao validar empresa.');
+    }
+});
+
+app.get('/empresa/imagem/:nome', async (req, res) => {
+    const nome = req.params.nome;
+    
+    
+    try {
+    
+      const response = await procurarImagem_empresa(nome);    
+
+        res.set('Content-type', 'image/jpg');
+        res.send(response[0].imagen); 
+     
+    } catch (error) {
+      console.log("Erro ao buscar a imagem:", error);
+      console.log("Nome:", nome);
+      
+      res.status(500).send('Erro ao processar a solicitação');
+    }
+  });
+
+app.post('/empresa',upload.single('img'), async (req, res) => {
+
+    //Nome_fantasia, Razao_social, Email, CNPJ, Senha, img 
+    console.log('teste funciona')
+    const Nome_fantasia = req.body.Nome_fantasia;
+    const Razao_social = req.body.Razao_social;
+    const Email = req.body.Email;
+    const CNPJ = Number(req.body.CNPJ);
+    const Senha = req.body.Senha;    
+    const img = req.file;
+    console.log('teste funciona 2')
+    
+    let emprData = { Nome_fantasia, Razao_social, Email, CNPJ, Senha, img };
+     
+    try {
+    console.log('teste funciona 3')
+
+        await setEmpr(emprData);
+        console.log(emprData)
+        res.status(200).send('Empresa criada com sucesso!');
+    } catch (error) {
+    console.log('teste funciona 4')
+
+        console.error('Erro ao criar empresa:', error);
+        res.status(500).send('Erro ao criar empresa.');
+    }
+});
+
+
+app.get('/empresa/mostrar', async (req, res) => {
+    const { what,valor, nome} = req.body; 
+console.log(valor, nome)
+    try {
+        const resultado = await procurar({ what, valor, nome});
+        res.status(200).json({ data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar usuário", error: error.message });
+    }
+});
+
+
+app.get('/empresa/mostrar/:what/:valor/:nome', async (req, res) => {
+    const what= req.params.what; 
+    const valor = req.params.valor; 
+    const nome = req.params.nome; 
+
+    try {
+       
+        const resultado = await procurar({ what, valor, nome});
+        const name = resultado.Nome;
+    
+  
+        //res.status(200).json({data:name});
+        res.status(200).send({data:name});
+     
+    } catch (error) {
+
+        res.status(500).json({ message: "Erro ao procurar empresa no servidor", error: error.message });
+    }
+});
+
+
+app.get('/empresa/mostrar_todos', async (req, res) => {
+    try {
+      const empresas = await getEmpresa();  
+      console.log('Empresas encontrados:', empresas); 
+      res.status(200).json(usuarios);  
+    } catch (error) {
+      console.error('Erro ao buscar todos as empresas:', error);
+      res.status(500).json({ message: "Erro ao buscar todos as empresas", error: error.message });
+    }
+  });
+
+
+  app.get('/empresa/logar/:nome/:cnpj/:senha', async (req, res) => {
+    const nome = req.params.nome;
+    const cnpj = Number(req.params.cnpj);
+    const senha = req.params.senha;
+
+    if (!nome || !cnpj || !senha) {
+        return res.status(400).json({ message: 'Parâmetros inválidos' });
+    }
+
+    let envio = { nome, cnpj, senha };
+
+    try {
+        const teste = await login_empresa(envio.nome, envio.cnpj, envio.senha);
+        console.log(envio)
+        if (teste == 1) {
+            return res.status(200).json(1);
+        }
+        else{
+            return res.status(200).json(0)
+        }
+    } 
+    catch (err) {
+        console.error(err);
+        return res.status(500).send('Erro no servidor');
+    }
+});
 //-----------------------------------------------usuário---------------------------------------------------------\\
 app.get('/teste', async (req, res) => {
     let cod_em = Number(req.body.cod_empr);
@@ -344,82 +484,6 @@ app.get('/produto/mostrar_todos', async (req, res) => {
 });
 
 
-
-//-----------------------------------------------Empresa------------------------------------------------------------\\
-
-app.get('/imagem/:cod', async (req, res) => {
-    const cod = req.params.cod;
-    try {
-        const response = await pegarImg(cod); 
-        if (response && response.imagen) {
-
-            res.set('Content-type','image/jpg');
-            res.send(response.imagen); 
-        } else {
-            res.status(404).send('Imagem não encontrada.');
-        }
-    } catch (error) {
-        res.status(500).send('Erro ao buscar a imagem.');
-    }
-});
-
-app.post('/empresa', upload.single('Imagem'), async (req, res) => {
-    let nome = req.body.Nome_fantasia;
-    let RS = req.body.Razao_social;
-    let email = req.body.Email;
-    let CNPJ = Number(req.body.CNPJ);
-    let Senha = req.body.Senha;
-    const Imagem = req.file; 
-
-    console.log({ nome, RS, email, CNPJ, Senha, Imagem });
-
-    try {
-        const resultado = await setEmpr(nome, RS, email, CNPJ, Senha, Imagem);
-        return res.status(200).json({ result: 1 });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao criar a empresa", error: error.message });
-    }
-});
-
-
-app.get('/empresa/mostrar', async (req, res) => {
-    const { valor, nome} = req.body;
-console.log(valor, nome)
-    try {
-        const resultado = await procurarEmp({ valor, nome});
-        res.status(200).json({ data: resultado });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao procurar a empresa", error: error.message });
-    }
-});
-
-
-app.post('/empresa/atualizar', async (req, res) => {
-    const { valor, nome, tipo, ent} = req.body;
-console.log(valor, nome,tipo, ent)
-    try {
-        const resultado = await atualizarEmp(valor, nome, tipo, ent)
-        res.status(200).json({ data: resultado });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao atualizar a empresa", error: error.message });
-    }
-});
-
-app.post('/empresa/deletar', async (req, res) => {
-    const { valor, nome} = req.body;
-console.log(valor, nome)
-    try {
-        const resultado = await delEmpr(valor, nome)
-        res.status(200).json({ data: resultado });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao deletar a empresa", error: error.message });
-    }
-});
-
-
-app.get('/empresa/mostrar_todos', async (req, res) => {
- getEmpresa()
-});
 //-----------------------------------------------Cargo--------------------------------------------------------\\
 
 app.post('/cargo', async (req, res) => {

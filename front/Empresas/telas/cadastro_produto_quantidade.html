@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/front/estilo/cadastro_produto_quantidade.css">
+    <link rel="icon" href="/front/img/logo_inteiro.png">
+    <title>Novo produto</title>
+</head>
+<body>
+    <header id="cabecalho">
+        <h1 id="header_inovaworks">InovaWorks</h1>
+        
+        <div id="header_links">
+            <a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button">Home</button></a>
+            <a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+            <a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+            <a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+            <a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
+        </div>
+        
+        <div id="header_user">
+            <img id="img_user" src="" alt="imagem_usuario">
+            <div id="header_config">
+                <h1 id="nome_user"></h1>
+                <a id="link_user" href="/front/config.html">configuração</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="Formulario">
+        <div id="cabecalho_formulario">
+        <h1 id="cabecalho_formulario_texto">Novo produto: quantidade</h1>
+        <a href="/front/cadastro_produto.html"><button id="cabecalho_button_formulario">Medidas</button></a>
+        </div>
+        <section id="s1">
+            <div id="s1b">
+                <label id="s1l">Nome do produto</label>
+                <input id="nome_produto" type="text" placeholder="Digite o nome do produto">
+            </div>
+            <div id="s1b">
+                <label id="s1l">Quantidade</label>
+                <input id="quantidade" type="text" placeholder="Digite a quantidade">
+            </div>
+            <div id="s1b">
+                <label id="s1l">Valor</label>
+                <input id="valor" type="text" placeholder="Digite o valor">
+            </div>
+        </section>
+
+    
+
+        <footer>
+            <label id="lab1">Observações</label>
+            <div id="obs-wrapper">
+                <textarea id="obs"></textarea>
+            </div>
+            <button id="OBS_a">Adicionar novo produto</button>
+        </footer>
+    </div>
+
+    <script>
+  function logOut(){  
+  if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
+    window.location.href = './login_cliente.html';
+  } 
+}
+
+        document.addEventListener('DOMContentLoaded', () => {
+               
+    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const senhaUser = localStorage.getItem('senha');
+    const codUser = localStorage.getItem('cod') ;
+ 
+   if(!nomeUser || !senhaUser || !codUser){
+    alert("faça o login");
+    window.location.href = "./login_cliente.html"
+   }
+ 
+   
+            const loadFromLocalStorage = () => {
+                const nomeUser = localStorage.getItem('nome') || 'Usuário';
+                const nomeUserElement = document.getElementById('nome_user');
+                if (nomeUserElement) {
+                    const primeiroNome = nomeUser.split(" ")[0];
+                    nomeUserElement.textContent = `${primeiroNome}`;
+                }
+
+                const imgUserElement = document.getElementById('img_user');
+async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    imgUserElement.src = "/front/img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
+            };
+
+            loadFromLocalStorage();
+            
+            const obsInput = document.getElementById('obs');
+            if (obsInput) {
+                obsInput.addEventListener('input', function () {
+                    obsInput.scrollTop = obsInput.scrollHeight;
+                });
+            }
+
+            // Função para capturar os dados dos inputs e chamar a rota com fetch
+            const button = document.getElementById('OBS_a');
+
+            button.addEventListener('click', async () => {
+              ///produto/:cod_empr/:nome/:valor/:quantidade/:obs
+
+              const dataAtual = new Date();
+const data = dataAtual.toISOString().split('T')[0]; // Extrai apenas a parte 'YYYY-MM-DD'
+
+console.log(data); // Exemplo: 2024-11-01
+
+                const nome = document.getElementById('nome_produto').value;
+                const quantidade = document.getElementById('quantidade').value;
+                const valor = document.getElementById('valor').value;
+                const obs = document.getElementById('obs').value;
+                
+                const cod_empr = localStorage.getItem('cod');
+
+                           if(!nome || ! quantidade || !valor || !obs || !cod_empr){
+                            alert("Por favor, insira todos os dados");
+                           }       
+                             else{           
+                const url = `http://localhost:3000/produto_quantidade/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                   
+                    if (response.ok) {
+                        
+                        const result = await response.json();
+                        alert(result.message); 
+                    } else {
+                        alert('Erro ao adicionar produto');
+                        console.log(response)
+                    }
+
+                } catch (error) {
+                    console.error('Erro na requisição:', error);
+                    alert('Erro do lado do servidor');
+                }
+            }
+            });
+        });
+    </script>
+</body>
+</html>

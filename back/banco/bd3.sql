@@ -36,9 +36,9 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`cargo` (
   `Cod_cargo` INT NOT NULL AUTO_INCREMENT,
+  `Empresa_Cod_empresa` INT NOT NULL,
   `Nome` VARCHAR(45) NOT NULL,
   `Salario` VARCHAR(45) NOT NULL,
-  `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_cargo`),
   INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_cargo_Empresa1`
@@ -212,18 +212,99 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`sugestoes`
+-- Table `mydb`.`Agenda_empresa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`sugestoes` (
-  `codigo` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(60) NULL DEFAULT NULL,
-  `sugestao` VARCHAR(225) NULL DEFAULT NULL,
-  `avaliacao` INT NULL DEFAULT NULL,
-  `profissao` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`codigo`))
+CREATE TABLE IF NOT EXISTS `mydb`.`Agenda_empresa` (
+  `Cod_agenda` INT NOT NULL AUTO_INCREMENT,
+  `empresa_Cod_empresa` INT NOT NULL,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Data` DATE NOT NULL,
+  `obs` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`Cod_agenda`, `empresa_Cod_empresa`),
+  INDEX `fk_Agenda_empresa_empresa1_idx` (`empresa_Cod_empresa` ASC) VISIBLE,
+  CONSTRAINT `fk_Agenda_empresa_empresa1`
+    FOREIGN KEY (`empresa_Cod_empresa`)
+    REFERENCES `mydb`.`empresa` (`Cod_empresa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Agenda_funcionario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Agenda_funcionario` (
+  `Cod_agenda` INT NOT NULL AUTO_INCREMENT,
+  `funcionario_Cod_funcionario` INT NOT NULL,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Data` DATE NOT NULL,
+  `obs` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`Cod_agenda`, `funcionario_Cod_funcionario`),
+  INDEX `fk_Agenda_funcionario_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) VISIBLE,
+  CONSTRAINT `fk_Agenda_funcionario_funcionario1`
+    FOREIGN KEY (`funcionario_Cod_funcionario`)
+    REFERENCES `mydb`.`funcionario` (`Cod_funcionario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Agenda_cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Agenda_cliente` (
+  `Cod_agenda` INT NOT NULL AUTO_INCREMENT,
+  `cliente_Cod_cliente` INT NOT NULL,
+  `Nome` VARCHAR(45) NOT NULL,
+  `Data` DATE NOT NULL,
+  `obs` VARCHAR(300) NOT NULL,
+  PRIMARY KEY (`Cod_agenda`, `cliente_Cod_cliente`),
+  INDEX `fk_Agenda_empresa_copy1_cliente1_idx` (`cliente_Cod_cliente` ASC) VISIBLE,
+  CONSTRAINT `fk_Agenda_empresa_copy1_cliente1`
+    FOREIGN KEY (`cliente_Cod_cliente`)
+    REFERENCES `mydb`.`cliente` (`Cod_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`os`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`os` (
+  `Cod_os` INT NOT NULL AUTO_INCREMENT,
+  `funcionario_Cod_funcionario` INT NOT NULL,
+  `empresa_Cod_empresa` INT NOT NULL,
+  `cliente_Cod_cliente` INT NOT NULL,
+  `Obs` VARCHAR(300) NOT NULL,
+  `Data_inicio` DATE NOT NULL,
+  `Data_fim` DATE NULL,
+  PRIMARY KEY (`Cod_os`, `funcionario_Cod_funcionario`, `empresa_Cod_empresa`, `cliente_Cod_cliente`),
+  INDEX `fk_os_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) VISIBLE,
+  INDEX `fk_os_empresa1_idx` (`empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_os_cliente1_idx` (`cliente_Cod_cliente` ASC) VISIBLE,
+  CONSTRAINT `fk_os_funcionario1`
+    FOREIGN KEY (`funcionario_Cod_funcionario`)
+    REFERENCES `mydb`.`funcionario` (`Cod_funcionario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_os_empresa1`
+    FOREIGN KEY (`empresa_Cod_empresa`)
+    REFERENCES `mydb`.`empresa` (`Cod_empresa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_os_cliente1`
+    FOREIGN KEY (`cliente_Cod_cliente`)
+    REFERENCES `mydb`.`cliente` (`Cod_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

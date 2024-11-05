@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+document.addEventListener('DOMContentLoaded',() =>{
+    funcaoAbrir();
+    window.location.href = "/inicial_login.html";
+});
+
+function funcaoAbrir()
+{
+const dadosUrl = new URLSearchParams(window.location.search);
+
+const nome = dadosUrl.get("nome");
+const cod = dadosUrl.get("cod_empresa");
+const senha = dadosUrl.get("senha");
+
+const h1_nome = document.getElementById("nome");
+const h1_cod = document.getElementById("cod");
+const h1_senha = document.getElementById("senha");
+
+localStorage.setItem("nome",nome);
+localStorage.setItem("cod",cod);
+localStorage.setItem("senha",senha);
+}
+</script>
+
+</body>
+</html>
