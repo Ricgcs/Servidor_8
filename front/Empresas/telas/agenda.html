@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/front/img/logo_inteiro.png">
-    <link rel="stylesheet" href="/front/estilo/Tela_padrao.css">
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+    <link rel="icon" href="../img/logo_inteiro.png">
+    <link rel="stylesheet" href="../estilo/agenda.css">
+ 
 
     <title id="titulo"></title>
 </head>
@@ -15,24 +14,35 @@
     <h1 id="header_inovaworks">InovaWorks</h1>
 
     <div id="header_links">
-        <a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"><img src="/front/img/" alt=""> Home</button></a>
-        <a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-        <a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
-        <a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
-        <a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
+        <a href="./inicial_login.html"><img id="imagem" src="../img/home.png" alt="menu"><button id="header_button">Home</button></a>
+        <a href="./index.html"><img id="imagem" src="../img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+        <a href="./estoque.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+        <a href="#"><img id="imagem" src="../img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+        <a href="#"><img id="imagem" src="../img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
     </div>
 
     <div id="header_user">
         <img id="img_user" src="" alt="imagem_usuario">
         <div id="header_config">
             <h1 id="nome_user"></h1>
-            <a id="link_user" href="/front/config.html">configuração</a>
+            <a id="link_user" href="./config.html">configuração</a>
         </div>
     </div>
 </header>
 
 <div id="corpo">
-    <div id="calendar"></div>
+    <div id="agenda">
+        <div id="agenda_cabecalho">
+            <input id="input_agenda_marcador" type="text" placeholder="Marcador">
+            <input id="input_agenda_dados" type="text" placeholder="Nova anotação">
+            <input id="input_agenda" type="datetime-local" placeholder="Data">
+            <button id="button_agenda">Salvar</button>
+        </div>
+
+        <div id="agenda_corpo">
+
+        </div>
+    </div>
 </div>
 
 <script>
@@ -46,11 +56,11 @@ function logOut() {
 document.addEventListener('DOMContentLoaded', () => {
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
-    const codUser = localStorage.getItem('cod');
- 
+    const codUser = localStorage.getItem('cnpj');
+    const nome = localStorage.getItem("nome");
     if (!nomeUser || !senhaUser || !codUser) {
         alert("faça o login");
-        window.location.href = "./login_cliente.html";
+        window.location.href = "../../inicial/front/inicial.html";
     }
    
     const loadFromLocalStorage = () => {
@@ -63,15 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const imgUserElement = document.getElementById('img_user');
         async function loadImage() {
             try {
-                const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+                const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
                 const blob = await response.blob();
                 if (response.ok) {
-                    imgUserElement.src = blob ? URL.createObjectURL(blob) : "/front/img/imagem_user.png";
+                    imgUserElement.src = blob ? URL.createObjectURL(blob) : "../img/imagem_user.png";
                 } else {
                     alert("erro médio");
                 }
             } catch (error) {
-                imgUserElement.src = "/front/img/imagem_user.png";
+                imgUserElement.src = "../img/imagem_user.png";
                 console.error(error);
             }  
         }
@@ -80,45 +90,94 @@ document.addEventListener('DOMContentLoaded', () => {
     
     loadFromLocalStorage();
 
-    // Inicialização do FullCalendar
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // Visualização inicial (mês)
-        headerToolbar: {
-            left: 'prev,next today',  // Botões à esquerda
-            center: 'title',          // Título centralizado
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'  // Visualizações à direita
-        },
-        locale: 'pt-br', // Idioma em português
-        events: [
-            {
-                title: 'Evento 1',
-                start: '2024-11-04',
-                end: '2024-11-06'  // Data de término é opcional
-            },
-            {
-                title: 'Evento 2',
-                start: '2024-11-10',
-                allDay: true  // Evento o dia todo
-            },
-            {
-                title: 'Evento 3',
-                start: '2024-11-15T14:30:00',  // Evento com horário específico
-            }
-        ],
-        editable: true,          // Permite arrastar eventos
-        selectable: true,        // Permite selecionar datas
-        dateClick: function(info) {
-            alert('Data clicada: ' + info.dateStr);  // Mostra data ao clicar
-        },
-        eventClick: function(info) {
-            alert('Evento: ' + info.event.title);  // Mostra o título do evento ao clicar
-        }
-    });
+    const btn = document.getElementById("button_agenda");
 
-    calendar.render();  // Renderiza o calendário na página
+    btn.addEventListener("click", async()=>{
+        const marcador = document.getElementById('input_agenda_marcador').value;
+        const dados = document.getElementById('input_agenda_dados').value;
+        const data = document.getElementById('input_agenda').value;
+        const nome = localStorage.getItem("nome");
+  
+        if(!marcador || !dados || !data){
+            alert("Preencha todos os capos");
+            return
+         }
+
+try{
+    
+
+    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+    const cod = await cod_um.json()
+  
+       
+   
+      const response = await fetch(`http://localhost:3000/agenda_empresa/${cod}/${data}/${dados}/${marcador}`)
+      window.location.reload()
+}
+
+catch(error)
+ {
+ console.log(error);
+ }
+})
+
+
+const mostrar = async () => {
+    const corpo = document.getElementById("corpo");
+    const div = document.getElementById('agenda_corpo');
+    try {
+        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+        const cod = await cod_um.json();
+
+   
+        const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
+        const todos = await todos_um.json();
+
+
+todos.forEach((user)=>{
+
+const div_bloco = document.createElement('div');
+div_bloco.id = "div_bloco";
+div_bloco.textContent = "user.nome";
+
+const div_um = document.createElement("div");
+div_um.id = "item";
+
+const div_nome = document.createElement("div");
+div_nome.textContent = user.nome;
+div_nome.id = "div_nome";
+
+const div_data = document.createElement("div");
+div_data.textContent = user.Data
+div_data.id = "div_data";
+
+const div_obs = document.createElement("div");
+div_obs.textContent = user.obs;
+div_obs.id = "div_obs";
+
+
+
+
+
+div_um.appendChild(div_nome);
+// div_um.appendChild(div_obs);
+div_um.appendChild(div_data);
+div.appendChild(div_um);
+
+})
+    } catch (error) {
+        console.log(error);
+    }
+
+
+
+
+
+};
+
+mostrar();
+
 });
 </script>
-
 </body>
 </html>

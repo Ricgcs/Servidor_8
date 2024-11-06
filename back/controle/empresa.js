@@ -13,12 +13,12 @@ export const validarEmpresa = async (cnpj) => {
 
 }
 export const nomeCod = async (nome) => {
-    const validar = 'SELECT Cod_empresa FROM empresa WHERE Nome_fantasia = ?';
+    const validar = 'SELECT Cod_empresa FROM empresa WHERE Razao_social = ?';
 
-        const [results] = await con.query(validar, [nome]);
-        const count = results[0].count; 
-        console.log(count);
-        return count; 
+        const results = await con.query(validar, [nome]);
+        const count = results; 
+    
+        return count[0][0].Cod_empresa; 
 }
 
 

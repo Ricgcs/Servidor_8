@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/front/img/logo_inteiro.png">
-    <link rel="stylesheet" href="/front/estilo/produto_inicial.css">
+    <link rel="icon" href="../img/logo_inteiro.png">
+    <link rel="stylesheet" href="../estilo/produto_inicial.css">
     <title id="titulo"></title>
 </head>
 <body>
@@ -13,18 +13,18 @@
 <h1 id="header_inovaworks">InovaWorks</h1>
 
 <div id="header_links">
-<a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"> Home</button></a>
-<a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-<a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
-<a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
-<a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
+<a href="./inicial_login.html"><img id="imagem" src="../img/home.png" alt="menu"><button id="header_button"> Home</button></a>
+<a href="./index.html"><img id="imagem" src="../img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+<a href="./estoque.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+<a href="#"><img id="imagem" src="../img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+<a href="#"><img id="imagem" src="../img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
 </div>
 
 <div id="header_user">
 <img id="img_user" src="" alt="imagem_usuario">
 <div id="header_config">
 <h1 id="nome_user"></h1>
-<a id="link_user" href="/front/config.html">configuração</a>
+<a id="link_user" href="./config.html">configuração</a>
 </div>
 
 </a>
@@ -39,7 +39,7 @@
 <h1 id="produtos">Produtos</h1>
 
 <div id="pesquisa">
-<button id="button_pesquisa"><img id="img_pesquisa" src="/front/img/pesquise.png" alt="Pesquise"></button><input id="pesquisa_input" placeholder="Digite o nome do material...">
+<button id="button_pesquisa"><img id="img_pesquisa" src="../img/pesquise.png" alt="Pesquise"></button><input id="pesquisa_input" placeholder="Digite o nome do material...">
 </div>
 
 <div id="produtos_cadastrados">
@@ -50,9 +50,9 @@
 
 
 <section id="s2">
-    <img id="imagem_logo_cadastrado" src="/front/img/logo_inteiro.png" alt="logo">
+    <img id="imagem_logo_cadastrado" src="../img/logo_inteiro.png" alt="logo">
 <h1 id="nome_cadastrado"></h1>
-<div><a href="/front/cadastro_produto.html"><button id="btn_footer"><strong>Adicionar produto</strong></button></a></div>
+<div><a href="./cadastro_produto.html"><button id="btn_footer"><strong>Adicionar produto</strong></button></a></div>
 </section>
 
 
@@ -69,7 +69,7 @@ function logOut(){
   
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
-    const codUser = localStorage.getItem('cod') ;
+    const codUser = localStorage.getItem('cnpj') ;
  
    if(!nomeUser || !senhaUser || !codUser){
     alert("faça o login");
@@ -89,7 +89,7 @@ function logOut(){
       const imgUserElement = document.getElementById('img_user');
 async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {
@@ -101,7 +101,7 @@ async function loadImage(){
       alert("erro médio");
     }
   } catch (error) {
-    imgUserElement.src = "/front/img/imagem_user.png";
+    imgUserElement.src = "../img/imagem_user.png";
     console.log(error);
   }  
 }

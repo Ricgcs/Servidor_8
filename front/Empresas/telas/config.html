@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/front/img/logo_inteiro.png">
-    <link rel="stylesheet" href="/front/estilo/config.css">
+    <link rel="icon" href="../img/logo_inteiro.png">
+    <link rel="stylesheet" href="../estilo/config.css">
     <title id="titulo"></title>
 </head>
 <body>
@@ -13,11 +13,11 @@
 <h1 id="header_inovaworks">InovaWorks</h1>
 
 <div id="header_links">
-<a href="/front/inicial_login.html"><img id="imagem" src="/front/img/home.png" alt="menu"><button id="header_button"><img src="/front/img/" alt=""> Home</button></a>
-<a href="/front/index.html"><img id="imagem" src="/front/img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-<a href="/front/estoque.html"><img id="imagem" src="/front/img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
-<a href="#"><img id="imagem" src="/front/img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
-<a href="#"><img id="imagem" src="/front/img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
+<a href="./inicial_login.html"><img id="imagem" src="../img/home.png" alt="menu"><button id="header_button"><img src="/front/img/" alt=""> Home</button></a>
+<a href="./index.html"><img id="imagem" src="../img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+<a href="./estoque.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+<a href="#"><img id="imagem" src="../img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+<a href="#"><img id="imagem" src="../img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
 </div>
 
 <div id="header_user">
@@ -64,11 +64,11 @@ function logOut(){
      
     const nomeUser = localStorage.getItem('nome') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
-    const codUser = localStorage.getItem('cod') ;
+    const codUser = localStorage.getItem('cnpj') ;
  
    if(!nomeUser || !senhaUser || !codUser){
     alert("faça o login");
-    window.location.href = "./login_cliente.html"
+    window.location.href = "../../inicial/front/inicial.html"
    }
    
    
@@ -98,12 +98,12 @@ imgAlt.appendChild(trocar_imagem);
 
 async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
+    const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {
-     imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
-     imgAlt.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+     imgUserElement.src =blob?URL.createObjectURL(blob):"../img/imagem_user.png";
+     imgAlt.src =blob?URL.createObjectURL(blob):"../img/imagem_user.png";
    
       console.log('funcionou');
     } else {
@@ -111,7 +111,7 @@ async function loadImage(){
       alert("erro médio");
     }
   } catch (error) {
-    imgUserElement.src = "/front/img/imagem_user.png";
+    imgUserElement.src = "../img/imagem_user.png";
     console.log(error);
   }  
 }

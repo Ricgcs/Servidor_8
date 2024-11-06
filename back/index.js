@@ -2,15 +2,17 @@ import express, { response } from "express";
 import bodyParser from "body-parser";
 import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
-import { setEmpr, procurarEmp, getEmpresa, procurarImagem_empresa, login_empresa, validarEmpresa } from "../back/controle/empresa.js";
+import { setEmpr, procurarEmp, getEmpresa, procurarImagem_empresa, login_empresa, validarEmpresa, nomeCod } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
 import { __dirname } from "../nomeArquivo.js";
+import { mostrarTarefas, salvar } from "./controle/agenda.js";
 import path from 'path';
 import cors from 'cors';
 import multer from 'multer';
+
 
 
 const app = express();
@@ -28,7 +30,44 @@ app.use(cors());
 
 
 
+//-----------------------------------------------Agenda empresa------------------------------------------------------------\\
 
+app.get('/agenda_empresa/:cod/:data/:obs/:nome',async (req, res) => {
+    //empresa_Cod_empresa, data, obs
+ 
+    const empresa_Cod_empresa = Number(req.params.cod);
+    const data = req.params.data;
+    const obs = req.params.obs;    
+    const nome = req.params.nome;    
+   
+ 
+    let setAgenda = { empresa_Cod_empresa, data, obs, nome};
+     
+    try {
+  
+
+        await salvar(setAgenda);
+        console.log(setAgenda)
+        res.status(200).send('Agenda salva com sucesso!');
+    } catch (error) {
+
+
+        console.error('Erro ao salvar agenda:', error);
+        res.status(500).send('Erro ao salvar agenda.');
+    }
+});
+
+
+app.get('/agenda_empresa/mostrar/:cod', async (req, res) => {
+    const cod = req.params.cod; 
+console.log(cod)
+    try {
+        const resultado = await mostrarTarefas(cod);
+        res.status(200).json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar tarefa", error: error.message });
+    }
+});
 
 //-----------------------------------------------Empresa------------------------------------------------------------\\
 app.get('/teste', async (req, res) => {
@@ -46,6 +85,25 @@ app.get('/teste', async (req, res) => {
         res.status(500).send('Erro ao validar empresa.');
     }
 });
+
+app.get('/empresa/cod/:nome', async (req, res) => {
+    const nome = req.params.nome;  
+    
+    try {
+    
+      const response = await nomeCod(nome);    
+     console.log(response);
+      res.json(response);
+     
+    } catch (error) {
+      console.log("Erro ao buscar o cod:", error);
+      console.log("Nome:", nome);
+      
+      res.status(500).send('Erro ao processar o cod');
+    }
+  });   
+
+
 
 app.get('/empresa/imagem/:nome', async (req, res) => {
     const nome = req.params.nome;
