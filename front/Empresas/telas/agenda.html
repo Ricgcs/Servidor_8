@@ -32,11 +32,22 @@
 
 <div id="corpo">
     <div id="agenda">
+        
         <div id="agenda_cabecalho">
+            <div id="enunciado">
+                <h1 id="marc">Marcador</h1>
+                <h1 id="atv">Atividade</h1>
+                <h1 id="dt_in">Data início</h1>
+                <h1 id="dt_lm">Data limite</h1>
+                
+            </div>
+        <div id="parametros">
             <input id="input_agenda_marcador" type="text" placeholder="Marcador">
-            <input id="input_agenda_dados" type="text" placeholder="Nova anotação">
-            <input id="input_agenda" type="datetime-local" placeholder="Data">
+            <input class="input_agenda_dados" id="input_agenda_dados" type="text" placeholder="Nova anotação">
+            <input class="input_agenda_dados" id="input_agenda_data_inicio" type="datetime-local" placeholder="Data_inicio">
+            <input class="input_agenda_dados" id="input_agenda_data_limite" type="datetime-local" placeholder="Data_limite">
             <button id="button_agenda">Salvar</button>
+        </div>
         </div>
 
         <div id="agenda_corpo">
@@ -93,26 +104,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById("button_agenda");
 
     btn.addEventListener("click", async()=>{
-        const marcador = document.getElementById('input_agenda_marcador').value;
+        const marcacao = document.getElementById('input_agenda_marcador').value;
         const dados = document.getElementById('input_agenda_dados').value;
-        const data = document.getElementById('input_agenda').value;
+        const data_inicio = document.getElementById('input_agenda_data_inicio').value;
+        const data_limite = document.getElementById('input_agenda_data_limite').value;
         const nome = localStorage.getItem("nome");
-  
-        if(!marcador || !dados || !data){
+  const dataInicioFormatada = data_inicio.toLocaleString('pt-BR');
+  const dataLimiteFormatada = data_limite.toLocaleString('pt-BR');
+        if(!marcacao || !dados || !data_inicio || !data_limite){
             alert("Preencha todos os capos");
             return
          }
-
 try{
-    
-
     const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
-    const cod = await cod_um.json()
-  
+    const cod = await cod_um.json();
        
    
-      const response = await fetch(`http://localhost:3000/agenda_empresa/${cod}/${data}/${dados}/${marcador}`)
-      window.location.reload()
+      const response = await fetch(`http://localhost:3000/agenda_empresa/${cod}/${dataInicioFormatada}/${dataLimiteFormatada}/${dados}/${marcacao}`);
+      window.location.reload();
 }
 
 catch(error)
@@ -123,48 +132,75 @@ catch(error)
 
 
 const mostrar = async () => {
-    const corpo = document.getElementById("corpo");
-    const div = document.getElementById('agenda_corpo');
-    try {
-        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
-        const cod = await cod_um.json();
+        const div = document.getElementById('agenda_corpo');
+        const prazo = document.createElement('div');
+        const cabeca = document.createElement('div');
+        cabeca.id = "topo"
+        const bt = document.createElement('button');
+        const div_bloco = document.createElement('div');
+
+      
+
+        div.appendChild(div_bloco);
+
+
+        try {
+            const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+            const cod = await cod_um.json();
+
+            const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
+            const todos = await todos_um.json();
+
+            todos.forEach((user) => {
+                const div_um = document.createElement("div");
+                div_um.id = "item";
+
+                const div_nome = document.createElement("div");
+                div_nome.textContent = user.marcacao;
+                div_nome.id = "div_nome";
+
+                const div_data = document.createElement("div");
+                div_data.textContent = new Date(user.Data).toLocaleString('pt-BR');
+                div_data.id = "div_data";
+
+                const div_data_limite = document.createElement("div");
+                div_data_limite.textContent = new Date(user.Data_limite).toLocaleString('pt-BR');
+                div_data_limite.id = "div_data_limite";
+
+                const div_obs = document.createElement("div");
+                div_obs.textContent = user.obs;
+                div_obs.id = "div_obs";
+
+                div_um.addEventListener('click', () => {
+    div_bloco.id = "div_bloco";
 
    
-        const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
-        const todos = await todos_um.json();
+    div_bloco.innerHTML = "";
+    div_bloco.appendChild(cabeca);
+    cabeca.appendChild(prazo);
+    prazo.textContent = "Data limite: " + new Date(user.Data_limite).toLocaleString('pt-BR');
+    cabeca.appendChild(bt);
 
+    div_bloco.appendChild(div_obs);
+    div_obs.textContent = user.obs;
 
-todos.forEach((user)=>{
+    bt.textContent = "x";
+    bt.id = "btn_fechar";
+});
 
-const div_bloco = document.createElement('div');
-div_bloco.id = "div_bloco";
-div_bloco.textContent = "user.nome";
+bt.addEventListener('click', () => {
+    div_bloco.id = "fechar_div_bloco";
+    div_bloco.textContent = "";
+    bt.textContent = "";
+    bt.id = "btn_fechado";
+});
 
-const div_um = document.createElement("div");
-div_um.id = "item";
-
-const div_nome = document.createElement("div");
-div_nome.textContent = user.nome;
-div_nome.id = "div_nome";
-
-const div_data = document.createElement("div");
-div_data.textContent = user.Data
-div_data.id = "div_data";
-
-const div_obs = document.createElement("div");
-div_obs.textContent = user.obs;
-div_obs.id = "div_obs";
-
-
-
-
-
-div_um.appendChild(div_nome);
-// div_um.appendChild(div_obs);
-div_um.appendChild(div_data);
-div.appendChild(div_um);
-
-})
+                div_um.appendChild(div_nome);
+                div_um.appendChild(div_data);
+                div_um.appendChild(div_data_limite);                
+                div.appendChild(div_um);
+            });
+        
     } catch (error) {
         console.log(error);
     }

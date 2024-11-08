@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`empresa` (
   `Imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -77,16 +77,17 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `mydb`.`agenda_empresa` (
   `Cod_agenda` INT NOT NULL AUTO_INCREMENT,
   `empresa_Cod_empresa` INT NOT NULL,
-  `Data` DATE NOT NULL,
+  `Data` DATETIME NOT NULL,
   `obs` VARCHAR(300) NOT NULL,
-  `nome` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`Cod_agenda`, `empresa_Cod_empresa`),
+  `marcacao` VARCHAR(255) NOT NULL,
+  `Data_limite` DATETIME NOT NULL,
+  PRIMARY KEY (`Cod_agenda`),
   INDEX `fk_Agenda_empresa_empresa1_idx` (`empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Agenda_empresa_empresa1`
     FOREIGN KEY (`empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8mb3;
 
 

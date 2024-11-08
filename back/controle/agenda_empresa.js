@@ -3,14 +3,14 @@ import { conexao } from "../conexao.js";
 const con = await conexao(); 
 
 
-export const salvar = async ({empresa_Cod_empresa, data, obs, nome}) => {
+export const salvar = async ({empresa_Cod_empresa, data_inicio, data_limite , obs, marcacao}) => {
     const con = await conexao();
-   
+   console.log(empresa_Cod_empresa, data_inicio, data_limite , obs, marcacao)
     try {
       
         const [result] = await con.execute(
-            'INSERT INTO agenda_empresa (empresa_Cod_empresa, data, obs, nome) VALUES (?,?,?,?)',
-            [ empresa_Cod_empresa, data, obs, nome]
+            'INSERT INTO agenda_empresa (empresa_Cod_empresa, Data, obs, marcacao, data_limite) VALUES (?,?,?,?,?)',
+            [ empresa_Cod_empresa, data_inicio, obs, marcacao, data_limite]
         );
         return result;
     } catch (error) {

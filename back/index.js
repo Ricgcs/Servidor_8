@@ -8,7 +8,7 @@ import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
 import { __dirname } from "../nomeArquivo.js";
-import { mostrarTarefas, salvar } from "./controle/agenda.js";
+import { mostrarTarefas, salvar } from "./controle/agenda_empresa.js";
 import path from 'path';
 import cors from 'cors';
 import multer from 'multer';
@@ -30,19 +30,20 @@ app.use(cors());
 
 
 
-//-----------------------------------------------Agenda empresa------------------------------------------------------------\\
+//-----------------------------------------------Agenda_empresa------------------------------------------------------------\\
 
-app.get('/agenda_empresa/:cod/:data/:obs/:nome',async (req, res) => {
+app.get('/agenda_empresa/:cod/:data_inicio/:data_limite/:obs/:marcacao',async (req, res) => {
     //empresa_Cod_empresa, data, obs
  
     const empresa_Cod_empresa = Number(req.params.cod);
-    const data = req.params.data;
+    const data_inicio = req.params.data_inicio;
+    const data_limite = req.params.data_limite;
     const obs = req.params.obs;    
-    const nome = req.params.nome;    
+    const marcacao = req.params.marcacao;    
    
  
-    let setAgenda = { empresa_Cod_empresa, data, obs, nome};
-     
+    let setAgenda = { empresa_Cod_empresa, data_inicio, data_limite, obs, marcacao};
+     console.log(setAgenda)
     try {
   
 
