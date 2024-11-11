@@ -118,32 +118,35 @@ loadImage();
                 });
             }
 
-            // Função para capturar os dados dos inputs e chamar a rota com fetch
+            
             const button = document.getElementById('OBS_a');
 
             button.addEventListener('click', async () => {
-              ///produto/:cod_empr/:nome/:valor/:quantidade/:obs
+            
 
               const dataAtual = new Date();
-const data = dataAtual.toISOString().split('T')[0]; // Extrai apenas a parte 'YYYY-MM-DD'
+const data = dataAtual.toISOString().split('T')[0]; 
 
-console.log(data); // Exemplo: 2024-11-01
+console.log(data); 
 
                 const nome = document.getElementById('nome_produto').value;
                 const quantidade = document.getElementById('quantidade').value;
                 const valor = document.getElementById('valor').value;
                 const obs = document.getElementById('obs').value;
                 
-                const cod_empr = localStorage.getItem('cod');
+                
 
-                           if(!nome || ! quantidade || !valor || !obs || !cod_empr){
+                           if(!nome || ! quantidade || !valor || !obs){
                             alert("Por favor, insira todos os dados");
+                            
                            }       
                              else{           
-                const url = `http://localhost:3000/produto_quantidade/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`;
 
                 try {
-                    const response = await fetch(url, {
+                    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+                const cod_empr = await cod_um.json();
+console.log(cod_empr);
+                    const response = await fetch(`http://localhost:3000/produto_quantidade/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -175,7 +175,9 @@ function logOut(){
 
 
    const nomes_cadastrado = async () => {
-   
+
+    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+    const cod_empr = await cod_um.json();
   const nomes = 'http://localhost:3000/usuario/mostrar_todos';
   const caixa_nome = document.getElementById('nome_cliente_list');
   
@@ -200,7 +202,8 @@ function logOut(){
 
     inputCod.addEventListener('input', async () => {
     const inputValor = document.getElementById('valor');
-    const cod_empresa = localStorage.getItem('cod')
+      const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+        const cod_empr = await cod_um.json();
     const cod_produto = inputCod.value; 
     const valor = document.getElementById('resultados');
     const cod_nome = document.getElementById('cod_nome');
@@ -208,7 +211,7 @@ function logOut(){
     const option_cod = document.createElement('option');
     if(inputCod){
     try {
-        const response = await fetch(`http://localhost:3000/orcamento/mostrarProdutoNome/${cod_empresa}/${cod_produto}`);
+        const response = await fetch(`http://localhost:3000/orcamento/mostrarProdutoNome/${cod_empr}/${cod_produto}`);
 
         const produto_value = await response.json();
       
@@ -281,7 +284,8 @@ loadImage();
                 const dataEntrega = document.getElementById('data_entrega').value;        
                 const obs = document.getElementById('obs').value;    
                 const codEmpr = localStorage.getItem('cod');
-                const codEmprLimpo = parseInt(codEmpr.replace(/[^0-9]/g, ''), 10);
+                const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+                const cod_empr = await cod_um.json();
                 
 
                 if (!nomeCliente || !descricao || !quantidade || !valor || !dataInicio || !dataEntrega) {
@@ -289,7 +293,7 @@ loadImage();
                     return;
                 }
                                                     
-                const url = `http://localhost:3000/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${codEmprLimpo}`;
+                const url = `http://localhost:3000/orcamento/${nomeCliente}/${descricao}/${valor}/${desconto}/${dataInicio}/${dataEntrega}/${cod_empr}`;
                 
                 
                 try {
@@ -372,7 +376,7 @@ loadImage();
 
 
              const nomes_de_cliente = async()=>{                
-                const response = fetch('http://localhost:3000//usuario/mostrar')
+                const response = fetch('http://localhost:3000/usuario/mostrar')
              }
 
         

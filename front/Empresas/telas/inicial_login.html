@@ -74,7 +74,7 @@
 
 <section id="s3">
     <h1 id="texto_cliente">Anotações</h1>
-    <div id="ultimos_clientes">
+    <div id="anotacoes">
 
 
     </div>
@@ -156,76 +156,82 @@ loadImage();
 }
   loadFromLocalStorage();
 
+  const mostrar = async () => {
+        const div = document.getElementById('anotacoes');
+        const prazo = document.createElement('div');
+        const cabeca = document.createElement('div');
+        cabeca.id = "topo"
+        const bt = document.createElement('button');
+        const div_bloco = document.createElement('div');
 
-//   const fetchUsuarios = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3000/usuario/mostrar_todos');
-//       if (!response.ok) {
-//         throw new Error('Erro na resposta da rede');
-//       }
-//       const usuarios = await response.json();
-//       console.log('Dados recebidos do backend:', usuarios);
-//       return usuarios;
-//     } catch (error) {
-//       console.error('Erro ao buscar os dados:', error);
-//     }
-//   };
- 
-//   const displayUsuarios = (usuarios) => {
-//     const tamanho = usuarios.length;
-//     const antigos_usuarios = document.getElementById('ultimos_clientes');
-//     antigos_usuarios.innerHTML = '';
- 
-//     if (tamanho > 0) {
-//       usuarios.forEach(usuario => {
-//         const div = document.createElement('div');
-//         div.classList.add('clientes');
- 
-//         const img = document.createElement('img');
-//         img.classList.add('imagem_teste');
+      
+
+        div.appendChild(div_bloco);
 
 
-//         async function loadImage(){
-//   try {
-//     const nomeUser = usuario.Nome;
-//     const codUser = usuario.Empresa_Cod_empresa;
-//     const response = await fetch(`http://localhost:3000/usuario/imagem/${nomeUser}/${codUser}`);
-//     console.log(response);
-//     const blob = await response.blob();
-//     if (response.ok) {
-//      img.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+        try {
+    const nome = localStorage.getItem('nome') || 'Usuário';
+
+            const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+            const cod = await cod_um.json();
+
+            const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
+            const todos = await todos_um.json();
+
+            todos.forEach((user) => {
+                const div_um = document.createElement("div");
+                div_um.id = "item";
+
+                const div_nome = document.createElement("div");
+                div_nome.textContent = user.marcacao;
+                div_nome.id = "div_nome";
+
+                const div_data = document.createElement("div");
+                div_data.textContent = new Date(user.Data).toLocaleString('pt-BR');
+                div_data.id = "div_data";
+
+                const div_data_limite = document.createElement("div");
+                div_data_limite.textContent = new Date(user.Data_limite).toLocaleString('pt-BR');
+                div_data_limite.id = "div_data_limite";
+
+                const div_obs = document.createElement("div");
+                div_obs.textContent = user.obs;
+                div_obs.id = "div_obs";
+
+                div_um.addEventListener('click', () => {
+    div_bloco.id = "div_bloco";
+
    
-//       console.log('funcionou');
-//     } else {
-//       console.log(response);
-//       alert("erro médio");
-//     }
-//   } catch (error) {
-//     img.src = "/front/img/imagem_user.png";
-//     console.log(error);
-//   }  
-// }
-// loadImage()
- 
-//         const nomeCliente = document.createElement('p');
-//         const nomeFiltrado = usuario.Nome.split(" ")[0];
-//         nomeCliente.textContent = nomeFiltrado;
- 
-//         div.appendChild(nomeCliente);
-//         div.appendChild(img);
-//         antigos_usuarios.appendChild(div);
-//       });
-//     } else {
-//       const mensagem = document.createElement('p');
-//       mensagem.textContent = 'Nenhum usuário cadastrado';
-//       antigos_usuarios.appendChild(mensagem);
-//     }
-//   };
+    div_bloco.innerHTML = "";
+    div_bloco.appendChild(cabeca);
+    cabeca.appendChild(prazo);
+    prazo.textContent = "Data limite: " + new Date(user.Data_limite).toLocaleString('pt-BR');
+    cabeca.appendChild(bt);
 
-  
-//   fetchUsuarios().then(displayUsuarios).catch(error => {
-//     console.error('Erro ao executar fetchUsuarios:', error);
-//   });
+    div_bloco.appendChild(div_obs);
+    div_obs.textContent = user.obs;
+
+    bt.textContent = "x";
+    bt.id = "btn_fechar";
+});
+
+bt.addEventListener('click', () => {
+    div_bloco.id = "fechar_div_bloco";
+    div_bloco.textContent = "";
+    bt.textContent = "";
+    bt.id = "btn_fechado";
+});
+
+                div_um.appendChild(div_nome);
+                div_um.appendChild(div_data);
+                div_um.appendChild(div_data_limite);                
+                div.appendChild(div_um);
+            });
+        
+    } catch (error) {
+        console.log(error);
+    }
+  }
 });
 
   </script>

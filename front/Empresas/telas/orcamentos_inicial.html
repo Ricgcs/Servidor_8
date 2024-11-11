@@ -140,6 +140,8 @@ loadImage();
     }
    
     try {
+      const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+      const cod_empr = await cod_um.json();
         const response = await fetch("http://localhost:3000/orcamento/mostrarTodos");
         const resposta = await response.json();
 

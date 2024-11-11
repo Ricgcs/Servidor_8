@@ -132,7 +132,7 @@ loadImage();
   const nome_cadastrado = document.getElementById('nome');
 try{
   const nomeUser = localStorage.getItem('nome');
-const response = await fetch(`http://localhost:3000/usuario/mostrar/Nome/Nome/${nomeUser}`);
+const response = await fetch(`http://localhost:3000/usuario/mostrar/Nome/${nomeUser}`);
 const data = await response.json();
 const nome = data.data;
 nome_cadastrado.textContent = nome;

@@ -180,7 +180,10 @@ loadImage();
                 const comprimento = document.getElementById('comprimento').value;
                 const largura = document.getElementById('largura').value;
                 const obs = document.getElementById('obs').value;
-                const cod_empr = localStorage.getItem('cod');
+
+                const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+                const cod_empr = await cod_um.json();
+
                 const a = document.getElementById('a').value;
                 const c = document.getElementById('c').value;
                 const l = document.getElementById('l').value;
@@ -188,6 +191,7 @@ loadImage();
               
                            if(!nome || ! quantidade || !valor || !altura || !comprimento || !largura || !cod_empr){
                             alert("Por favor, insira todos os dados");
+                            alert(cod_empr)
                            }       
                              else{           
                 const url = `http://localhost:3000/produto/${nome}/${valor}/${quantidade}/${cod_empr}/${altura}/${comprimento}/${largura}/${a}/${c}/${l}/${data}/${obs}`;
