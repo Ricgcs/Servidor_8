@@ -178,10 +178,11 @@ section{
     display: flex;
     align-items: center;
     flex-direction: column;
-    border-radius: 2%;
+    overflow: auto;
+    border-radius: 4%;
     color: white;
     overflow: auto;
-  
+    padding: 0.5vw;  
     
 }
 
@@ -193,7 +194,8 @@ section{
 
 #link_agenda{
     margin-top: 1vw;
-    width: 75%;
+    margin-left: 100%;
+    width: 100%;
 }
 
 #agenda_button{
@@ -202,7 +204,10 @@ section{
     color:white;
     border-radius: 1vw;
     padding: 1vw;
-    width: 100%;
+    width: 20%;
+    height: 100%;
+    margin-left: 20%;
+    
 }
 
 .clientes {
@@ -427,6 +432,7 @@ display: inline;
     position: fixed;
     display: flex;
     flex-direction: column;
+    overflow-wrap: break-word;
     color: white;
   font-family: "maun";
   top: 9vw;
