@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logo_inteiro.png">
+    <link rel="stylesheet" href="../estilo/c_fornecedor.css">
+    <title>Cadastro fornecedor</title>
+</head>
+<body>
+
+    <div id="menu">
+        <header>
+            <a><h1 id="Nome_header"><a id="link_menu" href="inicial.html">InovaWorks</a></h1></a>
+
+            <div id="div_link_header">
+                <a href="#"><h1 id="Links_header">COMPRE AGORA</h1></a>
+                <a href="#"><h1 id="Links_header">PROGRAMA</h1></a>
+                <a href="#"><h1 id="Links_header">VALORES</h1></a>
+                <a href="#"><h1 id="Links_header">CONTATE-NOS</h1></a>
+                <a href="sobre_nos.html"><h1 id="Links_header">SOBRE NÓS</h1></a>
+            </div>
+
+            <div id="div_img_header">
+                <a href="twiter"><img src="../img/twiter.png" alt="twiter"></a>
+                <a href="linkedin"><img src="../img/linkedin.png" alt="linkedin"></a>
+                <a href="instaram"><img id="logo_instagram" src="../img/instagram-removebg-preview (2).png" alt="instagram"></a>
+            </div>
+        </header>
+
+        <div id="corpo">
+            <img id="img_form" src="../img/logo_inteiro.png" alt="logo">
+            <h1 id="Nome_img">InovaWorks</h1>
+            <h1 id="local_imagem"></h1>
+     
+
+            <form id="formFornecedor" enctype="multipart/form-data">
+        <div id="form_beg">
+
+            <div id="form_dados">
+                <input id="razao_social" type="text" placeholder="Razão social" name="razao_social" required>
+                <input id="nome_fantasia" type="text" placeholder="Nome fantasia" name="nome_fantasia" required>                
+                <input id="cnpj" type="number" placeholder="CNPJ" name="cnpj" required>
+                <input id="telefone" type="number" placeholder="Telefone" name="telefone" required>
+                <input id="email" type="email" placeholder="Email" name="email" required>
+            </div>
+
+            <div id="form_local">
+                <input id="cep" type="number" placeholder="CEP" name="cep" required>
+                <input id="estado" type="text" placeholder="Estado" name="estado" required>                
+                <input id="cidade" type="text" placeholder="Cidade" name="cidade" required>
+                <input id="bairro" type="text" placeholder="Bairro" name="bairro" required>
+                <input id="senha" type="password" placeholder="Senha" name="senha" required>
+            </div>
+
+        </div>            
+
+            <div id="form_end">
+                <input id="img" type="file" placeholder="imagem" name="img">
+                <button id="corpo_button_cadastrar">Cadastrar</button>
+            </div>
+
+
+            </form>
+
+            <h6><a href="./login_fornecedor.html">Já é cadastrado? login</a></h6>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formFornecedor');
+        const button = document.getElementById("corpo_button_cadastrar");
+   
+
+
+
+        button.addEventListener("click", async(event) => {
+            event.preventDefault(); 
+
+            const form = document.getElementById('formFornecedor');    
+            const formData = new FormData(form)
+            
+            
+            try {
+            
+                const response = await fetch(`http://localhost:3000/fornecedor`, {
+    method: 'POST',
+    body: formData,
+});
+const data = await response.json();
+if(data.result == 2){
+    alert("Fornecedor ja existe");
+    return
+}
+                if (response.ok) {
+                    alert("Fornecedor cadastrado com sucesso");
+                } else {
+                    alert("Erro ao cadastrar o fornecedor");
+                }
+
+            } catch (error) {
+                console.log("Erro ao cadastrar o fornecedor");
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>

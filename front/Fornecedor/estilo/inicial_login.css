@@ -1,0 +1,532 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+body{
+    background-color: #0A0403;
+   position: fixed;
+    width:100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+@font-face {
+    font-family: 'Montserrate';
+    src: url(../fontes/Montserrat-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: "moul";
+    src: url(../fontes/Moul-Regular.ttf);
+}
+
+#cabecalho{
+    
+    background-color: black;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vw;
+}
+
+#header_links{
+
+width: 30%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-left: 1vw;
+
+}
+
+#header_button{
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+    font-family: 'Montserrate';
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+#centro{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+section{
+    height: 80%;
+}
+
+#s1{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+   }
+
+#s2{
+   width: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+#s3{
+    
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+#fluxo_caixa_button{
+        background: rgba(70, 67, 65, 1);
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        text-align: left;
+        color:white;
+        border-radius: 1vw;
+        padding: 0.5vw;
+        margin-left: 10%;
+        width: 16vw;
+}
+
+#texto_fluxo_caixa{
+    font-size: 1.7vw;
+    font-weight:normal;
+    margin-right: -1%;
+}
+
+#servico_button{
+        background: rgba(70, 67, 65, 1);
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.6vw;
+        color:white;
+        border-radius: 1vw;
+        padding: 0vw;
+        margin-left: 10%;
+        width: 16vw;
+}
+
+#entrega_button{
+        background: rgba(70, 67, 65, 1);
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.6vw;
+        color:white;
+        border-radius: 1vw;
+        padding: 0.5vw;
+        margin-left: 10%;
+        width: 16vw;
+}
+
+#orcamento_button{
+        background: rgba(70, 67, 65, 1);
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.6vw;
+        color:white;
+        border-radius: 1vw;
+        padding: 0.6vw;
+        margin-left: 10%;
+        width: 16vw;
+    
+}
+
+#estoque_button{
+        background: rgba(70, 67, 65, 1);
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.6vw;
+        color:white;
+        border-radius: 1vw;
+        margin-left: 10%;
+        width: 16vw;
+}
+
+#imagem_logo_cadastrado{
+    width: 27.5%;
+    height: 40%;
+}
+
+#nome_cadastrado{
+    color: white;
+}
+
+#texto_s1{
+    color: white;
+    margin-left: 2.7vw;
+}
+
+#anotacoes{
+    background-color: rgb(150, 62, 12);
+    height: 75%;
+    width: 75%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+    border-radius: 4%;
+    color: white;
+    overflow: auto;
+    padding: 0.5vw;  
+    
+}
+
+#texto_cliente{
+    color:white;
+    margin-top: 2vw;
+    font-size: 2vw;
+}
+
+#link_agenda{
+    margin-top: 1vw;
+    margin-left: 100%;
+    width: 100%;
+}
+
+#agenda_button{
+    background-color: rgb(75, 70, 70);
+   font-size: 1.6vw;
+    color:white;
+    border-radius: 1vw;
+    padding: 1vw;
+    width: 20%;
+    height: 100%;
+    margin-left: 20%;
+    
+}
+
+.clientes {
+display: flex;
+margin-top: 10%;
+height: 10%;
+width: 80%;
+background: rgba(70, 67, 65, 1);
+border-radius: 4%;
+padding: 4%;
+font-size:1.8vw;
+align-items: center;
+justify-content: center;
+}
+
+
+.imagem_teste{
+display: inline;
+color: white;
+margin-top: -0,6vw;
+width: 3vw;
+height: 3vw;
+border-radius: 2vw;
+margin-left: 0.1vw;
+}
+
+#nome_user{
+font-size: 1vw;
+color: white;
+}
+
+#header_user{
+display: flex;
+margin-right: 2vw;
+}
+
+#img_user{
+display: inline;
+color: white;
+
+margin-right: 0.3vw;
+width: 3vw;
+height: 3vw;
+border-radius: 2vw;
+}
+
+#link_user{
+color:white;
+}
+
+#header_config{    
+}
+
+#imagem{
+height: 1.5vw;
+width: 1.5vw;
+}
+
+a{
+display: flex;
+text-decoration: none;
+}
+
+#imagem_canto_logado{
+width: 30%;
+height: 80%;  
+display: inline;
+}
+
+ /* Menu lateral */
+ .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+
+  .sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidebar a:hover {
+    background-color: #575757;
+  }
+
+  .sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 36px;
+  }
+
+  /* Conteúdo principal */
+  #main-content {    
+    margin-left: 0;
+    transition: margin-left 0.5s;
+  }
+
+  .open-btn {
+    font-size: 1.5vw;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    border: none;
+    margin-right: 0.5vw;
+
+  }
+
+  /* Menu aberto */
+  .menu-aberto {
+    width: 250px;
+  }
+
+  .conteudo-movido {
+    margin-left: 250px;
+  }
+
+
+  #header_inovaworks{
+    color: white;
+    font-size: 1.5vw;
+    font-family: 'moul';    
+    display: flex;
+    
+}
+
+
+
+
+
+#agenda{
+    width: 100%;
+    height: 100%;
+    /* background-color: rgb(59, 59, 59); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #agenda_cabecalho{  
+  width: 60%;
+  height: 12%;  
+  margin-bottom:1.5vw;
+  
+  }
+  
+  
+  #input_agenda{
+    padding: 0.7vw;
+    border-radius:0.4vw ;
+    background: rgba(76, 76, 76, 1);
+    color:white;
+    border: 0.1vw solid 
+    rgba(176, 173, 173, 1);
+    font-family: 'maun';
+  width: 11%;
+  }
+  
+  #input_agenda_marcador{
+    padding: 0.7vw;
+    border-radius:0.4vw ;
+    background: rgba(76, 76, 76, 1);
+    color:white;
+    border: 0.1vw solid 
+    rgba(176, 173, 173, 1);
+    font-family: 'maun';
+    width: 14%;
+  }
+  
+  #button_agenda{
+    padding: 0.7vw;
+    border-radius:0.4vw ;
+    background: rgba(76, 76, 76, 1);
+    color:white;
+   width: 9%;
+    border: 0.1vw solid 
+    rgba(176, 173, 173, 1);
+    font-family: 'maun';
+  }
+  
+  #agenda_corpo{
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 80%;
+  
+  }
+  
+  
+  #item{
+  
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8%; 
+  color: white;
+  font-family: "maun";
+  width: 95%;
+  font-size: 2vw;
+  background: rgb(59, 59, 59);
+  margin-bottom: 1.5%;
+  border-radius: 0.5vw;
+  border: solid 0.1vw white;
+  
+  }
+  
+  #item:hover{
+    cursor: pointer;
+  }
+  
+  #div_bloco{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    color: white;
+  font-family: "maun";
+  top: 9vw;
+    left: 23vw;
+    height: 50%;
+    width: 50%;
+    background-color: gray;
+    border-radius: 2vw;
+    padding: 1vw;
+  }
+  
+  #btn_fechar{
+    background-color: red;
+    width: 1vw;
+    height: 1vw;
+    font-size: 1vw;
+    color:white;
+  }
+  
+  #inicio{
+  
+    width: 100%;
+    height: 10%;
+    background-color: aqua;
+  }
+  
+  #btn_fechado{
+  
+  }
+  
+  #fechar_div_bloco{
+  
+  }
+  #input_agenda_data_inicio{
+  width: 13%;
+  }
+  
+  #input_agenda_data_limite{
+    width: 13%;
+  }
+  
+  .input_agenda_dados{
+    padding: 0.7vw;
+    border-radius:0.4vw ;
+    background: rgba(76, 76, 76, 1);
+    color:white;
+    border: 0.1vw solid 
+    rgba(176, 173, 173, 1);
+    font-family: 'maun';
+    overflow: auto;
+    width: 30%;
+  }
+  
+  
+  #enunciado{
+    font-family: 'maun';
+    color:white;
+  display: flex;
+  width: 100%;
+  
+  }
+  #atv{
+  font-size: 1.5vw;
+  margin-left: 5vw;
+  }
+  
+  #dt_in{
+    font-size: 1.5vw;
+    margin-left: 14.3vw;
+  }
+  
+  #dt_lm{
+    font-size: 1.5vw;
+    margin-left: 4vw;
+  }
+  
+  #marc{
+    font-size: 1.5vw;
+    margin-left: 0.8vw;
+  }
+  
+  #parametros{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  }
+  
+  #topo{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5vw;
+  
+  
+  }

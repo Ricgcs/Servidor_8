@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logo_inteiro.png">
+    <link rel="stylesheet" href="../estilo/inicial_login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title id="titulo"></title>
+</head>
+<body>
+<header id = "cabecalho">
+
+
+
+<h1 id="header_inovaworks">
+  <!-- <div id="menu" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="fecharMenu()">×</a>
+    <a href="../telas/inicial_login.html">Home</a>
+    <a href="../telas/estoque.html">Estoque</a>
+    <a href="../telas/index.html">Servicos</a>
+    <a href="../telas/avaliacao.html">Entregas</a>
+    <a href="../telas/orcamentos_inicial.html">Orcamentos</a>
+    <a href="#">Fluxo de caixa</a>
+
+  </div>
+
+  <div id="main-content">
+    <button class="open-btn" onclick="abrirMenu()">☰</button>
+  </div> -->
+  InovaWorks
+</h1>
+
+
+<div id="header_links">
+<a href="../telas/inicial_login.html"><img id="imagem" src="../img/home.png" alt="menu"><button id="header_button"> Home</button></a>
+<a href="../telas/index.html"><img id="imagem" src="../img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
+<a href="../telas/estoque.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+<a href="#"><img id="imagem" src="../img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
+<a href="#"><img id="imagem" src="../img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
+</div>
+
+<div id="header_user">
+<img id="img_user" src="" alt="imagem_usuario">
+<div id="header_config">
+<h1 id="nome_user"></h1>
+<a id="link_user" href="../telas/config.html">configuração</a>
+</div>
+</a>
+</div>
+
+</header>
+<div id="centro">
+<section id="s1">
+<h1 id="texto_s1"> Outras opções</h1>
+<a href="#"><button id="fluxo_caixa_button"><h1 id="texto_fluxo_caixa">Fluxo de caixa</h1><img id="imagem_canto_logado" src="../img/acoes.png" alt="fluxo_caixa"></button></a>
+
+<a href="../telas/index.html"><button id="servico_button">Serviços<img id="imagem_canto_logado" src="../img/martelinho.png" alt="Serviços"></button></a>
+
+<a href="../telas/avaliacao.html"><button id="entrega_button">Avaliação<img id="imagem_canto_logado" src="../img/frete.png" alt="Avaliação"></button></a>
+
+<a href="../telas/orcamentos_inicial.html"><button id="orcamento_button">Orçamentos<img id="imagem_canto_logado" src="../img/calc.png" alt="Orçamentos"></button></a>
+
+<a href="../telas/estoque.html"><button id="estoque_button">Estoque<img id="imagem_canto_logado" src="../img/armazen.png" alt="estoque"></button></a>
+
+</section>
+
+
+<section id="s2">
+    <img id="imagem_logo_cadastrado" src="../img/logo_inteiro.png" alt="logo">
+<h1 id="nome_cadastrado"></h1>
+</section>
+
+
+<section id="s3">
+    <h1 id="texto_cliente">Anotações</h1>
+    <div id="anotacoes">
+
+
+    </div>
+    <a href="../telas/agenda.html" id="link_agenda"><button id="agenda_button"><i class="bi bi-calendar2-date"></i></button></a>
+</section>
+</div>
+
+
+<script type="text/javascript">
+function logOut(){  
+  if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
+    window.location.href = '../../inicial/front/inicial.html';
+  } 
+}
+
+ 
+function abrirMenu() {
+      document.getElementById("menu").classList.add("menu-aberto");
+      document.getElementById("main-content").classList.add("conteudo-movido");
+    }
+
+    function fecharMenu() {
+      document.getElementById("menu").classList.remove("menu-aberto");
+      document.getElementById("main-content").classList.remove("conteudo-movido");
+    }
+
+    
+ document.addEventListener('DOMContentLoaded', async () => {
+ 
+
+  const loadFromLocalStorage = () => {
+    const cnpj = localStorage.getItem('cnpj') ;
+    const nome = localStorage.getItem('nome') || 'Usuário';
+    const senha = localStorage.getItem('senha');
+  
+ 
+   if(!nome || !senha || !cnpj){
+    alert("faça o login");
+    window.location.href = "../../inicial/front/inicial.html"
+   }
+   
+    const nomeCadastroElement = document.getElementById('nome_cadastrado');
+ 
+    if (nomeCadastroElement) {
+      nomeCadastroElement.innerHTML = `Bem-vindo ${nome}`;
+    }
+ 
+    const nomeUserElement = document.getElementById('nome_user');
+ 
+    if (nomeUserElement) {
+      const primeiroNome = nome.split(" ")[0];
+      nomeUserElement.innerHTML = `${primeiroNome}`;
+    }
+ 
+
+
+  
+    const imgUserElement = document.getElementById('img_user');
+async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/empresa/imagem/${nome}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"../img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    imgUserElement.src = "../img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
+}
+  loadFromLocalStorage();
+
+  const mostrar = async () => {
+        const div = document.getElementById('anotacoes');
+        const prazo = document.createElement('div');
+        const cabeca = document.createElement('div');
+        cabeca.id = "topo"
+        const bt = document.createElement('button');
+        const div_bloco = document.createElement('div');
+
+      
+
+        div.appendChild(div_bloco);
+
+
+        try {
+    const nome = localStorage.getItem('nome') || 'Usuário';
+
+            const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+            const cod = await cod_um.json();
+
+            const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
+            const todos = await todos_um.json();
+
+            todos.forEach((user) => {
+                const div_um = document.createElement("div");
+                div_um.id = "item";
+
+                const div_nome = document.createElement("div");
+                div_nome.textContent = user.marcacao;
+                div_nome.id = "div_nome";
+
+                const div_data = document.createElement("div");
+                div_data.textContent = new Date(user.Data).toLocaleString('pt-BR');
+                div_data.id = "div_data";
+
+                const div_data_limite = document.createElement("div");
+                div_data_limite.textContent = new Date(user.Data_limite).toLocaleString('pt-BR');
+                div_data_limite.id = "div_data_limite";
+
+                const div_obs = document.createElement("div");
+                div_obs.textContent = user.obs;
+                div_obs.id = "div_obs";
+
+                div_um.addEventListener('click', () => {
+    div_bloco.id = "div_bloco";
+
+   
+    div_bloco.innerHTML = "";
+    div_bloco.appendChild(cabeca);
+    cabeca.appendChild(prazo);
+    prazo.textContent = "Data limite: " + new Date(user.Data_limite).toLocaleString('pt-BR');
+    cabeca.appendChild(bt);
+
+    div_bloco.appendChild(div_obs);
+    div_obs.textContent = user.obs;
+
+    bt.textContent = "x";
+    bt.id = "btn_fechar";
+});
+
+bt.addEventListener('click', () => {
+    div_bloco.id = "fechar_div_bloco";
+    div_bloco.textContent = "";
+    bt.textContent = "";
+    bt.id = "btn_fechado";
+});
+
+                div_um.appendChild(div_nome);
+             
+                div.appendChild(div_um);
+            });
+        
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+  await mostrar();
+});
+
+  </script>
+
+</body>
+</html>

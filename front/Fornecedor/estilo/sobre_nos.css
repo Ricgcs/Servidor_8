@@ -1,0 +1,288 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+@font-face {
+    font-family: 'Montserrate';
+    src: url(../fontes/Montserrat-VariableFont_wght.ttf);
+   
+}
+@font-face {
+    font-family: 'moul';
+    src: url(../fontes/Moul-Regular.ttf);
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#link_menu{
+    margin-left: -10vw;
+}
+
+body {
+    position: relative;
+    
+ 
+
+}
+
+body::before {
+    
+    
+content: '';
+ 
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+    
+background: url("../img/estrelado.jpg") no-repeat center center;
+
+background-size: cover;
+
+opacity: 1; /* Opacidade do pseudo-elemento */
+
+z-index: -1; /* Coloca o pseudo-elemento atrás do conteúdo do body */
+}
+#menu {
+
+    background: linear-gradient(360deg,
+        
+    rgba(0, 0, 0, 0.8) 50%, /* Orange with 40% opacity */
+        rgba(255, 77, 0, 0.8) /* Solid Orange */
+    );
+    height: 100%;
+    width: 100%;
+    
+}
+header{
+    color:white;
+padding: 1vw;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+#Nome_header{
+    margin-left: 1vw;
+    font-family:'moul';
+    font-size: 1.3vw;
+}
+
+#div_link_header{
+    display: flex;
+    font-family:'Montserrate';
+}
+
+#Links_header{
+   margin-left: 2vw;
+   font-size: 1vw;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+img{
+    height: 40%;
+    width: 15%;
+ 
+}
+
+#logo_instagram{
+    height: 80%;
+}
+
+#div_img_header{
+    height: 40%;
+    width: 10%;
+}
+
+
+
+#section_corpo{
+    margin-top: -2vw;
+    margin-left: 17%;
+   
+}
+#imagem_corpo{
+    height: 50%;
+    width: 75%;
+    display: flex;
+    opacity:0.5;
+float: right;
+}
+
+#h1_corpo_top{
+    font-size: 4vw;
+}
+
+#h2_corpo_top{
+    font-size:2vw;
+    margin-left: 6.5vw;
+}
+
+#h1_corpo_mid{
+ font-size: 1vw;
+ color: gray;
+ margin-top: 4vw;
+ margin-left: 3vw;
+}
+#h2_corpo_mid{
+    font-size: 1vw;
+    color: gray;
+    margin:0px 0px 0px 18vw;
+}
+
+#corpo_button_cadastrar{
+background: rgba(215, 101, 11, 1);
+padding: 0.7vw;
+font-size: 1vw;
+border-radius:0.4vw ;
+height: 12,5%;
+text-shadow: 0px 0px 1vw white
+}
+
+button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+form{
+    height: 40%;
+    width: 15%;
+    padding: 1vw;
+    border-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(30, 30, 30, 1);
+}
+
+input{
+    padding: 0.7vw;
+    border-radius:0.4vw ;
+    background: rgba(76, 76, 76, 1);
+    color:white;
+    height: 12,5%;
+
+}
+
+#img_form{
+    width: 7%;
+    height: 20%;
+}
+
+#Nome_img{
+    font-family: 'moul';
+}
+
+#cliente_add{
+    font-family: 'Montserrate';
+}
+
+input:hover{
+    border: 0.1vw solid white;
+}
+
+#corpo{
+    height: 80%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    color:white;
+    font-family:'Montserrate';
+    background-color: rgba(255, 255, 255, 0.09);
+    border-radius: 0.3vw;
+    margin-left: 10%;
+    }
+
+#metas{
+    display: flex;
+    width: 100%;
+    height: 75%;
+    justify-content: space-around;
+}
+
+#imagem_foguete{
+
+    background: rgba(30, 30, 30, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    height: 80%;
+    text-align: center;
+    border-radius: 0.4vw;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    padding: 1vw;
+
+
+}
+
+#imagem_pc{
+ 
+    background: rgba(30, 30, 30, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    height: 80%;
+    text-align: center;
+    border-radius: 0.4vw;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    padding: 1vw;
+
+}
+
+#imagem_cadeado{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 20%;
+    height: 80%;
+    background: rgba(30, 30, 30, 1);
+    border-radius: 0.4vw;
+    text-align: center;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    padding: 1vw;
+
+
+}
+
+#texto_img{
+    font-family: 'Montserrate';
+
+}
+
+#pc{
+width: 90%;
+height: 50%;
+margin: 1vw 0 1vw 0;
+
+}
+
+#foguete{
+width: 55%;
+height: 43%;
+margin: 2vw 0 2vw 0;
+
+}
+
+#cadeado{
+width: 80%;
+height: 45%;
+margin: 2vw 0 2vw 0;
+
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../img/logo_inteiro.png">
+ <link rel="stylesheet" href="../estilo/l_fornecedor.css">
+    <title>Login fornecedor</title>
+</head>
+<body>
+    <div id="menu">
+<header>
+    <a><h1 id="Nome_header"><a id="link_menu"href="inicial.html">InovaWorks</a></h1></a>
+
+
+<div id="div_link_header">
+    <a href="#"><h1 id="Links_header">COMPRE AGORA</h1></a>
+        <a href="#"><h1 id="Links_header">PROGRAMA</h1></a>
+            <a href="#"><h1 id="Links_header">VALORES</h1></a>
+        <a href="#"><h1 id="Links_header">CONTATE-NOS</h1></a>
+    <a href="sobre_nos.html"><h1 id="Links_header">SOBRE NÓS</h1></a>
+</div>
+
+
+<div id="div_img_header">
+    <a href="twiter"><img src="../img/twiter.png" alt="twiter"></a>
+        <a href="linkedin"><img src="../img/linkedin.png" alt="linkedin"></a>
+    <a href="instaram"><img id="logo_instagram" src="../img/instagram-removebg-preview (2).png" alt="instagram"></a>
+</div>
+
+</header>
+
+<div id="corpo">
+      <img id="img_form" src="../img/logo_inteiro.png" alt="logo">
+    <h1 id="Nome_img">InovaWorks</h1>
+
+<form id="formFornecedor">
+    <input id="rs" type="text" placeholder="Razão social" name="razao_social" required>
+    <input id="cnpj" type="number" placeholder="CNPJ" name="cnpj" required>
+    <input id="senha" type="password" placeholder="Senha" name="senha" required>
+    <button type="submit" id="corpo_button_cadastrar">Login</button>     
+</form>
+
+
+<h6 id="cliente_add"><a href="./cadastro_fornecedor.html">Cadastro fornecedor</a></h6>
+
+
+</div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById("corpo_button_cadastrar");
+
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            const rs = document.getElementById('rs').value;
+            const cnpj = document.getElementById('cnpj').value;
+            const senha = document.getElementById('senha').value;
+
+            if (!rs || !cnpj || !senha) {
+                alert("Preencha todos os campos");
+                return; 
+            }
+
+            try {
+                localStorage.setItem("rs", rs);
+                localStorage.setItem("cnpj", cnpj);
+                localStorage.setItem("senha", senha);                
+
+
+                const form = document.getElementById('formFornecedor');    
+                const formData = new FormData(form);
+                console.log("rs: " + rs);
+                console.log("cnpj: " + cnpj);
+                console.log("senha: " + senha);
+                const response = await fetch(`http://localhost:3000/fornecedor/logar`,{
+                    method: 'POST',
+                    body: formData,
+                });
+
+                     const data = await response.json();
+
+                    if (data.result == 1) {
+                        window.location.href = "../../Fornecedor/telas/inicial_login.html";                    
+                    }
+                     else {
+                        alert("Oops algo errado");
+                    }
+            }
+            catch (error) {
+                console.log("Erro na requisição: " + error.message);
+                console.log("rs: " + rs);
+                console.log("cnpj: " + cnpj);
+                console.log("senha: " + senha);
+               
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -7,11 +7,13 @@ import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../bac
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
+import { getFornecedor, login_fornecedor, nomeCod_fornecedor, procurarForn, procurarImagem_fornecedor, setForn, validarFornecedor } from "./controle/fornecedor.js";
 import { __dirname } from "../nomeArquivo.js";
 import { mostrarTarefas, salvar } from "./controle/agenda_empresa.js";
 import path from 'path';
 import cors from 'cors';
 import multer from 'multer';
+
 
 
 
@@ -30,6 +32,174 @@ app.use(cors());
 
 
 
+
+
+
+//-----------------------------------------------Fornecedor------------------------------------------------------------\\
+app.get('/fornecedor/validar', async (req, res) => {
+    let cnpj = Number(req.body.cnpj);
+
+    try {
+        const count = await validarFornecedor(cnpj);
+        if (count == 0) {
+            res.send("funciona");
+        } else {
+            res.send(`Empresa já existente: cnpj(${cnpj}) `);
+            console.log(`Empresa já existente: cnpj(${cnpj}) `);
+        }
+    } catch (error) {
+        res.status(500).send('Erro ao validar empresa.');
+    }
+});
+
+app.get('/fornecedor/cod/:nome', async (req, res) => {
+    const rs = req.params.rs;  
+    
+    try {
+    
+      const response = await nomeCod_fornecedor(rs);    
+     console.log(response);
+      res.json(response);
+     
+    } catch (error) {
+      console.log("Erro ao buscar o cod:", error);
+      console.log("Nome:", nome);
+      
+      res.status(500).send('Erro ao processar o cod');
+    }
+  });   
+
+
+
+app.get('/fornecedor/imagem/:nome', async (req, res) => {
+    const nome = req.params.nome;
+    
+    
+    try {
+    
+      const response = await procurarImagem_fornecedor(nome);    
+
+        res.set('Content-type', 'image/jpg');
+        res.send(response[0].imagen); 
+     
+    } catch (error) {
+      console.log("Erro ao buscar a imagem:", error);
+      console.log("Nome:", nome);
+      
+      res.status(500).send('Erro ao processar a solicitação');
+    }
+  });
+
+app.post('/fornecedor',upload.single('img'), async (req, res) => {
+
+
+    console.log('teste funciona')
+    const nome_fantasia = req.body.nome_fantasia;
+    const razao_social = req.body.razao_social;
+    const email = req.body.email;
+    const cnpj = Number(req.body.cnpj);
+    const senha = req.body.senha;   
+    const cep = req.body.cep;  
+    const estado = req.body.senha;   
+    const cidade = req.body.senha;   
+    const bairro = req.body.senha;   
+    const telefone = req.body.telefone;   
+
+    const img = req.file;
+    console.log('teste funciona 2')
+    
+    let fornData = { razao_social, nome_fantasia, cnpj, telefone, cep, email, estado, cidade, bairro, senha, img };
+     
+    try {
+
+        const validar = await validarFornecedor(cnpj);    
+       if(validar == 1)
+        {
+        return res.status(200).json(2);
+       }
+
+        await setForn(fornData);
+        console.log(fornData)
+        res.status(200).send('Fornecedor cadastrado com sucesso!');
+    } catch (error) {
+    console.log('teste funciona 4')
+
+        console.error('Erro ao cadastrar fornecedor:', error);
+        res.status(500).send('Erro ao cadastrar fornecedor.');
+    }
+});
+
+
+app.get('/fornecedor/mostrar', async (req, res) => {
+    const { what,valor, nome} = req.body; 
+console.log(valor, nome)
+    try {
+        const resultado = await procurar({ what, valor, nome});
+        res.status(200).json({ data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar fornecedor: ", error: error.message });
+    }
+});
+
+
+app.get('/fornecedor/mostrar/:what/:valor/:nome', async (req, res) => {
+    const what= req.params.what; 
+    const valor = req.params.valor; 
+    const nome = req.params.nome; 
+
+    try {
+       
+        const resultado = await procurarForn({ what, valor, nome});
+        const name = resultado.Nome;
+    
+  
+        //res.status(200).json({data:name});
+        res.status(200).send({data:name});
+     
+    } catch (error) {
+
+        res.status(500).json({ message: "Erro ao procurar empresa no servidor", error: error.message });
+    }
+});
+
+
+app.get('/fornecedor/mostrar_todos', async (req, res) => {
+    try {
+      const fornecedor = await getFornecedor();  
+      console.log('Fornecedores encontrados:', fornecedor); 
+      res.status(200).json(fornecedor);  
+    } catch (error) {
+      console.error('Erro ao buscar todos os fornecedores:', error);
+      res.status(500).json({ message: "Erro ao buscar todos os fornecedores", error: error.message });
+    }
+  });
+
+
+  app.post('/fornecedor/logar', async (req, res) => {
+    const rs = req.body.razao_social;
+    const cnpj = Number(req.body.cnpj);
+    const senha = req.body.senha;
+    console.log("Dados recebidos no servidor:", { rs, cnpj, senha });
+    let envio = { rs, cnpj, senha };
+
+    try {
+
+     
+
+        const teste = await login_fornecedor(envio.rs, envio.cnpj, envio.senha);
+        console.log("teste:", envio)
+        if (teste == 1) {
+            return res.status(200).json(1);
+        }
+        else{
+            return res.status(200).json(0)
+        }
+    } 
+    catch (err) {
+        console.error(err);
+        return res.status(500).send('Erro no servidor');
+    }
+});
 //-----------------------------------------------Agenda_empresa------------------------------------------------------------\\
 
 app.get('/agenda_empresa/:cod/:data_inicio/:data_limite/:obs/:marcacao',async (req, res) => {
