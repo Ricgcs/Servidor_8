@@ -14,7 +14,7 @@
 
 
 <h1 id="header_inovaworks">
-  <!-- <div id="menu" class="sidebar">
+  <div id="menu" class="sidebar">
     <a href="javascript:void(0)" class="close-btn" onclick="fecharMenu()">×</a>
     <a href="../telas/inicial_login.html">Home</a>
     <a href="../telas/estoque.html">Estoque</a>
@@ -27,7 +27,7 @@
 
   <div id="main-content">
     <button class="open-btn" onclick="abrirMenu()">☰</button>
-  </div> -->
+  </div>
   InovaWorks
 </h1>
 
@@ -52,7 +52,7 @@
 </header>
 <div id="centro">
 <section id="s1">
-<h1 id="texto_s1"> Outras opções</h1>
+<h1 id="texto_s1">Pedidos</h1>
 <a href="#"><button id="fluxo_caixa_button"><h1 id="texto_fluxo_caixa">Fluxo de caixa</h1><img id="imagem_canto_logado" src="../img/acoes.png" alt="fluxo_caixa"></button></a>
 
 <a href="../telas/index.html"><button id="servico_button">Serviços<img id="imagem_canto_logado" src="../img/martelinho.png" alt="Serviços"></button></a>
@@ -108,12 +108,14 @@ function abrirMenu() {
 
   const loadFromLocalStorage = () => {
     const cnpj = localStorage.getItem('cnpj') ;
-    const nome = localStorage.getItem('nome') || 'Usuário';
+    const nome = localStorage.getItem('rs') || 'Usuário';
     const senha = localStorage.getItem('senha');
   
  
    if(!nome || !senha || !cnpj){
-    alert("faça o login");
+    alert(nome);
+    alert(senha);
+    alert(cnpj);
     window.location.href = "../../inicial/front/inicial.html"
    }
    
@@ -136,7 +138,7 @@ function abrirMenu() {
     const imgUserElement = document.getElementById('img_user');
 async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/empresa/imagem/${nome}`);
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nome}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {

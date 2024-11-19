@@ -75,14 +75,14 @@
                 console.log("rs: " + rs);
                 console.log("cnpj: " + cnpj);
                 console.log("senha: " + senha);
-                const response = await fetch(`http://localhost:3000/fornecedor/logar`,{
+                const response = await fetch('http://localhost:3000/fornecedor/logar', {
                     method: 'POST',
-                    body: formData,
-                });
-
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ razao_social: rs, cnpj, senha }),
+});
                      const data = await response.json();
-
-                    if (data.result == 1) {
+                    console.log("data",data)
+                    if (data == 1) {
                         window.location.href = "../../Fornecedor/telas/inicial_login.html";                    
                     }
                      else {

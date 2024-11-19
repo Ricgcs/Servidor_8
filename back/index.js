@@ -25,6 +25,7 @@ const storage = multer.memoryStorage();
 const upload  = multer({storage:storage});
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'front')));
@@ -179,26 +180,26 @@ app.get('/fornecedor/mostrar_todos', async (req, res) => {
     const rs = req.body.razao_social;
     const cnpj = Number(req.body.cnpj);
     const senha = req.body.senha;
-    console.log("Dados recebidos no servidor:", { rs, cnpj, senha });
+    console.log("Dados recebidos no servidor:", req.body);
     let envio = { rs, cnpj, senha };
 
     try {
 
-     
-
         const teste = await login_fornecedor(envio.rs, envio.cnpj, envio.senha);
-        console.log("teste:", envio)
-        if (teste == 1) {
+        console.log("teste:", envio);
+
+        if (teste == 1){
             return res.status(200).json(1);
         }
+
         else{
-            return res.status(200).json(0)
+            return res.status(200).json(0);
         }
     } 
-    catch (err) {
+    catch(err){
         console.error(err);
         return res.status(500).send('Erro no servidor');
-    }
+        }
 });
 //-----------------------------------------------Agenda_empresa------------------------------------------------------------\\
 
