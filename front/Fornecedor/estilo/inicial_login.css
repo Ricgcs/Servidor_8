@@ -62,12 +62,7 @@ section{
     height: 80%;
 }
 
-#s1{
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-   }
+
 
 #s2{
    width: 50%;
@@ -182,8 +177,7 @@ section{
     border-radius: 4%;
     color: white;
     overflow: auto;
-    padding: 0.5vw;  
-    
+    padding: 0.5vw;      
 }
 
 #texto_cliente{
@@ -526,7 +520,34 @@ display: inline;
   height: 20%;
   display: flex;
   justify-content: space-between;
-  font-size: 1.5vw;
-  
+  font-size: 1.5vw; 
   
   }
+
+  #s1{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+   }
+
+   
+#texto_pedidos{
+  color:white;
+  font-size: 2vw;
+  margin-top: 2vw;
+}
+  #pedidos{
+    background-color: rgb(150, 62, 12);
+    height: 75%;
+    width: 75%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+    border-radius: 4%;
+    color: white;
+    overflow: auto;
+    padding: 0.5vw;      
+}

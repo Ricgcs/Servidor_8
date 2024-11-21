@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`empresa` (
   `Imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -106,9 +106,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fornecedor` (
   `cidade` VARCHAR(60) NOT NULL,
   `bairro` VARCHAR(60) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `imagen` LONGBLOB NULL,
+  `imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -117,11 +118,11 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`agenda_fornecedor` (
   `Cod_agenda` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
   `Data` DATETIME NOT NULL,
   `obs` VARCHAR(300) NOT NULL,
   `marcacao` VARCHAR(255) NOT NULL,
   `Data_limite` DATETIME NOT NULL,
-  `fornecedor_cod` INT NOT NULL,
   PRIMARY KEY (`Cod_agenda`, `fornecedor_cod`),
   INDEX `fk_agenda_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
   CONSTRAINT `fk_agenda_fornecedor_fornecedor1`
@@ -195,10 +196,39 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`produto_fornecedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`produto_fornecedor` (
+  `Cod_produto` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
+  `Nome` VARCHAR(120) NOT NULL,
+  `valor` FLOAT NOT NULL,
+  `Quantidade` INT NOT NULL,
+  `Altura` FLOAT NOT NULL,
+  `Comprimento` FLOAT NOT NULL,
+  `Largura` FLOAT NOT NULL,
+  `si_altura` VARCHAR(45) NOT NULL,
+  `si_comprimento` VARCHAR(45) NOT NULL,
+  `si_largura` VARCHAR(45) NOT NULL,
+  `Data` DATE NOT NULL,
+  `observacao` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`),
+  INDEX `fk_produto_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  CONSTRAINT `fk_produto_fornecedor_fornecedor1`
+    FOREIGN KEY (`fornecedor_cod`)
+    REFERENCES `mydb`.`fornecedor` (`cod`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`compras_medidas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`compras_medidas` (
   `Cod_produto` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
+  `produto_fornecedor_Cod_produto` INT NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   `Fornecedor` VARCHAR(120) NOT NULL,
   `Altura` FLOAT NOT NULL,
@@ -210,8 +240,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_medidas` (
   `Quantidade` INT NOT NULL,
   `Valor` FLOAT NOT NULL,
   `Data` DATE NOT NULL,
-  PRIMARY KEY (`Cod_produto`),
+  `ICMS` INT NOT NULL,
+  `COFINS` INT NOT NULL,
+  `IPI` INT NOT NULL,
+  `PIS` INT NOT NULL,
+  `estado` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_fornecedor_Cod_produto`),
   INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_compras_medidas_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  INDEX `fk_compras_medidas_produto_fornecedor1_idx` (`produto_fornecedor_Cod_produto` ASC) VISIBLE,
+  CONSTRAINT `fk_compras_medidas_fornecedor1`
+    FOREIGN KEY (`fornecedor_cod`)
+    REFERENCES `mydb`.`fornecedor` (`cod`),
+  CONSTRAINT `fk_compras_medidas_produto_fornecedor1`
+    FOREIGN KEY (`produto_fornecedor_Cod_produto`)
+    REFERENCES `mydb`.`produto_fornecedor` (`Cod_produto`),
   CONSTRAINT `fk_Produto_Empresa100`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -221,17 +264,53 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`produto_quantidade_fornecedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`produto_quantidade_fornecedor` (
+  `Cod_produto` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
+  `Nome` VARCHAR(120) NOT NULL,
+  `valor` FLOAT NOT NULL,
+  `Quantidade` INT NOT NULL,
+  `Data` DATE NOT NULL,
+  `observacao` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`),
+  INDEX `fk_produto_quantidade_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  CONSTRAINT `fk_produto_quantidade_fornecedor_fornecedor1`
+    FOREIGN KEY (`fornecedor_cod`)
+    REFERENCES `mydb`.`fornecedor` (`cod`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`compras_quantidade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`compras_quantidade` (
   `Cod_produto` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
+  `produto_quantidade_fornecedor_Cod_produto` INT NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   `Fornecedor` VARCHAR(120) NOT NULL,
   `Quantidade` INT NOT NULL,
   `Valor` FLOAT NOT NULL,
   `Data` DATE NOT NULL,
-  PRIMARY KEY (`Cod_produto`),
+  `ICMS` INT NOT NULL,
+  `COFINS` INT NOT NULL,
+  `IPI` INT NOT NULL,
+  `PIS` INT NOT NULL,
+  `estado` VARCHAR(45) NULL,
+  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_quantidade_fornecedor_Cod_produto`),
   INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_compras_quantidade_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  INDEX `fk_compras_quantidade_produto_quantidade_fornecedor1_idx` (`produto_quantidade_fornecedor_Cod_produto` ASC) VISIBLE,
+  CONSTRAINT `fk_compras_quantidade_fornecedor1`
+    FOREIGN KEY (`fornecedor_cod`)
+    REFERENCES `mydb`.`fornecedor` (`cod`),
+  CONSTRAINT `fk_compras_quantidade_produto_quantidade_fornecedor1`
+    FOREIGN KEY (`produto_quantidade_fornecedor_Cod_produto`)
+    REFERENCES `mydb`.`produto_quantidade_fornecedor` (`Cod_produto`),
   CONSTRAINT `fk_Produto_Empresa1000`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
