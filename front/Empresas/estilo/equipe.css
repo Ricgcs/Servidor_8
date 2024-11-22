@@ -1,0 +1,282 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+body{
+    background-color: #0A0403;
+   position: fixed;
+    width:100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+@font-face {
+    font-family: 'Montserrate';
+    src: url(../fontes/Montserrat-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: "moul";
+    src: url(../fontes/Moul-Regular.ttf);
+}
+
+#cabecalho{
+    
+    background-color: black;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vw;
+}
+
+#header_inovaworks{
+    color: white;
+    font-size: 1.5vw;
+    font-family: 'moul';
+    
+}
+
+#header_links{
+
+width: 30%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-left: 1vw;
+
+}
+
+#header_button{
+    text-decoration: none;
+    background-color: transparent;
+    color: white;
+    font-family: 'Montserrate';
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+
+.imagem_teste{
+    display: inline;
+    color: white;
+margin-top: -0,6vw;
+width: 15%;
+margin-left: 10%;
+
+
+}
+
+#nome_user{
+    font-size: 1vw;
+    color: white;
+    }
+    
+    #header_user{
+        display: flex;
+        margin-right: 3vw;
+        }
+        
+        #img_user{
+        display: inline;
+        color: white;
+        margin-top: -0.6vw;
+        margin-right: 0.3vw;
+        width: 3vw;
+        height: 3vw;
+        border-radius: 2vw;
+        }
+    
+    #link_user{
+    color:white;
+    }
+    
+    #header_config{    
+    }
+    
+    #imagem{
+    height: 1.5vw;
+    width: 1.5vw;
+    }
+a{
+display: flex;
+text-decoration: none;
+}
+
+
+
+#testea{
+    height: 20%;
+    width: 25%;
+   
+}
+
+#testeb{
+  height: 20%;
+  width: 25%;
+  margin-left: 8vw;
+ 
+}
+#corpo{
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    
+ 
+}
+
+
+
+#barra_lateral{
+   
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+   
+
+}
+
+#button_cargo{
+    font-size: 2vw;
+    background-color: transparent;
+    margin-bottom: 2vw;
+    margin-top: 10%;
+    color: white;
+}
+
+#button_funcionario{
+    font-size: 2vw;
+    background-color: transparent;
+    margin-bottom: 2vw;
+    color: white;
+
+
+}
+
+#button_fornecedor{
+    font-size: 2vw;
+    background-color: transparent;
+    margin-bottom: 2vw;
+    color: white;
+
+}
+
+
+.hover-bar {
+    position: relative;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s; 
+}
+
+.hover-bar::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: white; 
+    transition: width 0.3s ease-in-out; 
+}
+
+.hover-bar:hover::after {
+    width: 100%; 
+}
+
+.hover-bar:hover {
+    color: #ffebcd; 
+}
+
+
+.custom-hr {
+    width: 0; 
+    height: 100%; 
+    border: none;
+    border-left: 2px solid rgb(252, 252, 252); 
+    margin: 0; 
+    position: fixed;
+    left: 15%;
+  }
+
+
+    #cabeca_connteudo{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: 12.5%;
+    }
+
+
+img{
+    background-color: transparent;
+}
+
+
+    #pesq{
+      
+        display: flex;
+        height: 100%;
+        
+   
+    }   
+
+    #pesquisa_lupa{
+        background-color: transparent;
+        display: flex;
+        height: 50%;
+        rotate: -60deg ;
+    }
+
+    
+    #input_pesquisa_conteudo{
+        
+        padding: 0.7vw;
+        border-radius:0.4vw ;
+        background: rgba(76, 76, 76, 1);
+        color:white;
+        height: 10%;
+        width: 70%;
+        border: 0.1vw solid  rgba(176, 173, 173, 1);
+        font-family: 'maun';
+        display: flex;
+    
+}
+
+
+
+#pesquisa {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    width: 100%; 
+    height: 100%; 
+}
+
+/* #btn_pesq{
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 1vw;
+display: flex;
+
+} */
+
+#div_btn_pesq{
+display: flex;
+}
+
+
+#conteudo{
+    width: 85%;
+    }
