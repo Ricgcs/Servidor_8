@@ -717,10 +717,10 @@ app.get('/produto/mostrar_todos', async (req, res) => {
 //-----------------------------------------------Cargo--------------------------------------------------------\\
 
 app.post('/cargo', async (req, res) => {
-    const {Nome, Salario, Cod_empresa } = req.body;
+    const {Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque} = req.body;
 
     try {
-        const resultado = await setCarg({Nome, Salario, Cod_empresa });
+        const resultado = await setCarg({Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque});
         res.status(201).json({ message: "Cargo criado com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar o cargo", error: error.message });

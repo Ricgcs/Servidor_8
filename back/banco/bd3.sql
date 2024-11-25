@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`empresa` (
   `Imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cliente` (
   `Empresa_Cod_empresa` INT NOT NULL,
   `imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_cliente`),
-  INDEX `fk_Cliente_Empresa_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_Cliente_Empresa_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Cliente_Empresa`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`agenda_cliente` (
   `Data` DATE NOT NULL,
   `obs` VARCHAR(300) NOT NULL,
   PRIMARY KEY (`Cod_agenda`, `cliente_Cod_cliente`),
-  INDEX `fk_Agenda_empresa_copy1_cliente1_idx` (`cliente_Cod_cliente` ASC) ,
+  INDEX `fk_Agenda_empresa_copy1_cliente1_idx` (`cliente_Cod_cliente` ASC) VISIBLE,
   CONSTRAINT `fk_Agenda_empresa_copy1_cliente1`
     FOREIGN KEY (`cliente_Cod_cliente`)
     REFERENCES `mydb`.`cliente` (`Cod_cliente`))
@@ -82,12 +82,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`agenda_empresa` (
   `marcacao` VARCHAR(255) NOT NULL,
   `Data_limite` DATETIME NOT NULL,
   PRIMARY KEY (`Cod_agenda`),
-  INDEX `fk_Agenda_empresa_empresa1_idx` (`empresa_Cod_empresa` ASC) ,
+  INDEX `fk_Agenda_empresa_empresa1_idx` (`empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Agenda_empresa_empresa1`
     FOREIGN KEY (`empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 23
+AUTO_INCREMENT = 24
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fornecedor` (
   `imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`agenda_fornecedor` (
   `marcacao` VARCHAR(255) NOT NULL,
   `Data_limite` DATETIME NOT NULL,
   PRIMARY KEY (`Cod_agenda`, `fornecedor_cod`),
-  INDEX `fk_agenda_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) ,
+  INDEX `fk_agenda_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
   CONSTRAINT `fk_agenda_fornecedor_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`))
@@ -141,8 +141,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cargo` (
   `Empresa_Cod_empresa` INT NOT NULL,
   `Nome` VARCHAR(45) NOT NULL,
   `Salario` VARCHAR(45) NOT NULL,
+  `Equipe` TINYINT NOT NULL,
+  `fluxo_caixa` TINYINT NULL,
+  `servicos` TINYINT NULL,
+  `orcamentos` TINYINT NULL,
+  `estoque` TINYINT NULL,
   PRIMARY KEY (`Cod_cargo`),
-  INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_cargo_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -164,8 +169,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
   `cargo_Cod_cargo` INT NOT NULL,
   `senha` VARCHAR(35) NOT NULL,
   PRIMARY KEY (`Cod_funcionario`),
-  INDEX `fk_funcionario_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
-  INDEX `fk_funcionario_cargo1_idx` (`cargo_Cod_cargo` ASC) ,
+  INDEX `fk_funcionario_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_funcionario_cargo1_idx` (`cargo_Cod_cargo` ASC) VISIBLE,
   CONSTRAINT `fk_funcionario_cargo1`
     FOREIGN KEY (`cargo_Cod_cargo`)
     REFERENCES `mydb`.`cargo` (`Cod_cargo`),
@@ -186,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`agenda_funcionario` (
   `Data` DATE NOT NULL,
   `obs` VARCHAR(300) NOT NULL,
   PRIMARY KEY (`Cod_agenda`, `funcionario_Cod_funcionario`),
-  INDEX `fk_Agenda_funcionario_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) ,
+  INDEX `fk_Agenda_funcionario_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) VISIBLE,
   CONSTRAINT `fk_Agenda_funcionario_funcionario1`
     FOREIGN KEY (`funcionario_Cod_funcionario`)
     REFERENCES `mydb`.`funcionario` (`Cod_funcionario`))
@@ -213,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto_fornecedor` (
   `Data` DATE NOT NULL,
   `observacao` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`, `fornecedor_cod`),
-  INDEX `fk_produto_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) ,
+  INDEX `fk_produto_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
   CONSTRAINT `fk_produto_fornecedor_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`))
@@ -246,9 +251,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_medidas` (
   `PIS` INT NOT NULL,
   `estado` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_fornecedor_Cod_produto`),
-  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
-  INDEX `fk_compras_medidas_fornecedor1_idx` (`fornecedor_cod` ASC) ,
-  INDEX `fk_compras_medidas_produto_fornecedor1_idx` (`produto_fornecedor_Cod_produto` ASC) ,
+  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_compras_medidas_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  INDEX `fk_compras_medidas_produto_fornecedor1_idx` (`produto_fornecedor_Cod_produto` ASC) VISIBLE,
   CONSTRAINT `fk_compras_medidas_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`),
@@ -275,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto_quantidade_fornecedor` (
   `Data` DATE NOT NULL,
   `observacao` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`, `fornecedor_cod`),
-  INDEX `fk_produto_quantidade_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) ,
+  INDEX `fk_produto_quantidade_fornecedor_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
   CONSTRAINT `fk_produto_quantidade_fornecedor_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`))
@@ -300,11 +305,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_quantidade` (
   `COFINS` INT NOT NULL,
   `IPI` INT NOT NULL,
   `PIS` INT NOT NULL,
-  `estado` VARCHAR(45) NULL,
+  `estado` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_quantidade_fornecedor_Cod_produto`),
-  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
-  INDEX `fk_compras_quantidade_fornecedor1_idx` (`fornecedor_cod` ASC) ,
-  INDEX `fk_compras_quantidade_produto_quantidade_fornecedor1_idx` (`produto_quantidade_fornecedor_Cod_produto` ASC) ,
+  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_compras_quantidade_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  INDEX `fk_compras_quantidade_produto_quantidade_fornecedor1_idx` (`produto_quantidade_fornecedor_Cod_produto` ASC) VISIBLE,
   CONSTRAINT `fk_compras_quantidade_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`),
@@ -332,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`orcamento` (
   `Data_entrega` DATE NULL DEFAULT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   PRIMARY KEY (`Cod_orcamento`),
-  INDEX `fk_Orcamento_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_Orcamento_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Orcamento_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
@@ -353,9 +358,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`os` (
   `Data_inicio` DATE NOT NULL,
   `Data_fim` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_os`, `funcionario_Cod_funcionario`, `empresa_Cod_empresa`, `cliente_Cod_cliente`),
-  INDEX `fk_os_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) ,
-  INDEX `fk_os_empresa1_idx` (`empresa_Cod_empresa` ASC) ,
-  INDEX `fk_os_cliente1_idx` (`cliente_Cod_cliente` ASC) ,
+  INDEX `fk_os_funcionario1_idx` (`funcionario_Cod_funcionario` ASC) VISIBLE,
+  INDEX `fk_os_empresa1_idx` (`empresa_Cod_empresa` ASC) VISIBLE,
+  INDEX `fk_os_cliente1_idx` (`cliente_Cod_cliente` ASC) VISIBLE,
   CONSTRAINT `fk_os_cliente1`
     FOREIGN KEY (`cliente_Cod_cliente`)
     REFERENCES `mydb`.`cliente` (`Cod_cliente`),
@@ -387,12 +392,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto` (
   `Data` DATE NOT NULL,
   `observacao` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`),
-  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Produto_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -408,12 +413,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto_quantidade` (
   `Data` DATE NOT NULL,
   `observacao` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_produto`),
-  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) ,
+  INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_Produto_Empresa11`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
 
 

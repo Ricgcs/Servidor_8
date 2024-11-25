@@ -15,12 +15,12 @@ export const getCarg = async () => {
     }
 };
 
-export const setCarg = async ({Nome, Salario, Cod_empresa }) => {
+export const setCarg = async ({Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque}) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO cargo (Nome, Salario, Empresa_Cod_empresa )VALUES (?, ?, ?)',
-            [Nome, Salario, Cod_empresa ]
+            'INSERT INTO cargo (Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque]
         );
         return result;
     } catch (error) {

@@ -129,27 +129,167 @@ document.addEventListener('DOMContentLoaded', () => {
     const div_header = document.createElement("div");
     div_header.id = "div_header";
 
+    const texto_header = document.createElement("h1");
+    texto_header.id = "texto_header";
 
+    const texto_header_barra = document.createElement("hr");
+    texto_header_barra.id = "texto_header_barra";
+
+
+    const div0 = document.createElement("div");
+    div0.id = "div0";
+
+    const div1 = document.createElement("div");
+    div1.id = "div1";
+
+    const div2 = document.createElement("div");
+    div2.id = "div2";
+
+    const div3 = document.createElement("div");
+    div3.id = "div3";
+
+
+    
+    const diva = document.createElement("div");
+    diva.id = "diva";
+
+    const divb = document.createElement("div");
+    divb.id = "divb";
+
+    const divc = document.createElement("div");
+    divc.id = "divc";
+
+    const divd = document.createElement("div");
+    divd.id = "divd";
+
+    const dive = document.createElement("div");
+    dive.id = "dive";
+
+    
+
+    const input1 = document.createElement('input');
+    input1.id = "input1";
+    input1.type = 'checkbox';
+
+    const input2 = document.createElement('input');
+    input2.id = "input2";
+    input2.type = 'checkbox';
+
+    const input3 = document.createElement('input');
+    input3.id = "input3";
+    input3.type = 'checkbox';
+
+    const input4 = document.createElement('input');
+    input4.id = "input4";
+    input4.type = 'checkbox';
+
+    const input5 = document.createElement('input');
+    input5.id = "input5";
+    input5.type = 'checkbox';
+
+    const input6 = document.createElement('input');
+    input6.id = "input6";
+    input6.type = 'checkbox';
+
+     const h11 =document.createElement("h1");
+     h11.id = "h11";
+
+    const h12 =document.createElement("h1");
+     h12.id = "h12";
+
+     const h13 =document.createElement("h1");
+     h13.id = "h13";
+
+     const h14 =document.createElement("h1");
+     h14.id = "h14";
+
+     const h15 =document.createElement("h1");
+     h15.id = "h15";
+    
  const cadastros = async ()=>{
     const tela = document.getElementById('corpo_conteudo');
     const div_cadastro = document.createElement('div');
     div_cadastro.id = "div_cadastro";
 
+
     btn_cargo.addEventListener('click',()=>{
-        tela.innerHTML = "";
-        
-
-
+     
+        tela.innerHTML = "";     
         tela.appendChild(div_cadastro);
-        div_cadastro.appendChild(div_header)
-        div_header.textContent = "Cadastro cargo";
+        div_cadastro.appendChild(div_header);
+        div_header.appendChild(texto_header);
+        texto_header.textContent ="Cadastro cargo";
+        texto_header.appendChild(texto_header_barra);
         div_cadastro.appendChild(input_cargo_nome);
         div_cadastro.appendChild(input_cargo_salario);
         div_cadastro.appendChild(button_cadastro);
         div_cadastro.appendChild(button_visualizar);
+        div_cadastro.appendChild(div0);
+
+        div0.appendChild(div1);
+        div1.appendChild(diva);
+        div1.appendChild(divb);
+        diva.appendChild(input1);
+        diva.appendChild(h11);
+        h11.textContent = "Estoque";
+        
+        divb.appendChild(input2);
+        divb.appendChild(h12);
+        h12.textContent = "Orçamento"
+
+        div0.appendChild(div2);
+        div2.appendChild(divc);
+        div2.appendChild(divd);
+
+        divc.appendChild(input3);
+        divc.appendChild(h13);
+        h13.textContent = "Serviços";
+
+        divd.appendChild(input4);
+        divd.appendChild(h14);
+        h14.textContent = "Equipe";
+
+        div0.appendChild(div3);
+        div3.appendChild(dive)
+        dive.appendChild(input5);
+        dive.appendChild(h15);
+        h15.textContent = "Fluxo de caixa";
+        dive.appendChild(input6);
+
+        button_cadastro.addEventListener("click", async ()=>{
+            
+            //Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque
+            try {
+                    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+                const cod_empr = await cod_um.json();
+console.log(cod_empr);
+                    const response = await fetch(`http://localhost:3000/cargo/${cod_empr}/${nome_cargo}/${Salario}/${Equipe}/${fluxo_caixa}/${servicos}/${orcamentos}/${estoque}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                   
+                    if (response.ok) {
+                        
+                        const result = await response.json();
+                        alert(result.message); 
+                    } else {
+                        alert('Erro ao adicionar produto');
+                        console.log(response)
+                    }
+
+                } catch (error) {
+                    console.error('Erro na requisição:', error);
+                    alert('Erro do lado do servidor');
+                }
+            })     
+       
     });
 
- }
+
+
+}
 
 cadastros();
   

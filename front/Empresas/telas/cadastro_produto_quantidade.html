@@ -145,8 +145,8 @@ console.log(data);
                 try {
                     const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
                 const cod_empr = await cod_um.json();
-console.log(cod_empr);
-                    const response = await fetch(`http://localhost:3000/produto_quantidade/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`, {
+console.log(cod_empr);                                                       
+                    const response = await fetch(`http://localhost:3000/cargo/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
