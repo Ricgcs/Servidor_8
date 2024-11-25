@@ -48,8 +48,13 @@
             <button id="pesquisa_lupa"><img src="../img/lupa.png" id="pesq"></button>
         </div>
 
+    
+
     </div>
 
+    <div id="corpo_conteudo">
+
+    </div>
    </div>
 </div>
 
@@ -98,117 +103,56 @@ document.addEventListener('DOMContentLoaded', () => {
     
     loadFromLocalStorage();
 
-    const btn = document.getElementById("button_agenda");
 
-    btn.addEventListener("click", async()=>{
-        const marcacao = document.getElementById('input_agenda_marcador').value;
-        const dados = document.getElementById('input_agenda_dados').value;
-        const data_inicio = document.getElementById('input_agenda_data_inicio').value;
-        const data_limite = document.getElementById('input_agenda_data_limite').value;
-        const nome = localStorage.getItem("nome");
-  const dataInicioFormatada = data_inicio.toLocaleString('pt-BR');
-  const dataLimiteFormatada = data_limite.toLocaleString('pt-BR');
-        if(!marcacao || !dados || !data_inicio || !data_limite){
-            alert("Preencha todos os capos");
-            return
-         }
-try{
-    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
-    const cod = await cod_um.json();
-       
-   
-      const response = await fetch(`http://localhost:3000/agenda_empresa/${cod}/${dataInicioFormatada}/${dataLimiteFormatada}/${dados}/${marcacao}`);
-      window.location.reload();
-}
+    const btn_cargo = document.getElementById('button_cargo');
+    const btn_funcionario = document.getElementById('button_funcionario');
+    const btn_fornecedor = document.getElementById('button_fornecedor');
 
-catch(error)
- {
- console.log(error);
- }
-})
+    const input_cargo_nome = document.createElement("input");
+    input_cargo_nome.id ="input_cargo_nome";
+    input_cargo_nome.placeholder = "Nome do cargo";
+
+    const input_cargo_salario = document.createElement("input");
+    input_cargo_salario.id ="input_cargo_salario";
+    input_cargo_salario.placeholder = "Quantidade salário";
+    input_cargo_salario.type = "number";
+
+    const button_cadastro= document.createElement("button");
+    button_cadastro.id ="button_cadastro";
+    button_cadastro.textContent = "Cadastrar";
+
+    const button_visualizar = document.createElement("button");
+    button_visualizar.id ="button_visualizar";
+    button_visualizar.textContent = "Vizualizar";
 
 
-const mostrar = async () => {
-        const div = document.getElementById('agenda_corpo');
-        const prazo = document.createElement('div');
-        const cabeca = document.createElement('div');
-        cabeca.id = "topo"
-        const bt = document.createElement('button');
-        const div_bloco = document.createElement('div');
-
-      
-
-        div.appendChild(div_bloco);
+    const div_header = document.createElement("div");
+    div_header.id = "div_header";
 
 
-        try {
-            const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
-            const cod = await cod_um.json();
+ const cadastros = async ()=>{
+    const tela = document.getElementById('corpo_conteudo');
+    const div_cadastro = document.createElement('div');
+    div_cadastro.id = "div_cadastro";
 
-            const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
-            const todos = await todos_um.json();
-
-            todos.forEach((user) => {
-                const div_um = document.createElement("div");
-                div_um.id = "item";
-
-                const div_nome = document.createElement("div");
-                div_nome.textContent = user.marcacao;
-                div_nome.id = "div_nome";
-
-                const div_data = document.createElement("div");
-                div_data.textContent = new Date(user.Data).toLocaleString('pt-BR');
-                div_data.id = "div_data";
-
-                const div_data_limite = document.createElement("div");
-                div_data_limite.textContent = new Date(user.Data_limite).toLocaleString('pt-BR');
-                div_data_limite.id = "div_data_limite";
-
-                const div_obs = document.createElement("div");
-                div_obs.textContent = user.obs;
-                div_obs.id = "div_obs";
-
-                div_um.addEventListener('click', () => {
-    div_bloco.id = "div_bloco";
-
-   
-    div_bloco.innerHTML = "";
-    div_bloco.appendChild(cabeca);
-    cabeca.appendChild(prazo);
-    prazo.textContent = "Data limite: " + new Date(user.Data_limite).toLocaleString('pt-BR');
-    cabeca.appendChild(bt);
-
-    div_bloco.appendChild(div_obs);
-    div_obs.textContent = user.obs;
-
-    bt.textContent = "x";
-    bt.id = "btn_fechar";
-});
-
-bt.addEventListener('click', () => {
-    div_bloco.id = "fechar_div_bloco";
-    div_bloco.textContent = "";
-    bt.textContent = "";
-    bt.id = "btn_fechado";
-});
-
-                div_um.appendChild(div_nome);
-                div_um.appendChild(div_data);
-                div_um.appendChild(div_data_limite);                
-                div.appendChild(div_um);
-            });
+    btn_cargo.addEventListener('click',()=>{
+        tela.innerHTML = "";
         
-    } catch (error) {
-        console.log(error);
-    }
 
 
+        tela.appendChild(div_cadastro);
+        div_cadastro.appendChild(div_header)
+        div_header.textContent = "Cadastro cargo";
+        div_cadastro.appendChild(input_cargo_nome);
+        div_cadastro.appendChild(input_cargo_salario);
+        div_cadastro.appendChild(button_cadastro);
+        div_cadastro.appendChild(button_visualizar);
+    });
 
+ }
 
-
-};
-
-mostrar();
+cadastros();
+  
 
 });
 </script>

@@ -349,7 +349,7 @@ divCabecalho.appendChild(btn)
           button.addEventListener('click', async () => {
   const produtos = await fetchdiv(button.textContent);
   if (produtos.length > 0) {
-    replaceImageWithDiv(produtos[0]); // Passa o objeto produto inteiro
+    replaceImageWithDiv(produtos[0]); 
   }
 });
   
@@ -360,22 +360,8 @@ divCabecalho.appendChild(btn)
         mensagem.textContent = 'Nenhum produto cadastrado';
         antigos_produtos.appendChild(mensagem);
       }
-    };
-
-
-    
+    };    
   
-  //   fetchProdutos_quantidade()
-  // .then(result => {
-  //   displayProdutos_quantidade(result);
-  //   return result; // Retorna algo para continuar a cadeia
-  // })
-  // .then(() => fetchProdutos())
-  // .then(displayProdutos)
-  // .catch(error => {
-  //   console.error('Erro ao executar uma das funções:', error);
-  // });
-
   async function carregarProdutos() {
   try {
 
