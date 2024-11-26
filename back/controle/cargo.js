@@ -46,8 +46,24 @@ export const procurarCargo = async ({cod}) => {
     const con = await conexao();
     try {
         const [rows] = await con.query(
-            `SELECT Nome FROM cargo WHERE Empresas_Cod_empresa = ?`,
+            `SELECT Nome FROM cargo WHERE Empresa_Cod_empresa = ?`,
             [cod]
+        );
+        console.log("cod",cod)
+        console.log(rows)
+        return rows;
+    } catch (error) {
+        console.error('Erro ao procurar o cargo:', error.message);
+        throw error;
+    }
+};
+
+export const procurarSalario = async ({cod, nome}) => {
+    const con = await conexao();
+    try {
+        const [rows] = await con.query(
+            `SELECT Salario FROM cargo WHERE Empresas_Cod_empresa = ? && Nome = ?`,
+            [cod, nome]
         );
         return rows;
     } catch (error) {

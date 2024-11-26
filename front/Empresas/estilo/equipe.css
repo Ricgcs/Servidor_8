@@ -474,20 +474,209 @@ flex-direction: column;
 
 
 #primeiraDiv{
-    width: 100%;
+    width: 46%;
+    display: flex;
+    padding: 0.5vw;
 }
 
 #segundaDiv{
-    width: 100%;
+    width: 46%;
+    display: flex;
+    padding: 0.5vw;
 
 }
 
 #terceiraDiv{
-    width: 100%;
+    width: 46%;
+    display: flex;
+    padding: 0.5vw;
 
 }
 
 #quartaDiv{
-    width: 100%;
+    width: 46%;
+    display: flex;
+    padding: 0.5vw;
+}
 
+#quintaDiv{
+    width: 53%;
+    height: 78%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 47%;
+    margin-top: -45.7%;
+}
+
+#div_nome {
+   
+}
+
+#input_nome {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+}
+
+#h1_nome {
+font-size: 1.5vw;
+    
+}
+
+#div_cargo {
+
+}
+
+#input_cargo {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+    width: 186%;
+}
+
+#h1_cargo {
+font-size: 1.5vw;
+}
+
+#div_rg {
+
+}
+
+#input_rg {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+}
+
+#h1_rg {
+font-size: 1.5vw;
+}
+
+#div_cpf {
+  
+}
+
+#input_cpf {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+}
+
+#h1_cpf {
+    font-size: 1.5vw;
+
+}
+
+#div_data {
+   
+}
+
+#input_data {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+    width: 92%;
+}
+
+#h1_data {
+font-size: 1.5vw;
+
+}
+
+#div_telefone {
+    
+}
+
+#input_telefone {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+    
+}
+
+#h1_telefone {
+font-size: 1.5vw;
+}
+
+#div_email {
+    
+}
+
+#input_email {
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+    
+}
+
+#h1_email {
+    font-size: 1.5vw;
+}
+
+
+
+#div_foto {
+    
+}
+
+#input_foto{
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+    width: 92%;
+}
+
+#h1_foto{
+    font-size: 1.5vw;
+}
+
+
+#img_preview{
+   width: 21%;
+   height: 23%;
+   border-radius: 80%;
+}
+
+#button_exibir{
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 1vw;
+    margin-left: 1vw;
+}
+
+#button_cadastrar{
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 1vw;
+    margin-left: 1vw;
 }

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
 import { setEmpr, procurarEmp, getEmpresa, procurarImagem_empresa, login_empresa, validarEmpresa, nomeCod } from "../back/controle/empresa.js";
-import { setCarg, procurarCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
+import { setCarg, procurarCargo,procurarSalario,  atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
@@ -729,8 +729,8 @@ app.post('/cargo/:Empresa_Cod_empresa/:Nome/:Salario/:Equipe/:fluxo_caixa/:servi
 
 
 app.get('/cargo/mostrar/:cod', async (req, res) => {
-    const {cod} = req.params.cod;
-console.log(cod)
+    const {cod} = req.params;
+console.log("codigo:", cod)
     try {
         const resultado = await procurarCargo({cod});
         res.status(200).json({ data: resultado });
@@ -768,18 +768,32 @@ app.get('/cargo/mostrar_todos', async (req, res) => {
 });
 
 //---------------------------------------------Funcionário------------------------------------------\\
-
-app.post('/funcionario', async (req, res) => {
-    const {Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha } = req.body;
-console.log(Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha )
+app.post('/funcionario',upload.single('foto'), async (req, res) => {
+//Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha 
+    console.log('teste funciona')
+    const Nome = req.body.Nome;
+    const Telefone = Number(req.body.Telefone);
+    const Email = req.body.Email;
+    const CPF = Number(req.body.CPF);
+    const senha = req.body.senha;    
+    const foto = req.file;
+    const Cod_empresa = Number(req.body.Cod_empresa);
+    const Cod_cargo = Number(req.body.Cod_cargo);
+  
+    let cargData = {Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha};
+     
     try {
-        const resultado = await setFunc({Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha});
-        res.status(201).json({ message: "Funcionário criado com sucesso", data: resultado });
+
+        await setEmpr(cargData);
+        console.log(cargData)
+        res.status(200).send('Empresa criada com sucesso!');
     } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o funcionário", error: error.message });
+    console.log('teste funciona 4')
+
+        console.error('Erro ao criar empresa:', error);
+        res.status(500).send('Erro ao criar empresa.');
     }
 });
-
 
 app.get('/funcionario/mostrar', async (req, res) => {
     const { valor, nome} = req.body;

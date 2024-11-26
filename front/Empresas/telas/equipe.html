@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn_cargo.addEventListener('click',()=>{
      
         tela.innerHTML = "";     
+        div_cadastro.innerHTML = "";   
         tela.appendChild(div_cadastro);
         div_cadastro.appendChild(div_header);
         div_header.appendChild(texto_header);
@@ -326,69 +327,241 @@ console.log(cod_empr);
     });
 
 
-    const div_nome = document.createElement("div");   
-    const input_nome = document.createElement("input");
-    const h1_nome = document.createElement("h1");
-    
+  
+const div_nome = document.createElement("div");
+div_nome.id = "div_nome";
 
-    const div_cargo = document.createElement("div");   
-    const input_cargo = document.createElement("input");
-    const h1_cargo = document.createElement("h1");
+const input_nome = document.createElement("input");
+input_nome.id = "input_nome";
 
-    const div_rg = document.createElement("div");  
-    const input_rg = document.createElement("input");
-    const h1_rg = document.createElement("h1");
+const h1_nome = document.createElement("h1");
+h1_nome.id = "h1_nome";
 
-    const div_cpf = document.createElement("div");   
-    const input_cpf = document.createElement("input");
-    const h1_cpf = document.createElement("h1");
+const div_cargo = document.createElement("div");
+div_cargo.id = "div_cargo";
 
-    const div_data = document.createElement("div");  
-    const input_data = document.createElement("input");
-    const h1_data = document.createElement("h1");
+const input_cargo = document.createElement("select");
+input_cargo.id = "input_cargo";
 
-    const div_telefone = document.createElement("div"); 
-    const input_telefone = document.createElement("input");
-    const h1_telefone = document.createElement("h1");
+const h1_cargo = document.createElement("h1");
+h1_cargo.id = "h1_cargo";
 
-    const div_email = document.createElement("div");     
-    const input_email = document.createElement("input");
-    const h1_email = document.createElement("h1");  
+const div_rg = document.createElement("div");
+div_rg.id = "div_rg";
+
+const input_rg = document.createElement("input");
+input_rg.id = "input_rg";
+input_rg.type = "number";
+const h1_rg = document.createElement("h1");
+h1_rg.id = "h1_rg";
+
+
+const div_cpf = document.createElement("div");
+div_cpf.id = "div_cpf";
+
+const input_cpf = document.createElement("input");
+input_cpf.id = "input_cpf";
+input_cpf.type = "number";
+
+const h1_cpf = document.createElement("h1");
+h1_cpf.id = "h1_cpf";
+
+
+const div_data = document.createElement("div");
+div_data.id = "div_data";
+
+const input_data = document.createElement("input");
+input_data.id = "input_data";
+input_data.type = "date";
+
+const h1_data = document.createElement("h1");
+h1_data.id = "h1_data";
+
+const div_telefone = document.createElement("div");
+div_telefone.id = "div_telefone";
+
+const input_telefone = document.createElement("input");
+input_telefone.id = "input_telefone";
+input_telefone.type = "number";
+
+const h1_telefone = document.createElement("h1");
+h1_telefone.id = "h1_telefone";
+
+const div_email = document.createElement("div");
+div_email.id = "div_email";
+
+const input_email = document.createElement("input");
+input_email.id = "input_email";
+input_email.type = "email";
+const h1_email = document.createElement("h1");
+h1_email.id = "h1_email";
+
+
+const div_foto = document.createElement("div");
+div_foto.id = "div_foto";
+
+const input_foto = document.createElement("input");
+input_foto.id = "input_foto";
+
+const h1_foto = document.createElement("h1");
+h1_foto.id = "h1_foto";
+
 
     const primeiraDiv = document.createElement("div");
-    primeiraDiv.id = "primeiraDiv"
+    primeiraDiv.id = "primeiraDiv";
 
     const segundaDiv = document.createElement("div");
-    segundaDiv.id = "segundaDiv"
+    segundaDiv.id = "segundaDiv";
 
     const terceiraDiv = document.createElement("div");
-    terceiraDiv.id = "terceiraDiv"
+    terceiraDiv.id = "terceiraDiv";
 
     const quartaDiv = document.createElement("div");
-    quartaDiv.id = "quartaDiv"
+    quartaDiv.id = "quartaDiv";
 
-    btn_funcionario.addEventListener("click",()=>{
-        tela.innerHTML = ""; 
-        div_cadastro.innerHTML = "";     
-        tela.appendChild(div_cadastro);
-        div_cadastro.appendChild(div_header);
-        div_header.appendChild(texto_header);        
-        texto_header.textContent ="Cadastro funcionário";
-        texto_header.appendChild(texto_header_barra);
+    const quintaDiv = document.createElement("div");
+    quintaDiv.id = "quintaDiv";
+
+    btn_funcionario.addEventListener("click",async () => {
+        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+                const cod_empr = Number(await cod_um.json());
+console.log(cod_empr);
 
 
-        div_cadastro.appendChild(primeiraDiv);
-        primeiraDiv.appendChild(div_nome);
-        div_nome.appendChild(h1_nome);
-        div_nome.appendChild(input_nome);
+
+    tela.innerHTML = "";
+    div_cadastro.innerHTML = "";
+    tela.appendChild(div_cadastro);
+    div_cadastro.appendChild(div_header);
+    div_header.appendChild(texto_header);
+    texto_header.textContent = "Cadastro funcionário";
+    texto_header.appendChild(texto_header_barra);
+
+    div_cadastro.appendChild(primeiraDiv);
+    primeiraDiv.appendChild(div_nome);
+    primeiraDiv.appendChild(div_cargo);
+    div_cargo.appendChild(h1_cargo);
+    h1_cargo.textContent = "Cargo";
+    div_cargo.appendChild(input_cargo);
+
+
+    const items = async()=>
+    {
+    input_cargo.textContent = "";
+    const response = await fetch(`http://localhost:3000/cargo/mostrar/${cod_empr}`);
+    const res_tratada = await response.json();
+    const cargos = res_tratada.data;
+    
+        cargos.forEach(cargo => {
+            const option = document.createElement('option');
+            option.value = cargo.Nome; 
+            option.textContent = cargo.Nome; 
+            input_cargo.appendChild(option);
+        });
+    }
+    items();
+    div_nome.appendChild(h1_nome);
+    h1_nome.textContent = "Nome";
+    div_nome.appendChild(input_nome);
+
+    div_cadastro.appendChild(segundaDiv);
+    div_cadastro.appendChild(terceiraDiv);
+    div_cadastro.appendChild(quartaDiv);
+    div_cadastro.appendChild(quintaDiv);
+
+    segundaDiv.appendChild(div_rg);
+    div_rg.appendChild(h1_rg);
+    h1_rg.textContent = "RG";
+    div_rg.appendChild(input_rg);
+
+    segundaDiv.appendChild(div_cpf);
+    div_cpf.appendChild(h1_cpf);
+    h1_cpf.textContent = "CPF";
+    div_cpf.appendChild(input_cpf);
+
+    terceiraDiv.appendChild(div_telefone);
+    div_telefone.appendChild(h1_telefone);
+    h1_telefone.textContent = "Telefone";
+    div_telefone.appendChild(input_telefone);
+
+    terceiraDiv.appendChild(div_data);
+    div_data.appendChild(h1_data);
+    h1_data.textContent = "Data de Nascimento";
+    div_data.appendChild(input_data);
+
+    quartaDiv.appendChild(div_email);
+    div_email.appendChild(h1_email);
+    h1_email.textContent = "Email";
+    div_email.appendChild(input_email);
+
+    quartaDiv.appendChild(div_foto);
+    div_foto.appendChild(h1_foto);
+    h1_foto.textContent = "Foto";
+    div_foto.appendChild(input_foto);
+    input_foto.type = "file";
+
+    const button_exibir = document.createElement("button");
+    button_exibir.textContent = "Exibir Dados";
+    button_exibir.id = "button_exibir";
+    div_cadastro.appendChild(button_exibir);
+
+    const button_cadastrar = document.createElement("button");
+    button_cadastrar.textContent = "Cadastrar funcionário";
+    button_cadastrar.id = "button_cadastrar";
+    div_cadastro.appendChild(button_cadastrar);
+
+    button_exibir.addEventListener("click", () => {
+       
+        quintaDiv.innerHTML = "";
 
         
+        const nome = input_nome.value;
+        const cargo = input_cargo.value;
+        const rg = input_rg.value;
+        const cpf = input_cpf.value;
+        const telefone = input_telefone.value;
+        const data = input_data.value;
+        const email = input_email.value;
 
-        div_cadastro.appendChild(segundaDiv);
-        div_cadastro.appendChild(terceiraDiv);
-        div_cadastro.appendChild(quartaDiv);
-    
+        const h1_dados = document.createElement("h1");
+        h1_dados.id = "h1_dados"
+        h1_dados.innerHTML = `
+    ${nome}<br>
+    ${cargo}<br>
+    ${rg}<br>
+    ${cpf}<br>
+    ${telefone}<br>
+    ${data}<br>
+    ${email}
+`;
+        
+
+        const file = input_foto.files[0];
+        if (file) {
+            const img = document.createElement("img");
+            img.id = "img_preview";
+            
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            quintaDiv.appendChild(img);
+            
+        } else {
+            const noImageText = document.createElement("h1");
+            noImageText.textContent = "Nenhuma imagem selecionada.";
+            quintaDiv.appendChild(noImageText);
+        }
+        quintaDiv.appendChild(h1_dados);
     });
+
+    button_cadastrar.addEventListener("click",()=>{
+        
+    })
+});
 
 
 }
