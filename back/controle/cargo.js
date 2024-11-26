@@ -19,7 +19,7 @@ export const setCarg = async ({Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO cargo (Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO cargo (Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque)VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
             [Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque]
         );
         return result;
@@ -42,12 +42,12 @@ console.log("valor deletado com sucesso", envio)
     }
 }
 
-export const procurarCargo = async ({ valor, nome }) => {
+export const procurarCargo = async ({cod}) => {
     const con = await conexao();
     try {
         const [rows] = await con.query(
-            `SELECT * FROM cargo WHERE ${valor} = ?`,
-            [nome]
+            `SELECT Nome FROM cargo WHERE Empresas_Cod_empresa = ?`,
+            [cod]
         );
         return rows;
     } catch (error) {

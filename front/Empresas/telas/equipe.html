@@ -219,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         div_cadastro.appendChild(div_header);
         div_header.appendChild(texto_header);
         texto_header.textContent ="Cadastro cargo";
+
         texto_header.appendChild(texto_header_barra);
         div_cadastro.appendChild(input_cargo_nome);
         div_cadastro.appendChild(input_cargo_salario);
@@ -260,9 +261,42 @@ document.addEventListener('DOMContentLoaded', () => {
             
             //Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque
             try {
+                const nome_cargo = document.getElementById("input_cargo_nome").value;
+                const Salario = document.getElementById("input_cargo_salario").value;
+                let Equipe = 0;
+                let fluxo_caixa = 0;
+                let servicos = 0;
+                let orcamentos = 0;
+                let estoque = 0;
+
+
+                if(input1.checked){
+                    
+                         Equipe = 1;
+                }
+
+                if(input2.checked){
+                        fluxo_caixa = 1;
+                }
+               
+                if(input3.checked){
+                        servicos = 1;
+                }
+
+                if(input4.checked){
+                        orcamentos = 1;
+
+                }
+
+                if(input5.checked){
+                        estoque = 1;
+                }
+             
                     const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
-                const cod_empr = await cod_um.json();
+                const cod_empr = Number(await cod_um.json());
 console.log(cod_empr);
+
+
                     const response = await fetch(`http://localhost:3000/cargo/${cod_empr}/${nome_cargo}/${Salario}/${Equipe}/${fluxo_caixa}/${servicos}/${orcamentos}/${estoque}`, {
                         method: 'POST',
                         headers: {
@@ -275,18 +309,86 @@ console.log(cod_empr);
                         const result = await response.json();
                         alert(result.message); 
                     } else {
-                        alert('Erro ao adicionar produto');
+                        alert('Erro ao adicionar cargo');
                         console.log(response)
                     }
 
                 } catch (error) {
                     console.error('Erro na requisição:', error);
+
                     alert('Erro do lado do servidor');
                 }
             })     
        
+
+
+            
     });
 
+
+    const div_nome = document.createElement("div");   
+    const input_nome = document.createElement("input");
+    const h1_nome = document.createElement("h1");
+    
+
+    const div_cargo = document.createElement("div");   
+    const input_cargo = document.createElement("input");
+    const h1_cargo = document.createElement("h1");
+
+    const div_rg = document.createElement("div");  
+    const input_rg = document.createElement("input");
+    const h1_rg = document.createElement("h1");
+
+    const div_cpf = document.createElement("div");   
+    const input_cpf = document.createElement("input");
+    const h1_cpf = document.createElement("h1");
+
+    const div_data = document.createElement("div");  
+    const input_data = document.createElement("input");
+    const h1_data = document.createElement("h1");
+
+    const div_telefone = document.createElement("div"); 
+    const input_telefone = document.createElement("input");
+    const h1_telefone = document.createElement("h1");
+
+    const div_email = document.createElement("div");     
+    const input_email = document.createElement("input");
+    const h1_email = document.createElement("h1");  
+
+    const primeiraDiv = document.createElement("div");
+    primeiraDiv.id = "primeiraDiv"
+
+    const segundaDiv = document.createElement("div");
+    segundaDiv.id = "segundaDiv"
+
+    const terceiraDiv = document.createElement("div");
+    terceiraDiv.id = "terceiraDiv"
+
+    const quartaDiv = document.createElement("div");
+    quartaDiv.id = "quartaDiv"
+
+    btn_funcionario.addEventListener("click",()=>{
+        tela.innerHTML = ""; 
+        div_cadastro.innerHTML = "";     
+        tela.appendChild(div_cadastro);
+        div_cadastro.appendChild(div_header);
+        div_header.appendChild(texto_header);        
+        texto_header.textContent ="Cadastro funcionário";
+        texto_header.appendChild(texto_header_barra);
+
+
+        div_cadastro.appendChild(primeiraDiv);
+        primeiraDiv.appendChild(div_nome);
+        div_nome.appendChild(h1_nome);
+        div_nome.appendChild(input_nome);
+
+        
+
+        div_cadastro.appendChild(segundaDiv);
+        div_cadastro.appendChild(terceiraDiv);
+        div_cadastro.appendChild(quartaDiv);
+    
+    });
 
 
 }

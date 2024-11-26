@@ -298,7 +298,6 @@ app.get('/empresa/imagem/:nome', async (req, res) => {
 
 app.post('/empresa',upload.single('img'), async (req, res) => {
 
-    //Nome_fantasia, Razao_social, Email, CNPJ, Senha, img 
     console.log('teste funciona')
     const Nome_fantasia = req.body.Nome_fantasia;
     const Razao_social = req.body.Razao_social;
@@ -306,6 +305,7 @@ app.post('/empresa',upload.single('img'), async (req, res) => {
     const CNPJ = Number(req.body.CNPJ);
     const Senha = req.body.Senha;    
     const img = req.file;
+
     console.log('teste funciona 2')
     
     let emprData = { Nome_fantasia, Razao_social, Email, CNPJ, Senha, img };
@@ -716,9 +716,9 @@ app.get('/produto/mostrar_todos', async (req, res) => {
 
 //-----------------------------------------------Cargo--------------------------------------------------------\\
 
-app.post('/cargo', async (req, res) => {
-    const {Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque} = req.body;
-
+app.post('/cargo/:Empresa_Cod_empresa/:Nome/:Salario/:Equipe/:fluxo_caixa/:servicos/:orcamentos/:estoque', async (req, res) => {
+    const {Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque} = req.params;
+    console.log(req.params)
     try {
         const resultado = await setCarg({Empresa_Cod_empresa, Nome, Salario, Equipe, fluxo_caixa, servicos, orcamentos, estoque});
         res.status(201).json({ message: "Cargo criado com sucesso", data: resultado });
@@ -728,11 +728,11 @@ app.post('/cargo', async (req, res) => {
 });
 
 
-app.get('/cargo/mostrar', async (req, res) => {
-    const { valor, nome} = req.body;
-console.log(valor, nome)
+app.get('/cargo/mostrar/:cod', async (req, res) => {
+    const {cod} = req.params.cod;
+console.log(cod)
     try {
-        const resultado = await procurarCargo({ valor, nome});
+        const resultado = await procurarCargo({cod});
         res.status(200).json({ data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao procurar o cargo", error: error.message });
