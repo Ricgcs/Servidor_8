@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
 import { setEmpr, procurarEmp, getEmpresa, procurarImagem_empresa, login_empresa, validarEmpresa, nomeCod } from "../back/controle/empresa.js";
-import { setCarg, procurarCargo,procurarSalario,  atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
+import { setCarg, procurarCargo,procurarSalario, procurarCodCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
@@ -780,18 +780,17 @@ app.post('/funcionario',upload.single('foto'), async (req, res) => {
     const Cod_empresa = Number(req.body.Cod_empresa);
     const Cod_cargo = Number(req.body.Cod_cargo);
   
-    let cargData = {Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha};
+    let funcData = {Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha};
      
     try {
 
-        await setEmpr(cargData);
-        console.log(cargData)
-        res.status(200).send('Empresa criada com sucesso!');
+        await setFunc(funcData);
+        console.log(funcData)
+        res.status(200).send('Funcionário criada com sucesso!');
     } catch (error) {
-    console.log('teste funciona 4')
 
-        console.error('Erro ao criar empresa:', error);
-        res.status(500).send('Erro ao criar empresa.');
+        console.error('Erro ao criar funcionário:', error);
+        res.status(500).send('Erro ao criar funcionário.');
     }
 });
 
@@ -803,6 +802,19 @@ console.log(valor, nome)
         res.status(200).json({ data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao procurar o funcionário", error: error.message });
+    }
+});
+
+app.get('/funcionario/mostrarCod/:cod/:nome', async (req, res) => {
+    const { cod, nome} = req.params;
+console.log(cod, nome)
+    try {
+        const resultado_inicio = await procurarCodCargo({ cod, nome});
+        const resultado = await resultado_inicio.Cod_cargo;
+
+        res.status(200).json({ data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar o codigo do cargo", error: error.message });
     }
 });
 

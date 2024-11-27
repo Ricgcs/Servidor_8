@@ -58,6 +58,21 @@ export const procurarCargo = async ({cod}) => {
     }
 };
 
+export const procurarCodCargo = async ({cod, nome}) => {
+    const con = await conexao();
+    try {
+        const [rows] = await con.query(
+            `SELECT Cod_cargo FROM cargo WHERE Empresa_Cod_empresa = ? && Nome = ?`,
+            [cod, nome]
+        );
+        console.log("cod",cod)
+        console.log(rows[0])
+        return rows[0];
+    } catch (error) {
+        console.error('Erro ao procurar o cargo:', error.message);
+        throw error;
+    }
+};
 export const procurarSalario = async ({cod, nome}) => {
     const con = await conexao();
     try {

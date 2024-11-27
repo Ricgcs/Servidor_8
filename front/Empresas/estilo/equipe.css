@@ -477,12 +477,15 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
+    margin-top: -1%;
 }
 
 #segundaDiv{
     width: 46%;
     display: flex;
     padding: 0.5vw;
+    margin-top: -1%;
+
 
 }
 
@@ -490,6 +493,8 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
+    margin-top: -1%;
+
 
 }
 
@@ -497,6 +502,8 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
+    margin-top: -2%;
+
 }
 
 #quintaDiv{
@@ -508,6 +515,12 @@ flex-direction: column;
     justify-content: center;
     margin-left: 47%;
     margin-top: -45.7%;
+}
+
+#sextaDiv{
+margin-top: -10%;
+width: 50%;
+margin-left: 0.5vw;
 }
 
 #div_nome {
@@ -679,4 +692,18 @@ font-size: 1.5vw;
     border: none;
     font-size: 1vw;
     margin-left: 1vw;
+}
+
+#h1_senha{
+    font-size: 1.5vw; 
+}
+
+#input_senha{
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    margin: 0 1vw 2vw 0;
+  
 }

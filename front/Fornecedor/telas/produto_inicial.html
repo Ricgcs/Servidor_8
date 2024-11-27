@@ -15,7 +15,7 @@
 <div id="header_links">
 <a href="./inicial_login.html"><img id="imagem" src="../img/home.png" alt="menu"><button id="header_button"> Home</button></a>
 <a href="./index.html"><img id="imagem" src="../img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-<a href="./estoque.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+<a href="../telas/produto_inicial.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
 <a href="#"><img id="imagem" src="../img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
 <a href="#"><img id="imagem" src="../img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
 </div>
@@ -67,7 +67,7 @@ function logOut(){
 }
   document.addEventListener('DOMContentLoaded', () => {
   
-    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const nomeUser = localStorage.getItem('rs') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cnpj') ;
  
@@ -78,7 +78,7 @@ function logOut(){
    
    
     const loadFromLocalStorage = () => {
-      const nomeUser = localStorage.getItem('nome') || 'Usuário';
+      const nomeUser = localStorage.getItem('rs') || 'Usuário';
   
       const nomeUserElement = document.getElementById('nome_user');
       if (nomeUserElement) {

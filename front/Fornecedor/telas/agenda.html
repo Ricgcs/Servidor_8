@@ -16,7 +16,7 @@
     <div id="header_links">
         <a href="./inicial_login.html"><img id="imagem" src="../img/home.png" alt="menu"><button id="header_button">Home</button></a>
         <a href="./index.html"><img id="imagem" src="../img/servicos.png" alt="servicos"><button id="header_button">Serviços</button></a>
-        <a href="./estoque.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
+        <a href="../telas/produto_inicial.html"><img id="imagem" src="../img/armazen.png" alt="estoque"><button id="header_button">Estoque</button></a>
         <a href="#"><img id="imagem" src="../img/nsei.png" alt="ajuda"><button id="header_button">Ajuda</button></a>
         <a href="#"><img id="imagem" src="../img/flecha.png" alt="log_out"><button id="header_button" onclick="logOut()">Log out</button></a>
     </div>
@@ -82,21 +82,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const imgUserElement = document.getElementById('img_user');
-        async function loadImage() {
-            try {
-                const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
-                const blob = await response.blob();
-                if (response.ok) {
-                    imgUserElement.src = blob ? URL.createObjectURL(blob) : "../img/imagem_user.png";
-                } else {
-                    alert("erro médio");
-                }
-            } catch (error) {
-                imgUserElement.src = "../img/imagem_user.png";
-                console.error(error);
-            }  
-        }
-        loadImage();
+        async function loadImage(){
+  try {
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nome}`);
+    console.log(response);
+    const blob = await response.blob();
+    if (response.ok) {
+     imgUserElement.src =blob?URL.createObjectURL(blob):"../img/imagem_user.png";
+   
+      console.log('funcionou');
+    } else {
+      console.log(response);
+      alert("erro médio");
+    }
+  } catch (error) {
+    imgUserElement.src = "../img/imagem_user.png";
+    console.log(error);
+  }  
+}
+loadImage();
     };
     
     loadFromLocalStorage();
