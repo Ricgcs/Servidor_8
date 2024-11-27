@@ -69,7 +69,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
                
-    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const nomeUser = localStorage.getItem('rs') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cnpj') ;
  
@@ -80,7 +80,7 @@
  
    
             const loadFromLocalStorage = () => {
-                const nomeUser = localStorage.getItem('nome') || 'Usuário';
+                const nome = localStorage.getItem('rs') || 'Usuário';
                 const nomeUserElement = document.getElementById('nome_user');
                 if (nomeUserElement) {
                     const primeiroNome = nomeUser.split(" ")[0];
@@ -90,7 +90,7 @@
                 const imgUserElement = document.getElementById('img_user');
                 async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nome}`);
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {
@@ -140,13 +140,14 @@ console.log(data);
                             alert("Por favor, insira todos os dados");
                             
                            }       
-                             else{           
-
+                             else{          
+                                const nomeUserfornecedor = localStorage.getItem('rs') || 'Usuário'; 
+                                const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUserfornecedor}`);
+                                const cod_empr = await cod_um.json();
+                
                 try {
-                    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
-                const cod_empr = await cod_um.json();
-console.log(cod_empr);
-                    const response = await fetch(`http://localhost:3000/produto_quantidade/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`, {
+                   
+                    const response = await fetch(`http://localhost:3000/produto_quantidade_fornecedor/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -65,7 +65,7 @@ function logOut(){
 }
     document.addEventListener('DOMContentLoaded', () => {
      
-    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const nomeUser = localStorage.getItem('rs') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cnpj') ;
  
@@ -76,9 +76,7 @@ function logOut(){
    
      
      const loadFromLocalStorage = () => {
-     
-       const nomeUser = localStorage.getItem('nome') || 'Usuário';
-       
+         
       
         const nomeUserElement = document.getElementById('nome_user');
        if (nomeUserElement) {
@@ -88,7 +86,7 @@ function logOut(){
        const imgUserElement = document.getElementById('img_user');
        async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nome}`);
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {

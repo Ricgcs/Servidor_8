@@ -65,7 +65,7 @@ function logOut() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const nomeUser = localStorage.getItem('rs') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cnpj');
     const nome = localStorage.getItem("nome");
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const imgUserElement = document.getElementById('img_user');
         async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nome}`);
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {
@@ -120,11 +120,11 @@ loadImage();
             return
          }
 try{
-    const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+    const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
     const cod = await cod_um.json();
        
    
-      const response = await fetch(`http://localhost:3000/agenda_empresa/${cod}/${dataInicioFormatada}/${dataLimiteFormatada}/${dados}/${marcacao}`);
+      const response = await fetch(`http://localhost:3000/agenda_fornecedor/${cod}/${dataInicioFormatada}/${dataLimiteFormatada}/${dados}/${marcacao}`);
       window.location.reload();
 }
 
@@ -149,10 +149,10 @@ const mostrar = async () => {
 
 
         try {
-            const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+            const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
             const cod = await cod_um.json();
 
-            const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
+            const todos_um = await fetch(`http://localhost:3000/agenda_fornecedor/mostrar/${cod}`);
             const todos = await todos_um.json();
 
             todos.forEach((user) => {

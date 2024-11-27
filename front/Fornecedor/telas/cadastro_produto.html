@@ -116,7 +116,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
                
-    const nomeUser = localStorage.getItem('nome') || 'Usuário';
+    const nomeUser = localStorage.getItem('rs') || 'Usuário';
     const senhaUser = localStorage.getItem('senha');
     const codUser = localStorage.getItem('cnpj') ;
  
@@ -127,7 +127,7 @@
  
    
             const loadFromLocalStorage = () => {
-                const nomeUser = localStorage.getItem('nome') || 'Usuário';
+                const nomeUser = localStorage.getItem('rs') || 'Usuário';
                 const nomeUserElement = document.getElementById('nome_user');
                 if (nomeUserElement) {
                     const primeiroNome = nomeUser.split(" ")[0];
@@ -137,7 +137,7 @@
                 const imgUserElement = document.getElementById('img_user');
 async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {
@@ -182,7 +182,7 @@ loadImage();
                 const largura = document.getElementById('largura').value;
                 const obs = document.getElementById('obs').value;
 
-                const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+                const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
                 const cod_empr = await cod_um.json();
 
                 const a = document.getElementById('a').value;
@@ -195,7 +195,7 @@ loadImage();
                             alert(cod_empr)
                            }       
                              else{           
-                const url = `http://localhost:3000/produto/${nome}/${valor}/${quantidade}/${cod_empr}/${altura}/${comprimento}/${largura}/${a}/${c}/${l}/${data}/${obs}`;
+                const url = `http://localhost:3000/produto_fornecedor/${cod_empr}/${nome}/${valor}/${quantidade}/${altura}/${comprimento}/${largura}/${a}/${c}/${l}/${data}/${obs}`;
 
                 try {
                     const response = await fetch(url, {

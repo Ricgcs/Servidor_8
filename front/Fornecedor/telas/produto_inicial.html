@@ -89,7 +89,7 @@ function logOut(){
       const imgUserElement = document.getElementById('img_user');
 async function loadImage(){
   try {
-    const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
+    const response = await fetch(`http://localhost:3000/fornecedor/imagem/${nomeUser}`);
     console.log(response);
     const blob = await response.blob();
     if (response.ok) {
@@ -112,14 +112,14 @@ loadImage();
     
     const fetchProdutos = async () => {
       try {
-        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+        const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
         const cod_empr = await cod_um.json();
         if (!cod_empr) {
-          console.error('cod_empresa não definido no localStorage.');
+          console.error('cod_fornecedor não definido .');
           return [];
         }
   
-        const response = await fetch(`http://localhost:3000/produto/mostrar/${cod_empr}`);
+        const response = await fetch(`http://localhost:3000/produto_fornecedor/mostrar/${cod_empr}`);
         
         if (!response.ok) {
           throw new Error('Erro na resposta da rede');
@@ -172,14 +172,14 @@ divCabecalho.appendChild(btn)
 
     const fetchdiv = async (valor) => {
       try {
-        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+        const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
         const cod_empr = await cod_um.json();
         if (!cod_empr) {
-          throw new Error('Código da empresa não encontrado no localStorage.');
+          throw new Error('Código do fornecedor não encontrado no localStorage.');
         }
         const nome = encodeURIComponent(valor);
   
-        const response = await fetch(`http://localhost:3000/produto/mostrar_nome/${nome}/${cod_empr}`);
+        const response = await fetch(`http://localhost:3000/produto_fornecedor/mostrar_nome/${nome}/${cod_empr}`);
         
         if (!response.ok) {
           throw new Error('Erro na resposta da rede');
@@ -206,14 +206,14 @@ divCabecalho.appendChild(btn)
 
     const fetchProdutos_quantidade = async () => {
       try {
-        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+        const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
         const cod_empr = await cod_um.json();
         if (!cod_empr) {
-          console.error('cod_empresa não definido no localStorage.');
+          console.error('cod_fornecedor não definido no localStorage.');
           return [];
         }
   
-        const response = await fetch(`http://localhost:3000/produto_quantidade/mostrar/${cod_empr}`);
+        const response = await fetch(`http://localhost:3000/produto_quantidade_fornecedor/mostrar/${cod_empr}`);
         
         if (!response.ok) {
           throw new Error('Erro na resposta da rede');
@@ -263,14 +263,14 @@ divCabecalho.appendChild(btn)
 };
     const fetchdiv_quantidade = async (valor) => {
       try {
-        const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+        const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nomeUser}`);
         const cod_empr = await cod_um.json();
         if (!cod_empr) {
-          throw new Error('Código da empresa não encontrado no localStorage.');
+          throw new Error('Código do fornecedor não encontrado.');
         }
         const nome = encodeURIComponent(valor);
   
-        const response = await fetch(`http://localhost:3000/produto_quantidade/mostrar_nome/${nome}/${cod_empr}`);
+        const response = await fetch(`http://localhost:3000/produto_quantidade_fornecedor/mostrar_nome/${nome}/${cod_empr}`);
         
         if (!response.ok) {
           throw new Error('Erro na resposta da rede');

@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
   `Nome` VARCHAR(120) NOT NULL,
   `Email` VARCHAR(120) NOT NULL,
   `Telefone` INT NOT NULL,
-  `foto` VARCHAR(120) NOT NULL,
+  `foto` LONGBLOB NULL DEFAULT NULL,
   `CPF` INT NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   `cargo_Cod_cargo` INT NOT NULL,

@@ -8,11 +8,15 @@ import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
 import { getFornecedor, login_fornecedor, nomeCod_fornecedor, procurarForn, procurarImagem_fornecedor, setForn, validarFornecedor } from "./controle/fornecedor.js";
+import { atualizarProd_fornecedor, delProd_fornecedor, getnomeprod_fornecedor, getProd_fornecedor, procurarProd_fornecedor, setProd_fornecedor } from "./controle/produtos_fornecedor.js";
+import { getnomeprod_quantidade_fornecedor, procurarProd_quantidade_fornecedor, setProd_quantidade_fornecedor } from "./controle/produtos_quantidade_fornecedor.js";
 import { __dirname } from "../nomeArquivo.js";
 import { mostrarTarefas, salvar } from "./controle/agenda_empresa.js";
 import path from 'path';
 import cors from 'cors';
 import multer from 'multer';
+import { mostrarTarefasFornecedor, salvarFornecedor } from "./controle/agenda_fornecedor.js";
+
 
 
 
@@ -54,7 +58,7 @@ app.get('/fornecedor/validar', async (req, res) => {
 });
 
 app.get('/fornecedor/cod/:nome', async (req, res) => {
-    const rs = req.params.rs;  
+    const rs = req.params.nome;  
     
     try {
     
@@ -64,7 +68,7 @@ app.get('/fornecedor/cod/:nome', async (req, res) => {
      
     } catch (error) {
       console.log("Erro ao buscar o cod:", error);
-      console.log("Nome:", nome);
+      console.log("Nome:", rs);
       
       res.status(500).send('Erro ao processar o cod');
     }
@@ -159,7 +163,7 @@ app.get('/fornecedor/mostrar/:what/:valor/:nome', async (req, res) => {
      
     } catch (error) {
 
-        res.status(500).json({ message: "Erro ao procurar empresa no servidor", error: error.message });
+        res.status(500).json({ message: "Erro ao procurar o fornecedor no servidor", error: error.message });
     }
 });
 
@@ -201,6 +205,170 @@ app.get('/fornecedor/mostrar_todos', async (req, res) => {
         return res.status(500).send('Erro no servidor');
         }
 });
+
+//-----------------------------------Produto_quantidade_fornecedor--------------------------------------------\\
+app.post('/produto_quantidade_fornecedor/:cod_empr/:nome/:valor/:quantidade/:data/:obs', async (req, res) => {
+    const {cod_empr, nome, valor, quantidade,data, obs} = req.params; 
+
+    try {
+        const resultado = await setProd_quantidade_fornecedor({cod_empr, nome, valor, quantidade,data, obs});
+        res.status(201).json({ message: "Produto criado com sucesso", data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o produto", error: error.message });
+    }
+});
+
+
+app.get('/produto_quantidade_fornecedor/mostrar/:pesq', async (req, res) => {
+    const pesq = req.params.pesq;  
+    console.log('Código da empresa:', pesq);
+  
+    try {
+      const resultado = await procurarProd_quantidade_fornecedor(pesq);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(404).json({ message: 'Nenhum produto encontrado.' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
+
+
+  app.get('/produto_quantidade_fornecedor/mostrar_nome/:nome/:cod', async (req, res) => {
+    const nome = req.params.nome;
+    const cod = req.params.cod;
+    console.log(`Nome: ${nome}, Código: ${cod}`);
+    
+    try {
+        const resultado = await getnomeprod_quantidade_fornecedor({ nome, cod });
+        res.status(200).json({ data: resultado });
+        console.log("Resultado:", resultado);
+        return resultado;
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar o produto", error: error.message });
+        console.error("Erro:", error.message);
+    }
+});
+
+
+//-----------------------------------------------Produto_fornecedor---------------------------------------------------------\\
+app.post('/produto_fornecedor/:cod_empr/:nome/:valor/:quantidade/:altura/:comprimento/:largura/:a/:c/:l/:data/:obs', async (req, res) => {
+    const {cod_empr, nome, valor, quantidade, altura, comprimento, largura,a,c,l,data,obs } = req.params; 
+
+    try {
+        const resultado = await setProd_fornecedor({cod_empr, nome, valor, quantidade, altura, comprimento, largura, a, c, l,data,obs});
+        res.status(201).json({ message: "Produto criado com sucesso", data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar o produto", error: error.message });
+    }
+});
+
+
+app.get('/produto_fornecedor/mostrar/:pesq', async (req, res) => {
+    const pesq = req.params.pesq; 
+    console.log('Código da empresa:', pesq);
+  
+    try {
+      const resultado = await procurarProd_fornecedor(pesq);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(404).json({ message: 'Nenhum produto encontrado.' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
+
+app.get('/produto_fornecedor/mostrar_nome/:nome/:cod', async (req, res) => {
+    const nome = req.params.nome;
+    const cod = req.params.cod;
+    console.log(`Nome: ${nome}, Código: ${cod}`);
+    
+    try {
+        const resultado = await getnomeprod_fornecedor({ nome, cod });
+        res.status(200).json({ data: resultado });
+        console.log("Resultado:", resultado);
+        return resultado;
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar o produto", error: error.message });
+        console.error("Erro:", error.message);
+    }
+});
+
+app.post('/produto_fornecedor/atualizar', async (req, res) => {
+    const { valor, nome, tipo, ent} = req.body; 
+console.log(valor, nome,tipo, ent)
+    try {
+        const resultado = await atualizarProd_fornecedor(valor, nome, tipo, ent)
+        res.status(200).json({ data: resultado });
+        console.log(resultado)
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao atualizar o produto", error: error.message });
+        console.log("erro")
+
+    }
+});
+
+app.post('/produto_fornecedor/deletar', async (req, res) => {
+    const { valor, nome} = req.body; 
+console.log(valor, nome)
+    try {
+        const resultado = await delProd_fornecedor(valor, nome)
+        res.status(200).json({ data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao deletar o produto", error: error.message });
+    }
+});
+
+
+app.get('/produto_fornecedor/mostrar_todos', async (req, res) => {
+ getProd_fornecedor()
+});
+
+
+//-----------------------------------------------Agenda_fornecedor------------------------------------------------------------\\
+
+app.get('/agenda_fornecedor/:cod/:data_inicio/:data_limite/:obs/:marcacao',async (req, res) => {
+    //empresa_Cod_empresa, data, obs
+ 
+    const empresa_Cod_empresa = Number(req.params.cod);
+    const data_inicio = req.params.data_inicio;
+    const data_limite = req.params.data_limite;
+    const obs = req.params.obs;    
+    const marcacao = req.params.marcacao;    
+   
+ 
+    let setAgenda = { empresa_Cod_empresa, data_inicio, data_limite, obs, marcacao};
+     console.log(setAgenda)
+    try {
+  
+
+        await salvarFornecedor(setAgenda);
+        console.log(setAgenda)
+        res.status(200).send('Agenda salva com sucesso!');
+    } catch (error) {
+
+
+        console.error('Erro ao salvar agenda:', error);
+        res.status(500).send('Erro ao salvar agenda.');
+    }
+});
+
+
+app.get('/agenda_fornecedor/mostrar/:cod', async (req, res) => {
+    const cod = req.params.cod; 
+console.log(cod)
+    try {
+        const resultado = await mostrarTarefasFornecedor(cod);
+        res.status(200).json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao procurar tarefa", error: error.message });
+    }
+});
+
 //-----------------------------------------------Agenda_empresa------------------------------------------------------------\\
 
 app.get('/agenda_empresa/:cod/:data_inicio/:data_limite/:obs/:marcacao',async (req, res) => {

@@ -164,12 +164,12 @@ loadImage();
 
 
         try {
-    const nome = localStorage.getItem('nome') || 'Usuário';
+    const nome = localStorage.getItem('rs') || 'Usuário';
 
-            const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nome}`);
+            const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${nome}`);
             const cod = await cod_um.json();
 
-            const todos_um = await fetch(`http://localhost:3000/agenda_empresa/mostrar/${cod}`);
+            const todos_um = await fetch(`http://localhost:3000/agenda_fornecedor/mostrar/${cod}`);
             const todos = await todos_um.json();
 
             todos.forEach((user) => {
