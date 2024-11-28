@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`empresa` (
   `Imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 15
+AUTO_INCREMENT = 16
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fornecedor` (
   `imagen` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`agenda_fornecedor` (
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 23
+AUTO_INCREMENT = 24
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -142,16 +142,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`cargo` (
   `Nome` VARCHAR(45) NOT NULL,
   `Salario` VARCHAR(45) NOT NULL,
   `Equipe` TINYINT NOT NULL,
-  `fluxo_caixa` TINYINT NULL,
-  `servicos` TINYINT NULL,
-  `orcamentos` TINYINT NULL,
-  `estoque` TINYINT NULL,
+  `fluxo_caixa` TINYINT NULL DEFAULT NULL,
+  `servicos` TINYINT NULL DEFAULT NULL,
+  `orcamentos` TINYINT NULL DEFAULT NULL,
+  `estoque` TINYINT NULL DEFAULT NULL,
   PRIMARY KEY (`Cod_cargo`),
   INDEX `fk_cargo_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   CONSTRAINT `fk_cargo_Empresa1`
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -163,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
   `Nome` VARCHAR(120) NOT NULL,
   `Email` VARCHAR(120) NOT NULL,
   `Telefone` INT NOT NULL,
-  `foto` LONGBLOB NULL DEFAULT NULL,
+  `foto` VARCHAR(120) NOT NULL,
   `CPF` INT NOT NULL,
   `Empresa_Cod_empresa` INT NOT NULL,
   `cargo_Cod_cargo` INT NOT NULL,
@@ -223,8 +224,24 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto_fornecedor` (
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`compras`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`compras` (
+  `cod_compras` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
+  PRIMARY KEY (`cod_compras`),
+  INDEX `fk_compras_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  CONSTRAINT `fk_compras_fornecedor1`
+    FOREIGN KEY (`fornecedor_cod`)
+    REFERENCES `mydb`.`fornecedor` (`cod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -250,10 +267,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_medidas` (
   `IPI` INT NOT NULL,
   `PIS` INT NOT NULL,
   `estado` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_fornecedor_Cod_produto`),
+  `compras_cod_compras` INT NOT NULL,
+  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_fornecedor_Cod_produto`, `compras_cod_compras`),
   INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   INDEX `fk_compras_medidas_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
   INDEX `fk_compras_medidas_produto_fornecedor1_idx` (`produto_fornecedor_Cod_produto` ASC) VISIBLE,
+  INDEX `fk_compras_medidas_compras1_idx` (`compras_cod_compras` ASC) VISIBLE,
   CONSTRAINT `fk_compras_medidas_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`),
@@ -262,7 +281,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_medidas` (
     REFERENCES `mydb`.`produto_fornecedor` (`Cod_produto`),
   CONSTRAINT `fk_Produto_Empresa100`
     FOREIGN KEY (`Empresa_Cod_empresa`)
-    REFERENCES `mydb`.`empresa` (`Cod_empresa`))
+    REFERENCES `mydb`.`empresa` (`Cod_empresa`),
+  CONSTRAINT `fk_compras_medidas_compras1`
+    FOREIGN KEY (`compras_cod_compras`)
+    REFERENCES `mydb`.`compras` (`cod_compras`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
@@ -285,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto_quantidade_fornecedor` (
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -306,10 +330,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_quantidade` (
   `IPI` INT NOT NULL,
   `PIS` INT NOT NULL,
   `estado` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_quantidade_fornecedor_Cod_produto`),
+  `compras_cod_compras` INT NOT NULL,
+  PRIMARY KEY (`Cod_produto`, `fornecedor_cod`, `produto_quantidade_fornecedor_Cod_produto`, `compras_cod_compras`),
   INDEX `fk_Produto_Empresa1_idx` (`Empresa_Cod_empresa` ASC) VISIBLE,
   INDEX `fk_compras_quantidade_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
   INDEX `fk_compras_quantidade_produto_quantidade_fornecedor1_idx` (`produto_quantidade_fornecedor_Cod_produto` ASC) VISIBLE,
+  INDEX `fk_compras_quantidade_compras1_idx` (`compras_cod_compras` ASC) VISIBLE,
   CONSTRAINT `fk_compras_quantidade_fornecedor1`
     FOREIGN KEY (`fornecedor_cod`)
     REFERENCES `mydb`.`fornecedor` (`cod`),
@@ -318,7 +344,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`compras_quantidade` (
     REFERENCES `mydb`.`produto_quantidade_fornecedor` (`Cod_produto`),
   CONSTRAINT `fk_Produto_Empresa1000`
     FOREIGN KEY (`Empresa_Cod_empresa`)
-    REFERENCES `mydb`.`empresa` (`Cod_empresa`))
+    REFERENCES `mydb`.`empresa` (`Cod_empresa`),
+  CONSTRAINT `fk_compras_quantidade_compras1`
+    FOREIGN KEY (`compras_cod_compras`)
+    REFERENCES `mydb`.`compras` (`cod_compras`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
@@ -397,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto` (
     FOREIGN KEY (`Empresa_Cod_empresa`)
     REFERENCES `mydb`.`empresa` (`Cod_empresa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -420,6 +451,62 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produto_quantidade` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`materiais_os`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`materiais_os` (
+  `idmateriais_os` INT NOT NULL,
+  `os_Cod_os` INT NOT NULL,
+  `os_funcionario_Cod_funcionario` INT NOT NULL,
+  `os_empresa_Cod_empresa` INT NOT NULL,
+  `os_cliente_Cod_cliente` INT NOT NULL,
+  `produto_Cod_produto` INT NOT NULL,
+  `produto_quantidade_Cod_produto` INT NOT NULL,
+  PRIMARY KEY (`idmateriais_os`, `produto_Cod_produto`, `produto_quantidade_Cod_produto`),
+  INDEX `fk_materiais_os_os1_idx` (`os_Cod_os` ASC, `os_funcionario_Cod_funcionario` ASC, `os_empresa_Cod_empresa` ASC, `os_cliente_Cod_cliente` ASC) VISIBLE,
+  INDEX `fk_materiais_os_produto1_idx` (`produto_Cod_produto` ASC) VISIBLE,
+  INDEX `fk_materiais_os_produto_quantidade1_idx` (`produto_quantidade_Cod_produto` ASC) VISIBLE,
+  CONSTRAINT `fk_materiais_os_os1`
+    FOREIGN KEY (`os_Cod_os` , `os_funcionario_Cod_funcionario` , `os_empresa_Cod_empresa` , `os_cliente_Cod_cliente`)
+    REFERENCES `mydb`.`os` (`Cod_os` , `funcionario_Cod_funcionario` , `empresa_Cod_empresa` , `cliente_Cod_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_materiais_os_produto1`
+    FOREIGN KEY (`produto_Cod_produto`)
+    REFERENCES `mydb`.`produto` (`Cod_produto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_materiais_os_produto_quantidade1`
+    FOREIGN KEY (`produto_quantidade_Cod_produto`)
+    REFERENCES `mydb`.`produto_quantidade` (`Cod_produto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`lista_fornecedores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`lista_fornecedores` (
+  `cod_lista` INT NOT NULL AUTO_INCREMENT,
+  `fornecedor_cod` INT NOT NULL,
+  `empresa_Cod_empresa` INT NOT NULL,
+  PRIMARY KEY (`cod_lista`, `fornecedor_cod`, `empresa_Cod_empresa`),
+  INDEX `fk_lista_fornecedores_fornecedor1_idx` (`fornecedor_cod` ASC) VISIBLE,
+  INDEX `fk_lista_fornecedores_empresa1_idx` (`empresa_Cod_empresa` ASC) VISIBLE,
+  CONSTRAINT `fk_lista_fornecedores_fornecedor1`
+    FOREIGN KEY (`fornecedor_cod`)
+    REFERENCES `mydb`.`fornecedor` (`cod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_lista_fornecedores_empresa1`
+    FOREIGN KEY (`empresa_Cod_empresa`)
+    REFERENCES `mydb`.`empresa` (`Cod_empresa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

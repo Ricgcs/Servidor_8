@@ -477,14 +477,14 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -1%;
+    margin-top: -2%;
 }
 
 #segundaDiv{
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -1%;
+    margin-top: -3%;
 
 
 }
@@ -493,7 +493,7 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -1%;
+    margin-top: -3%;
 
 
 }
@@ -502,7 +502,7 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -2%;
+    margin-top: -3%;
 
 }
 
@@ -518,7 +518,7 @@ flex-direction: column;
 }
 
 #sextaDiv{
-margin-top: -10%;
+
 width: 50%;
 margin-left: 0.5vw;
 }
@@ -661,7 +661,7 @@ font-size: 1.5vw;
     font-size: 1vw;
     padding: 0.3vw;
     background-color: #E7E7E7;
-    margin: 0 1vw 2vw 0;
+    margin: 0 2vw 2vw 0;
     width: 92%;
 }
 
