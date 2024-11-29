@@ -136,15 +136,14 @@ app.post('/fornecedor',upload.single('img'), async (req, res) => {
 
 
 app.get('/fornecedor/mostrar', async (req, res) => {
-    const { what,valor, nome} = req.body; 
-console.log(valor, nome)
     try {
-        const resultado = await procurar({ what, valor, nome});
-        res.status(200).json({ data: resultado });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao procurar fornecedor: ", error: error.message });
-    }
+     const resultado = await getFornecedor();
+     res.status(200).json({ data: resultado });
+ } catch (error) {
+     res.status(500).json({ message: "Erro ao procurar fornecedor: ", error: error.message });
+ }
 });
+
 
 
 app.get('/fornecedor/mostrar/:what/:valor/:nome', async (req, res) => {

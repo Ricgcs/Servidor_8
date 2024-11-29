@@ -62,7 +62,7 @@
 function logOut() {  
     if (confirm("Tem certeza que deseja sair da conta?")) {
         localStorage.clear();
-        window.location.href = './login_empresa.html';
+        window.location.href = '"../../inicial/front/inicial.html"';
     } 
 }
 
@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
      
         tela.innerHTML = "";     
         div_cadastro.innerHTML = "";   
+        div_header.innerHTML ="";
         tela.appendChild(div_cadastro);
         div_cadastro.appendChild(div_header);
         div_header.appendChild(texto_header);
@@ -445,6 +446,7 @@ console.log(cod_empr);
 
     tela.innerHTML = "";
     div_cadastro.innerHTML = "";
+    div_header.innerHTML ="";
     tela.appendChild(div_cadastro);
     div_cadastro.appendChild(div_header);
     div_header.appendChild(texto_header);
@@ -630,8 +632,85 @@ console.log(cod_empr);
     }
 });
 });
+
+        const btn_fornecedor = document.getElementById("button_fornecedor");
+        const btn_lista = document.createElement("button");
+        const tela2 = document.createElement("div");
+        const div_mostrar = document.createElement("div");
+        div_mostrar.id = "div_mostrar";
+        const div_dados = document.createElement("div");
+        div_dados.id = "div_dados";
+        const img_forn = document.createElement("img");
+        img_forn.id = "img_forn";
+        btn_fornecedor.addEventListener("click",async ()=>{            
+            tela.innerHTML = "";
+            div_header.innerHTML ="";
+            tela2.innerHTML = "";
+            div_dados.innerHTML = "";
+            const response = await fetch('http://localhost:3000/fornecedor/mostrar');
+            const result = await response.json(); 
+            const fornecedores = result.data;          
+            
+            btn_lista.id = "btn_lista";
+            btn_lista.textContent = "Lista";
+            tela2.id = "tela2";
+            tela.appendChild(tela2);
+            tela2.appendChild(div_header);       
+            tela2.appendChild(div_mostrar)     
+            div_header.id = "div_header_fornecedores";
+            
+            div_header.appendChild(texto_header);
+            div_header.appendChild(btn_lista)
+            texto_header.textContent = "Fornecedores";  
+            texto_header.id = 'texto_header_fornecedors';     
+            texto_header.appendChild(texto_header_barra);
+            texto_header_barra.id = "texto_header_barra_fornecedores";
+            const div_demonstracao = document.createElement('div');
+            div_demonstracao.id = "div_demonstracao";
+
+            fornecedores.forEach(async (user) => { 
+  
+  div_mostrar.appendChild(div_dados); 
+    div_dados.appendChild(img_forn);   
+
+    try {
+        
+        const response = await fetch(`http://localhost:3000/fornecedor/imagem/${user.razao_social}`);
+        console.log(response);
+
+        const blob = await response.blob();
+        if (response.ok) {
+       
+            img_forn.src = blob ? URL.createObjectURL(blob) : "../img/imagem_user.png";
+            console.log('Imagem carregada com sucesso');
+        } else {
+          
+            img_forn.src = "../img/imagem_user.png";
+        }
+    } catch (error) {
+
+        img_forn.src = "../img/imagem_user.png";
+        console.log("Erro ao carregar a imagem:", error);
+    }
+
+    const nomeFornecedor = document.createElement("h1");
+    nomeFornecedor.textContent = user.razao_social;
+    div_dados.appendChild(nomeFornecedor);
+
+    div_dados.addEventListener('click',()=>{
+    tela.appendChild(div_demonstracao);
+})
+});
+
+
+
+
+        })
 }
+
 cadastros();
+  
+
 });
 </script>
 </body>

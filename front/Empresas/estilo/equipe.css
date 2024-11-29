@@ -477,14 +477,14 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -2%;
+    margin-top: -1%;
 }
 
 #segundaDiv{
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -3%;
+    margin-top: -1%;
 
 
 }
@@ -493,7 +493,7 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -3%;
+    margin-top: -1%;
 
 
 }
@@ -502,7 +502,7 @@ flex-direction: column;
     width: 46%;
     display: flex;
     padding: 0.5vw;
-    margin-top: -3%;
+    margin-top: -2%;
 
 }
 
@@ -518,7 +518,7 @@ flex-direction: column;
 }
 
 #sextaDiv{
-
+margin-top: -10%;
 width: 50%;
 margin-left: 0.5vw;
 }
@@ -661,7 +661,7 @@ font-size: 1.5vw;
     font-size: 1vw;
     padding: 0.3vw;
     background-color: #E7E7E7;
-    margin: 0 2vw 2vw 0;
+    margin: 0 1vw 2vw 0;
     width: 92%;
 }
 
@@ -706,4 +706,83 @@ font-size: 1.5vw;
     background-color: #E7E7E7;
     margin: 0 1vw 2vw 0;
   
+}
+
+
+#div_header_fornecedores{
+    width: 100%;
+    height: 12%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color:rgba(218, 66, 0, 1);
+    border-top-left-radius: 2vw; 
+    border-top-right-radius: 2vw;
+    margin-bottom: 1vw;
+    
+    }
+
+#texto_header_fornecedors{
+    font-size: 2vw;
+    margin-left: 1vw;
+    }
+
+#texto_header_barra_fornecedores{
+    width: 100%;
+    height: 0.15vw;
+    background-color: #0A0403;
+}
+
+#tela2{
+    width: 100%;
+    height: 100%;
+}
+
+#btn_lista{
+    background: rgb(185, 56, 0);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 2vw;
+    margin-right: 1vw;
+}
+
+#div_mostrar{
+    width: 100%;
+    height: 100%;
+    padding: 1vw;;
+    display: flex;
+    overflow: auto;
+}
+
+#div_dados{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 15%;
+    height: 40%;
+    margin-right: 1vw;
+    background-color: rgba(241, 241, 241, 0.651);
+    border-radius: 1vw;
+}
+#div_dados:hover{
+    cursor: pointer;
+}
+
+#img_forn{
+    width: 70%;
+    height: 45%;
+    border-radius: 80%;
+}
+
+#div_demonstracao{
+position: fixed;
+width: 60%;
+height: 50%;
+background-color: rgb(117, 117, 117);
+}
+
+#div_demonstracao_fechar{
+    display: none;
 }
