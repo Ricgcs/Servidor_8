@@ -633,6 +633,9 @@ console.log(cod_empr);
 });
 });
 
+
+
+
         const btn_fornecedor = document.getElementById("button_fornecedor");
         const btn_lista = document.createElement("button");
         const tela2 = document.createElement("div");
@@ -642,6 +645,8 @@ console.log(cod_empr);
         div_dados.id = "div_dados";
         const img_forn = document.createElement("img");
         img_forn.id = "img_forn";
+
+
         btn_fornecedor.addEventListener("click",async ()=>{            
             tela.innerHTML = "";
             div_header.innerHTML ="";
@@ -650,7 +655,8 @@ console.log(cod_empr);
             const response = await fetch('http://localhost:3000/fornecedor/mostrar');
             const result = await response.json(); 
             const fornecedores = result.data;          
-            
+
+
             btn_lista.id = "btn_lista";
             btn_lista.textContent = "Lista";
             tela2.id = "tela2";
@@ -667,51 +673,333 @@ console.log(cod_empr);
             texto_header_barra.id = "texto_header_barra_fornecedores";
             const div_demonstracao = document.createElement('div');
             div_demonstracao.id = "div_demonstracao";
+            
+            const div_nome_imagem_fornecedor = document.createElement("div");
+            div_nome_imagem_fornecedor.id = "div_nome_imagem_fornecedor";
 
-            fornecedores.forEach(async (user) => { 
-  
-  div_mostrar.appendChild(div_dados); 
-    div_dados.appendChild(img_forn);   
+            const h1_nome_fornecedor = document.createElement("h1");
+            h1_nome_fornecedor.id = "h1_nome_fornecedor";
+            const div_img_forn = document.createElement("img");
+            div_img_forn.id = "div_img_forn";
 
-    try {
-        
-        const response = await fetch(`http://localhost:3000/fornecedor/imagem/${user.razao_social}`);
-        console.log(response);
+            const div_div_imagem_fornecedor = document.createElement("div");
+             div_div_imagem_fornecedor.id = "div_div_imagem_fornecedor";  
+             
+             const div_esquerda = document.createElement("div");
+             div_esquerda.id = "div_esquerda";    
 
-        const blob = await response.blob();
-        if (response.ok) {
-       
-            img_forn.src = blob ? URL.createObjectURL(blob) : "../img/imagem_user.png";
-            console.log('Imagem carregada com sucesso');
-        } else {
+             const div_direita = document.createElement("div");
+             div_direita.id = "div_direita";    
+
           
-            img_forn.src = "../img/imagem_user.png";
-        }
-    } catch (error) {
+             const div_button_lista = document.createElement("button");
+             div_button_lista.id = "div_button_lista";
+             div_button_lista.textContent = "Adicionar fornecedor";
 
-        img_forn.src = "../img/imagem_user.png";
-        console.log("Erro ao carregar a imagem:", error);
-    }
+             const div_primaria = document.createElement("div");
+            div_primaria.id = "div_primaria";
 
-    const nomeFornecedor = document.createElement("h1");
-    nomeFornecedor.textContent = user.razao_social;
-    div_dados.appendChild(nomeFornecedor);
 
-    div_dados.addEventListener('click',()=>{
-    tela.appendChild(div_demonstracao);
-})
+            const div_secundaria = document.createElement("div");
+            div_secundaria.id = "div_secundaria";
+
+            const div_terciaria = document.createElement("div");
+            div_terciaria.id = "div_terciaria";
+
+            const h1_primaria_cep = document.createElement("h1");
+            h1_primaria_cep.id = "h1_primaria_cep";         
+
+            const h1_primaria_estado = document.createElement("h1");
+            h1_primaria_estado.id = "h1_primaria_estado";    
+
+            const h1_primaria_cidade = document.createElement("h1");
+            h1_primaria_cidade.id = "h1_primaria_cidade";      
+
+            const h1_primaria_bairro = document.createElement("h1");
+            h1_primaria_bairro.id = "h1_primaria_bairro";           
+    
+            const h1_secundaria_nf = document.createElement("h1");
+            h1_secundaria_nf.id = "h1_secundaria_nf";
+
+            const h1_secundaria_cnpj = document.createElement("h1");
+            h1_secundaria_cnpj.id = "h1_secundaria_cnpj";
+
+            const h1_secundaria_telefone = document.createElement("h1");
+            h1_secundaria_telefone.id = "h1_secundaria_telefone";
+
+            const h1_secundaria_email = document.createElement("h1");
+            h1_secundaria_email.id = "h1_secundaria_email";
+
+            const div_primaria_cep = document.createElement("div");
+            div_primaria_cep.id = "div_primaria_cep";
+
+            const div_primaria_estado = document.createElement("div");
+            div_primaria_estado.id = "div_primaria_estado";
+
+            const div_primaria_cidade = document.createElement("div");
+            div_primaria_cidade.id = "div_primaria_cidade";
+
+            const div_primaria_bairro = document.createElement("div");
+            div_primaria_bairro.id = "div_primaria_bairro";
+
+            const div_secundaria_nf = document.createElement("div");
+            div_secundaria_nf.id = "div_secundaria_nf";
+
+            const div_secundaria_cnpj = document.createElement("div");
+            div_secundaria_cnpj.id = "div_secundaria_cnpj";
+
+            const div_secundaria_telefone = document.createElement("div");
+            div_secundaria_telefone.id = "div_secundaria_telefone";
+
+            const div_secundaria_email = document.createElement("div");
+            div_secundaria_email.id = "div_secundaria_email";
+
+            const titulo_primaria_cep = document.createElement("h1");
+            titulo_primaria_cep.id = "titulo_primaria_cep";
+
+            const titulo_primaria_estado = document.createElement("h1");
+            titulo_primaria_estado.id = "titulo_primaria_estado";
+
+            const titulo_primaria_cidade = document.createElement("h1");
+            titulo_primaria_cidade.id = "titulo_primaria_cidade";
+
+            const titulo_primaria_bairro = document.createElement("h1");
+            titulo_primaria_bairro.id = "titulo_primaria_bairro";
+
+           
+            const titulo_secundaria_nf = document.createElement("h1");
+            titulo_secundaria_nf.id = "titulo_secundaria_nf";
+
+            const titulo_secundaria_cnpj = document.createElement("h1");
+            titulo_secundaria_cnpj.id = "titulo_secundaria_cnpj";
+
+            const titulo_secundaria_telefone = document.createElement("h1");
+            titulo_secundaria_telefone.id = "titulo_secundaria_telefone";
+
+            const titulo_secundaria_email = document.createElement("h1");
+            titulo_secundaria_email.id = "titulo_secundaria_email";
+
+            const div_produtos = document.createElement("div");
+            div_produtos.id = "div_produtos";
+
+            const div_dados_fornecedor = document.createElement("div");
+             div_dados_fornecedor.id = "div_dados_fornecedor";
+
+             const div_fornecedores = document.createElement("div");
+             div_fornecedores.id = "div_fornecedores";
+
+
+             
+             fornecedores.forEach(async (user) => { 
+
+  
+div_mostrar.appendChild(div_dados); 
+  div_dados.appendChild(img_forn);   
+
+  try {
+      
+      const response = await fetch(`http://localhost:3000/fornecedor/imagem/${user.razao_social}`);
+      console.log(response);
+
+      const blob = await response.blob();
+      if (response.ok) {
+     
+          img_forn.src = blob ? URL.createObjectURL(blob) : "../img/imagem_user.png";
+          console.log('Imagem carregada com sucesso');
+      } else {
+        
+          img_forn.src = "../img/imagem_user.png";
+      }
+  } catch (error) {
+
+      img_forn.src = "../img/imagem_user.png";
+      console.log("Erro ao carregar a imagem:", error);
+  }
+
+  const nomeFornecedor = document.createElement("h1");
+  nomeFornecedor.textContent = user.razao_social;
+  div_dados.appendChild(nomeFornecedor);
+
+  div_dados.addEventListener('click',async ()=>{
+      div_demonstracao.innerHTML = "";
+      const response = await fetch(`http://localhost:3000/fornecedor/imagem/${user.razao_social}`);
+      const blob = await response.blob();
+      tela.appendChild(div_demonstracao);
+
+
+      div_demonstracao.appendChild(div_esquerda);
+      div_esquerda.appendChild(div_div_imagem_fornecedor);
+      div_esquerda.appendChild(div_button_lista);    
+      div_div_imagem_fornecedor.appendChild(div_nome_imagem_fornecedor);
+      div_div_imagem_fornecedor.appendChild(h1_nome_fornecedor);
+      h1_nome_fornecedor.textContent = `${user.razao_social}`;
+      div_nome_imagem_fornecedor.appendChild(div_img_forn);
+      div_img_forn.src = blob ? URL.createObjectURL(blob) : "../img/imagem_user.png";
+      div_demonstracao.appendChild(div_direita);
+
+
+      div_direita.appendChild(div_primaria);
+      div_direita.appendChild(div_secundaria);
+      div_direita.appendChild(div_terciaria);
+
+
+          div_primaria.appendChild(div_primaria_cep);
+      div_primaria_cep.appendChild(titulo_primaria_cep);
+      div_primaria_cep.appendChild(h1_primaria_cep);
+      titulo_primaria_cep.textContent = "CEP";
+      h1_primaria_cep.textContent = `${user.cep}`
+
+      div_primaria.appendChild(div_primaria_estado);
+      div_primaria_estado.appendChild(titulo_primaria_estado);
+      div_primaria_estado.appendChild(h1_primaria_estado);
+      titulo_primaria_estado.textContent = "Estado";
+      h1_primaria_estado.textContent = `${user.estado}`
+
+      div_primaria.appendChild(div_primaria_cidade);
+      div_primaria_cidade.appendChild(titulo_primaria_cidade);
+      div_primaria_cidade.appendChild(h1_primaria_cidade);
+      titulo_primaria_cidade.textContent = "Cidade";
+      h1_primaria_cidade.textContent = `${user.cidade}`;
+
+      div_primaria.appendChild(div_primaria_bairro);
+      div_primaria_bairro.appendChild(titulo_primaria_bairro);
+      div_primaria_bairro.appendChild(h1_primaria_bairro);
+      titulo_primaria_bairro.textContent = "Bairro";
+      h1_primaria_bairro.textContent = `${user.bairro}`;
+
+      div_secundaria.appendChild(div_secundaria_nf);
+      div_secundaria_nf.appendChild(titulo_secundaria_nf);
+      div_secundaria_nf.appendChild(h1_secundaria_nf);
+      titulo_secundaria_nf.textContent = "NF";
+      h1_secundaria_nf.textContent = `${user.nome_fantasia}`;
+
+      div_secundaria.appendChild(div_secundaria_cnpj);
+      div_secundaria_cnpj.appendChild(titulo_secundaria_cnpj);
+      div_secundaria_cnpj.appendChild(h1_secundaria_cnpj);
+      titulo_secundaria_cnpj.textContent = "CNPJ";
+      h1_secundaria_cnpj.textContent = `${user.cnpj}`;
+
+      div_secundaria.appendChild(div_secundaria_telefone);
+      div_secundaria_telefone.appendChild(titulo_secundaria_telefone);
+      div_secundaria_telefone.appendChild(h1_secundaria_telefone);
+      titulo_secundaria_telefone.textContent = "Telefone";
+      h1_secundaria_telefone.textContent = `${user.telefone}`;
+
+      div_secundaria.appendChild(div_secundaria_email);
+      div_secundaria_email.appendChild(titulo_secundaria_email);
+      div_secundaria_email.appendChild(h1_secundaria_email);
+      titulo_secundaria_email.textContent = "Email";
+      h1_secundaria_email.textContent = `${user.email}`;
+
+          const cod_um = await fetch(`http://localhost:3000/fornecedor/cod/${user.razao_social}`);
+      const cod_empr = await cod_um.json();
+      
+      if (!cod_empr) {
+          console.error('Código do fornecedor não encontrado.');
+          return { produtos: [], quantidade: [] }; // Retorna arrays vazios em caso de erro
+      }
+
+      // Codificar o valor (caso necessário)
+
+      // Buscar os valores dos produtos com base no código do fornecedor
+      const responsea = await fetch(`http://localhost:3000/fornecedor/mostrar_valores/${cod_empr}`);
+      
+      if (!responsea.ok) {
+          console.error('Erro na resposta da rede ao buscar produtos.');
+          return { produtos: [], quantidade: [] }; // Retorna arrays vazios em caso de erro
+      }
+      
+      const resposta = await responsea.json();
+      const produtos = resposta.data;
+      
+      // Log para verificar os dados recebidos
+      console.log('Dados recebidos do backend (produtos):', produtos);
+      console.log('Tipo de dados retornado:', Array.isArray(produtos) ? 'Array' : typeof produtos);
+      console.log('Primeiro item do array:', produtos[0]);
+
+      // Buscar a quantidade de produtos com base no código do fornecedor
+      const responseQuant = await fetch(`http://localhost:3000/fornecedor/mostrar_quantidade/${cod_empr}`);
+      
+      if (!responseQuant.ok) {
+          console.error('Erro na resposta da rede ao buscar quantidade.');
+          return { produtos: [], quantidade: [] }; // Retorna arrays vazios em caso de erro
+      }
+      
+      const respostaQuant = await responseQuant.json();
+      const quantidade = respostaQuant.data;
+      
+      // Log para verificar os dados de quantidade
+      console.log('Dados recebidos do backend (quantidade):', quantidade);
+      console.log('Tipo de dados retornado:', Array.isArray(quantidade) ? 'Array' : typeof quantidade);
+      console.log('Primeiro item do array:', quantidade[0]);
+
+      div_terciaria.appendChild(div_produtos);
+      div_produtos.textContent = `Nome: ${produtos.Nome}_______________________________________________________________Valor: ${produtos.valor}`;
+
+      div_terciaria.appendChild(div_produtos);
+      div_produtos.textContent = `Nome: ${quantidade.Nome}_______________________________________________________________Valor: ${quantidade.valor}`;
+
+
+ btn_lista.addEventListener("click",async ()=>{
+      tela.innerHTML = "";
+      tela.appendChild(div_fornecedores);
+       const cod_dois = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+       const cod_tres = await cod_dois.json();
+     
+       const response = await fetch(`http://localhost:3000/fornecedor_lista/mostrar/${cod_tres}`);
+       const res = await response.json();
+       const resultado = res.data;
+
+
+
+      resultado.forEach(async (user)=>{
+          console.log(user.fornecedor_cod);
+       const responsa = await fetch(`http://localhost:3000/fornecedor/nome/${user.fornecedor_cod}`);
+      // console.log(await responsa.json());
+      const dados = await responsa.json()
+      div_fornecedores.appendChild(div_dados_fornecedor);
+       div_dados_fornecedor.textContent = `${dados}`;
+      });
+
+       //fornecedor_cod
+
+      alert("funciona");
+        
+     
+  })
+
+      div_button_lista.addEventListener("click",async ()=>{
+          const cod_dois = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+          const cod_tres = await cod_dois.json();
+          try{
+              
+          const response = await fetch(`http://localhost:3000/fornecedor_lista/${cod_empr}/${cod_tres}`, {
+                      method: 'POST'           
+      });
+
+      alert("Fornecedor salvo")
+
+      }
+
+      catch(error){
+          alert("Erro");
+          console.log(error);
+          }
+
+
+  });
+
+
+
+});
 });
 
 
-
-
-        })
-}
+});
+}//fim cadastros
 
 cadastros();
-  
-
-});
+});//fim dom
 </script>
 </body>
 </html>

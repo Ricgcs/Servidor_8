@@ -24,12 +24,12 @@ export const getnomeprod_quantidade = async ({ nome, cod }) => {
     }
 };
 
-export const setProd_quantidade = async ({cod_empr, nome, valor, quantidade, data, obs}) => {
+export const setProd_quantidade = async ({cod_empr, nome, valor, quantidade, data, obs, cod_compra, fornecedor}) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO Produto_quantidade ( Empresa_Cod_empresa,Nome, Valor, Quantidade, Data, observacao)VALUES (?, ?, ?, ?, ?, ?)',
-            [ cod_empr, nome, valor, quantidade, data, obs ]
+            'INSERT INTO Produto_quantidade ( Empresa_Cod_empresa,Nome, Valor, Quantidade, Data, observacao, cod_compra, fornecedor)VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [ cod_empr, nome, valor, quantidade, data, obs, cod_compra, fornecedor  ]
         );
         return result;
     } catch (error) {

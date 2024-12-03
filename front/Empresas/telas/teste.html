@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Alert</title>
+</head>
+<body>
+    <h1>Escolha um item</h1>
+    <label for="itemSelect">Selecione um item:</label>
+    <select id="itemSelect">
+        <option value="">--Selecione--</option>
+        <option value="item1">Item 1</option>
+        <option value="item2">Item 2</option>
+        <option value="item3">Item 3</option>
+    </select>
+
+    <script>
+        // Seleciona o elemento select
+        const selectElement = document.getElementById('itemSelect');
+
+        // Adiciona um ouvinte de evento de mudança
+        selectElement.addEventListener('change', () => {
+            const selectedValue = selectElement.value; // Obtém o valor selecionado
+            if (selectedValue) {
+                alert(`Você selecionou: ${selectedValue}`);
+            }
+        });
+    </script>
+</body>
+</html>

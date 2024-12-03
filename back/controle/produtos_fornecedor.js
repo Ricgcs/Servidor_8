@@ -24,6 +24,19 @@ export const getnomeprod_fornecedor = async ({ nome, cod }) => {
     }
 };
 
+
+export const getcod_nome_b = async ({ cod }) => {
+    try {
+        const sql = "SELECT * FROM produto_fornecedor WHERE fornecedor_cod = ?";
+        const [rows] = await con.query(sql, [cod]);
+        return rows;
+    } catch (error) {
+        console.error("Erro no select_Prod", error);
+        throw new Error("Erro ao obter os produtos");
+    }
+};
+
+
 export const setProd_fornecedor = async ({cod_empr, nome, valor, quantidade, altura, comprimento, largura, a, c, l, data, obs}) => {
     const con = await conexao();
     try {
@@ -74,6 +87,23 @@ export const procurarProdcod_fornecedor = async (Cod_empresa, Cod_produto) => {
         const [rows] = await con.query(
             `SELECt  * FROM produto_fornecedor WHERE fornecedor_cod = ? && Cod_produto = ?`,
             [Cod_empresa, Cod_produto]
+           
+        );
+
+        return rows;
+    } catch (error) {
+        console.error('Erro ao procurar produto:', error.message);
+        throw error;
+    }
+};
+
+
+export const procurarProdnome_fornecedor = async (cod, nome) => {
+    const con = await conexao();
+    try {
+        const [rows] = await con.query(
+            `SELECt  * FROM produto_fornecedor WHERE fornecedor_cod = ? && Nome = ?`,
+            [cod, nome]
            
         );
 

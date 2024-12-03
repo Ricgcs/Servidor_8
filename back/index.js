@@ -7,15 +7,18 @@ import { setCarg, procurarCargo,procurarSalario, procurarCodCargo, atualizarCarg
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
 import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
-import { getFornecedor, login_fornecedor, nomeCod_fornecedor, procurarForn, procurarImagem_fornecedor, setForn, validarFornecedor } from "./controle/fornecedor.js";
-import { atualizarProd_fornecedor, delProd_fornecedor, getnomeprod_fornecedor, getProd_fornecedor, procurarProd_fornecedor, setProd_fornecedor } from "./controle/produtos_fornecedor.js";
-import { getnomeprod_quantidade_fornecedor, procurarProd_quantidade_fornecedor, setProd_quantidade_fornecedor } from "./controle/produtos_quantidade_fornecedor.js";
+import { codNome_fornecedor, getFornecedor, login_fornecedor, Nome_fornecedor, nomeCod_fornecedor, procurarForn, procurarImagem_fornecedor, setForn, validarFornecedor } from "./controle/fornecedor.js";
+import { atualizarProd_fornecedor, delProd_fornecedor, getcod_nome_b, getnomeprod_fornecedor, getProd_fornecedor, procurarProd_fornecedor, procurarProdnome_fornecedor, setProd_fornecedor } from "./controle/produtos_fornecedor.js";
+import { getcod_nome_a, getnomeprod_quantidade_fornecedor, procurarProd_quantidade_fornecedor, procurarProdQuantidadenome_fornecedor, setProd_quantidade_fornecedor } from "./controle/produtos_quantidade_fornecedor.js";
 import { __dirname } from "../nomeArquivo.js";
 import { mostrarTarefas, salvar } from "./controle/agenda_empresa.js";
 import path from 'path';
 import cors from 'cors';
 import multer from 'multer';
 import { mostrarTarefasFornecedor, salvarFornecedor } from "./controle/agenda_fornecedor.js";
+import { mostrarLista, salvarlista } from "./controle/lista.js";
+import { procCompraHora, setCompra } from "./controle/compra.js";
+import { setParcela } from "./controle/parcelas.js";
 
 
 
@@ -67,13 +70,46 @@ app.get('/fornecedor/cod/:nome', async (req, res) => {
       res.json(response);
      
     } catch (error) {
+      console.log("Erro ao buscar os dados:", error);
+      console.log("Nome:", rs);
+      
+      res.status(500).send('Erro ao processar os dados');
+    }
+  });   
+
+  app.get('/fornecedor/dados_nome/:nome', async (req, res) => {
+    const rs = req.params.nome;  
+    
+    try {
+    
+      const response = await Nome_fornecedor(rs);    
+     console.log(response);
+      res.json(response);
+     
+    } catch (error) {
       console.log("Erro ao buscar o cod:", error);
       console.log("Nome:", rs);
       
       res.status(500).send('Erro ao processar o cod');
     }
-  });   
+  }); 
 
+  app.get('/fornecedor/nome/:cod', async (req, res) => {
+    const cod = req.params.cod;  
+    console.log("chegou isso",cod)
+    try {
+    
+      const response = await codNome_fornecedor(cod);    
+     console.log(response);
+     return res.status(200).json(response)
+     
+    } catch (error) {
+      console.log("Erro ao buscar o nome:", error);
+      console.log("Cod:", cod);
+      
+      res.status(500).send('Erro ao processar o nome');
+    }
+  }); 
 
 
 app.get('/fornecedor/imagem/:nome', async (req, res) => {
@@ -105,16 +141,16 @@ app.post('/fornecedor',upload.single('img'), async (req, res) => {
     const cnpj = Number(req.body.cnpj);
     const senha = req.body.senha;   
     const cep = req.body.cep;  
-    const estado = req.body.senha;   
-    const cidade = req.body.senha;   
-    const bairro = req.body.senha;   
+    const estado = req.body.estado;   
+    const cidade = req.body.cidade;   
+    const bairro = req.body.bairro;   
     const telefone = req.body.telefone;   
 
     const img = req.file;
     console.log('teste funciona 2')
     
     let fornData = { razao_social, nome_fantasia, cnpj, telefone, cep, email, estado, cidade, bairro, senha, img };
-     
+     console.log(fornData)
     try {
 
         const validar = await validarFornecedor(cnpj);    
@@ -122,14 +158,14 @@ app.post('/fornecedor',upload.single('img'), async (req, res) => {
         {
         return res.status(200).json(2);
        }
-
-        await setForn(fornData);
+       console.log("chegou aqui essa porra")
+      const foda =  await setForn(fornData);
         console.log(fornData)
         res.status(200).send('Fornecedor cadastrado com sucesso!');
     } catch (error) {
     console.log('teste funciona 4')
 
-        console.error('Erro ao cadastrar fornecedor:', error);
+        console.log('Erro ao cadastrar fornecedor:', error);
         res.status(500).send('Erro ao cadastrar fornecedor.');
     }
 });
@@ -166,6 +202,43 @@ app.get('/fornecedor/mostrar/:what/:valor/:nome', async (req, res) => {
     }
 });
 
+app.get('/fornecedor/mostrar_quantidade/:cod', async (req, res) => {
+    const cod= req.params.cod; 
+
+
+    try {
+       
+        const resultado = await getcod_nome_a({cod});
+        
+    
+  
+        //res.status(200).json({data:name});
+        res.status(200).send({data:resultado});
+     
+    } catch (error) {
+
+        res.status(500).json({ message: "Erro ao procurar o fornecedor no servidor", error: error.message });
+    }
+});
+
+
+app.get('/fornecedor/mostrar_valores/:cod', async (req, res) => {
+    const cod= req.params.cod; 
+
+
+    try {
+       
+        const resultado = await getcod_nome_b({cod});
+    
+  
+        //res.status(200).json({data:name});
+        res.status(200).send({data:resultado});
+     
+    } catch (error) {
+
+        res.status(500).json({ message: "Erro ao procurar o fornecedor no servidor", error: error.message });
+    }
+});
 
 app.get('/fornecedor/mostrar_todos', async (req, res) => {
     try {
@@ -205,6 +278,41 @@ app.get('/fornecedor/mostrar_todos', async (req, res) => {
         }
 });
 
+app.post('/fornecedor_lista/:cod/:pesq', async (req, res) => {
+    const pesq = req.params.pesq;  
+    const cod = req.params.cod;  
+    console.log('Código da empresa:', pesq);
+  
+    try {
+      const resultado = await salvarlista(cod, pesq);
+
+        res.status(200).json({ data: resultado });
+
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o fornecedor', error: error.message });
+    }
+  });
+
+
+
+app.get('/fornecedor_lista/mostrar/:pesq', async (req, res) => {
+    const pesq = req.params.pesq;  
+    console.log('Código da empresa:', pesq);
+  
+    try {
+      const resultado = await mostrarLista(pesq);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(404).json({ message: 'Nenhum produto encontrado.' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
+
+
+
 //-----------------------------------Produto_quantidade_fornecedor--------------------------------------------\\
 app.post('/produto_quantidade_fornecedor/:cod_empr/:nome/:valor/:quantidade/:data/:obs', async (req, res) => {
     const {cod_empr, nome, valor, quantidade,data, obs} = req.params; 
@@ -227,12 +335,32 @@ app.get('/produto_quantidade_fornecedor/mostrar/:pesq', async (req, res) => {
       if (resultado.length > 0) {
         res.status(200).json({ data: resultado });
       } else {
-        res.status(404).json({ message: 'Nenhum produto encontrado.' });
+        res.status(200).json({ message: 'Nenhum produto encontrado.' });
       }
     } catch (error) {
       res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
     }
   });
+
+  app.get('/produto_fornecedor/procurarNomeQuantidade/:cod/:nome', async (req, res) => {
+    const cod = req.params.cod; 
+    const nome = req.params.nome; 
+    console.log('Código do fornecedor:', cod);  
+    console.log('NOme do produto:', nome);   
+
+    try {                                       
+      const resultado = await procurarProdQuantidadenome_fornecedor(cod, nome);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(200).json({ data: 0 });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
+
+
 
 
   app.get('/produto_quantidade_fornecedor/mostrar_nome/:nome/:cod', async (req, res) => {
@@ -250,7 +378,53 @@ app.get('/produto_quantidade_fornecedor/mostrar/:pesq', async (req, res) => {
         console.error("Erro:", error.message);
     }
 });
+//-------------------------------------------------Parcelas--------------------------------------------------------\\
+app.post('/parcela/fornecedor_cod/:empresa_Cod_empresa/:os_empresa_Cod_empresa/:produto_quantidade_fornecedor_Cod_produto/:produto_fornecedor_fornecedor_cod/:data/:estado', async (req, res) => {
+    
+    const {fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado} = req.params; 
+console.log(fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado)
+    try {
+        const resultado = await setParcela({fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado});
+        res.status(201).json({ message: "Parcela criado com sucesso", data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar a parcela", error: error.message });
+    }
+});
 
+//--------------------------------------------------Compra-------------------------------------------------------\\
+// fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data;
+
+
+
+app.post('/compras/:fornecedor_cod/:empresa_Cod_empresa/:data', async (req, res) => {
+    const {fornecedor_cod, empresa_Cod_empresa, data} = req.params; 
+console.log(fornecedor_cod, empresa_Cod_empresa, data)
+    try {
+        const resultado = await setCompra({fornecedor_cod, empresa_Cod_empresa, data});
+        res.status(201).json({ message: "Compra salva com sucesso", data: resultado });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar a compra", error: error.message });
+    }
+});
+
+
+app.get('/compras/procurar/:cod/:hora', async (req, res) => {
+    const cod = req.params.cod; 
+    const hora = req.params.hora; 
+    console.log('Código do fornecedor:', cod);
+    console.log('NOme do fornecedor:', hora);
+  
+    try {
+      const resultado = await procCompraHora(cod, hora);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(200).json({ data: 0 });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
 
 //-----------------------------------------------Produto_fornecedor---------------------------------------------------------\\
 app.post('/produto_fornecedor/:cod_empr/:nome/:valor/:quantidade/:altura/:comprimento/:largura/:a/:c/:l/:data/:obs', async (req, res) => {
@@ -280,6 +454,25 @@ app.get('/produto_fornecedor/mostrar/:pesq', async (req, res) => {
       res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
     }
   });
+
+  app.get('/produto_fornecedor/procurarNome/:cod/:nome', async (req, res) => {
+    const cod = req.params.cod; 
+    const nome = req.params.nome; 
+    console.log('Código do fornecedor:', cod);
+    console.log('NOme do produto:', nome);
+  
+    try {
+      const resultado = await procurarProdnome_fornecedor(cod, nome);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(200).json({ data: 0 });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
+
 
 app.get('/produto_fornecedor/mostrar_nome/:nome/:cod', async (req, res) => {
     const nome = req.params.nome;
@@ -759,11 +952,11 @@ app.get('/usuario/mostrar_todos', async (req, res) => {
     }
 });
 //------------------------------------------Produto_quantidade---------------------------------------------------\\
-app.post('/produto_quantidade/:cod_empr/:nome/:valor/:quantidade/:data/:obs', async (req, res) => {
-    const {cod_empr, nome, valor, quantidade,data, obs} = req.params; 
+app.post('/produto_quantidade/:cod_empr/:nome/:valor/:quantidade/:data/:obs/:cod_compra/:fornecedor', async (req, res) => {
+    const {cod_empr, nome, valor, quantidade,data, obs, cod_compra, fornecedor} = req.params; 
 
     try {
-        const resultado = await setProd_quantidade({cod_empr, nome, valor, quantidade,data, obs});
+        const resultado = await setProd_quantidade({cod_empr, nome, valor, quantidade,data, obs,cod_compra, fornecedor});
         res.status(201).json({ message: "Produto criado com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar o produto", error: error.message });
@@ -806,11 +999,11 @@ app.get('/produto_quantidade/mostrar/:pesq', async (req, res) => {
 
 
 //-----------------------------------------------Produto---------------------------------------------------------\\
-app.post('/produto/:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura/:a/:c/:l/:data/:obs', async (req, res) => {
-    const { nome, valor, quantidade, cod_empr, altura, comprimento, largura,a,c,l,data,obs } = req.params; 
-
+app.post('/produto/:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura/:a/:c/:l/:data/:obs/:cod_compra/:fornecedor', async (req, res) => {
+    const { nome, valor, quantidade, cod_empr, altura, comprimento, largura,a,c,l,data,obs, cod_compra, fornecedor } = req.params; 
+    console.log(req.params)
     try {
-        const resultado = await setProd({ nome, valor, quantidade, cod_empr, altura, comprimento, largura, a, c, l,data,obs});
+        const resultado = await setProd({ nome, valor, quantidade, cod_empr, altura, comprimento, largura, a, c, l,data,obs, cod_compra, fornecedor});
         res.status(201).json({ message: "Produto criado com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar o produto", error: error.message });

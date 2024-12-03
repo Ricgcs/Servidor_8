@@ -20,6 +20,23 @@ export const nomeCod_fornecedor = async (rs) => {
         return count[0][0].cod; 
 }
 
+export const codNome_fornecedor = async (cod) => {
+    const validar = 'SELECT razao_social FROM fornecedor WHERE cod = ?';
+
+        const results = await con.query(validar, [cod]);
+        const count = results; 
+    
+        return count[0][0].razao_social; 
+}
+
+export const Nome_fornecedor = async (cod) => {
+    const validar = 'SELECT * FROM fornecedor WHERE razao_social = ?';
+
+        const results = await con.query(validar, [cod]);
+        const count = results; 
+    
+        return count[0][0].razao_social; 
+}
 
 export const login_fornecedor = async (rs, cnpj, senha) => {
  
@@ -65,7 +82,7 @@ export const getFornecedor = async (res) => {
 
 export const setForn = async ({ razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha, img }) => {
     const con = await conexao();
-   
+    console.log(razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha)
     try {
         const imagen = img.buffer;
         const [result] = await con.execute(

@@ -132,8 +132,7 @@ console.log(data);
                 const nome = document.getElementById('nome_produto').value;
                 const quantidade = document.getElementById('quantidade').value;
                 const valor = document.getElementById('valor').value;
-                const obs = document.getElementById('obs').value;
-                
+                const obs = document.getElementById('obs').value;             
                 
 
                            if(!nome || ! quantidade || !valor || !obs){
@@ -146,12 +145,7 @@ console.log(data);
                     const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
                 const cod_empr = await cod_um.json();
 console.log(cod_empr);                                                       
-                    const response = await fetch(`http://localhost:3000/cargo/${cod_empr}/${nome}/${valor}/${quantidade}/${data}/${obs}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    });
+                   
                    
                     if (response.ok) {
                         

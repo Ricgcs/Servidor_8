@@ -778,11 +778,246 @@ font-size: 1.5vw;
 
 #div_demonstracao{
 position: fixed;
+display: flex;
 width: 60%;
 height: 50%;
 background-color: rgb(117, 117, 117);
+border-radius: 2vw;
+padding: 0.5vw;
 }
 
 #div_demonstracao_fechar{
     display: none;
 }
+
+#div_nome_imagem_fornecedor{
+    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#div_img_forn{   
+
+    width: 50%;
+    height: 80%;
+    border-radius: 80%;
+}
+
+#div_div_imagem_fornecedor{
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#div_esquerda{
+width: 25%;
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around;
+}
+
+#h1_nome_fornecedor{
+
+}
+
+#div_button_lista{
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 1vw;
+    margin-left: 1vw;
+    
+}
+
+#div_direita{
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    #div_primaria { 
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 20%;
+    }
+    
+    #div_secundaria { 
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 20%;
+    }
+    
+    #div_terciaria { 
+    overflow: auto;
+    display: flex;
+    width: 90%;
+    height: 60%;
+    }
+    
+    #h1_primaria_cep { 
+        font-size: 1vw;
+    }
+    
+    #h1_primaria_estado { 
+        font-size: 1vw;
+        
+    }
+    
+    #h1_primaria_cidade { 
+        font-size: 1vw;
+        
+    }
+    
+    #h1_primaria_bairro { 
+        font-size: 1vw;
+        
+    }
+    
+    #h1_secundaria_nf { 
+        font-size: 1vw;
+        
+    }
+    
+    #h1_secundaria_cnpj { 
+        font-size: 1vw;
+        
+    }
+    
+    #h1_secundaria_telefone { 
+        font-size: 1vw;
+        
+    }
+    
+    #h1_secundaria_email { 
+        font-size: 1vw;
+        
+    }
+    
+    #div_primaria_cep { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #div_primaria_estado { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #div_primaria_cidade { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #div_primaria_bairro { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #div_secundaria_nf { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #div_secundaria_cnpj { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #div_secundaria_telefone { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #div_secundaria_email { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    
+    #titulo_primaria_cep { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_primaria_estado { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_primaria_cidade { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_primaria_bairro { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_secundaria_nf { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_secundaria_cnpj { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_secundaria_telefone { 
+        font-size: 1.5vw;
+    }
+    
+    #titulo_secundaria_email { 
+        font-size: 1.5vw;
+    }    
+    #div_produtos{
+        width: auto;
+        height: 7%;
+        background-color: #575757;
+        border: solid white 0.1vw;
+        border-radius: 4vw;
+        padding: 1vw;
+    }
+
+    #div_fornecedores{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    }
+
+    #div_dados_fornecedor{
+        width: 90%;
+        height: 10%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1vw;
+        border-radius: 1vw;
+        border: solid black 0.2vw;
+        font-size: 2vw;
+    }

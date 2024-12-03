@@ -183,19 +183,19 @@ div {
 #vh1 {}
 
 #vh2 {
-    margin-left: 2vw;
+    margin-left: 8vw;
 }
 
 #vh3 {
-    margin-left: 7.9vw;
+    margin-left: 5vw;
 }
 
 #vh4 {
-    margin-left: 5.8vw;
+    margin-left: 4vw;
 }
 
 #vh5 {
-    margin-left: 5.7vw;
+    margin-left: 5vw;
 }
 
 #menu {
@@ -227,6 +227,8 @@ hr {
 }
 #s3{
     margin-left: -0.59vw;
+    height: 10%;
+    overflow: auto;
 
 }
 #Adicionar_itens {
@@ -245,6 +247,9 @@ hr {
 
 #ult2 {
     width: 30%;
+    background-color: transparent;
+    font-size: 1vw;
+    color: black;
 }
 
 #input_ult {
@@ -315,8 +320,20 @@ label {
     cursor: pointer;
 }
 
-#v2in {
-    width: 80%;
+#v2ina {
+    width: 100%;
+}
+
+#v2inb {
+    width: 40%;
+}
+
+#v2inc {
+    width: 40%;
+}
+
+#v2ind {
+    width: 40%;
 }
 
 #va {
@@ -370,4 +387,82 @@ label {
     padding: 0.6vw;
     border: none;
     margin-left: 70%;
+    height: 100%;
+}
+
+
+select{
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    width: 8vw;
+    margin: 0 1vw 2vw 0;
+}
+
+#select_nome_produto{
+    width: 75%;
+}
+
+#parcelas{
+    background-color: white;
+}
+
+#adicionar_parcela{
+    background-color: #DA4200;
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+}
+
+#valores_parcelas{
+    background-color: white;
+    display: flex;
+    height: 20%;
+}
+
+#ultimos{
+    
+    background-color: white; 
+    display: flex;
+    height: 3vw;
+    
+}
+
+#button_adicionar_parcelas{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: white;
+}
+
+#parcelas_inputs{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 70%;
+    height: 4vw;
+    background-color: rgb(255, 255, 255);
+    overflow: auto;
+   margin-left: -2.4vw;
+
+}
+
+#calcular_parcelas{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    background-color: white;
+    font-size: 1vw;
+    color: black;
+    margin-left: 1vw;
+    
+}
+
+#divParcela{
+    background-color: white;
+display: flex;
+margin-bottom: -2vw;
 }
