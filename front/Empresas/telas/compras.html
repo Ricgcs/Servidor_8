@@ -102,12 +102,12 @@
             </footer>
         </div>
         <script>
-        function logOut(){  
-        if(confirm("Tem certeza que deseja sair da conta?")){
-            localStorage.clear();
-            window.location.href = './login_cliente.html';
-        } 
-        }
+    function logOut(){  
+  if(confirm("Tem certeza que deseja sair da conta?")){
+    localStorage.clear();
+    window.location.href = '../../inicial/front/inicial.html';
+  } 
+}
 
 
     document.addEventListener('DOMContentLoaded', () => 
@@ -346,24 +346,25 @@ select_fornecedor.addEventListener("change", async () => {
         const inputValorParcela = document.createElement("input");
         inputValorParcela.type = "number";
         inputValorParcela.placeholder = "Valor da parcela";
-        inputValorParcela.className = `valor_parcela parcela${quantidadeParcelas}`;
+        inputValorParcela.className = `valor_parcela${quantidadeParcelas}`;
         inputValorParcela.required = true;
 
         // Campo: Forma de pagamento (agora um input de texto)
         const inputFormaPagamento = document.createElement("input");
         inputFormaPagamento.type = "text";
         inputFormaPagamento.placeholder = "Forma de pagamento";
-        inputFormaPagamento.className = `forma_pagamento parcela${quantidadeParcelas}`;
+        inputFormaPagamento.className = `forma_pagamento${quantidadeParcelas}`;
         inputFormaPagamento.required = true;
 
         // Campo: Data de vencimento
         const inputDataVencimento = document.createElement("input");
         inputDataVencimento.type = "date";
-        inputDataVencimento.className = `data_vencimento parcela${quantidadeParcelas}`;
+        inputDataVencimento.className = `data_vencimento${quantidadeParcelas}`;
         inputDataVencimento.required = true;
 
         const estado = document.createElement("select");
-        estado.className = `data_vencimento parcela${quantidadeParcelas}`;  
+        estado.id = "status_select";
+        estado.className = `status${quantidadeParcelas}`;
 
         const opt1 = document.createElement("option");
         opt1.value = "Ausente";
@@ -411,9 +412,10 @@ select_fornecedor.addEventListener("change", async () => {
   const nomeProduto = nomeProduto_d.Nome;
   
     const data = document.querySelector(".data")?.value;
+
     const estatus = document.getElementById("status_select").value;
                                                                 
-const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}/${estatus}`, {
+const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}`, {
                         method: 'POST',                         
                                           
                     });    
@@ -451,10 +453,18 @@ const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_
   let parcelaItems = document.querySelectorAll("[class^='parcela']");
 
  parcelaItems.forEach( (div) => {
-   const valorParcela = div.querySelector(`.valor_parcela${div.className.match(/\d+/)[0]}`)?.value || null;
-   const formaPagamento = div.querySelector(`.forma_pagamento${div.className.match(/\d+/)[0]}`)?.value || null;
-   const dataVencimento = div.querySelector(`.data_vencimento${div.className.match(/\d+/)[0]}`)?.value || null;
-  const estatus = document.querySelector(".status")?.value;
+  console.log("TESTE PARCELA ITEMS:",parcelaItems)
+  
+  const index = div.className.match(/\d+/)?.[0]; // Extrai o número da classe, ex.: "1"
+    const valorParcela = div.querySelector(`.valor_parcela${index}`)?.value || null;
+    const formaPagamento = div.querySelector(`.forma_pagamento${index}`)?.value || null;
+    const dataVencimento = div.querySelector(`.data_vencimento${index}`)?.value || null;
+    const estatus = document.querySelector(`.status${index}`)?.value || null;
+    console.log(`Parcela ${index} - Valor:`, valorParcela);
+    console.log(`Parcela ${index} - Forma de Pagamento:`, formaPagamento);
+    console.log(`Parcela ${index} - Data de Vencimento:`, dataVencimento);
+
+  
    
    parcelas.push({
      valorParcela,
@@ -462,14 +472,18 @@ const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_
      dataVencimento,
      estatus,
    });
+
+   console.log("TESTE PARCELAS CLASSE:",parcelas)
    });
 
   parcelas.forEach(async(parcela)=>{
+
     const valor = parcela.valorParcela;
     const forma = parcela.formaPagamento;
     const data = parcela.dataVencimento;
     const status = parcela.estatus;
     const fornecedor = select_fornecedor.value;
+
     const response = await fetch(`http://localhost:3000/parcela/${valor}/${forma}/${data}/${cod_empr}/${cod_compra}/${status}/${fornecedor}`, {
         method: 'POST',
         headers: {
@@ -544,8 +558,9 @@ if (produto != 0) {
 
   console.log("Medidas",pesquisaProdutoQuantidadeB.data);
    try {
-   
+    console.log(produto)
     const data_um = produto.Data;
+
     const data = data_um.replace("T", " ").replace("Z", "").split(".")[0];
                                                                                         //  /:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura/:a/:c/:l/:data/:obs
    const response = await fetch(`http://localhost:3000/produto/${produto.Nome}/${produto.valor}/${compras.quantidade}/${cod_empr}/${produto.Altura}/${produto.Comprimento}/${produto.Largura}/${produto.si_altura}/${produto.si_comprimento}/${produto.si_largura}/${data}/${compras.descricao}/${cod_compra}/${select_fornecedor.value}`, {

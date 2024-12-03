@@ -165,6 +165,12 @@ text-decoration: none;
 
 }
 
+#button_cliente{
+    font-size: 2vw;
+    background-color: transparent;
+    margin-bottom: 2vw;
+    color: white;
+}
 
 .hover-bar {
     position: relative;
@@ -518,7 +524,7 @@ flex-direction: column;
 }
 
 #sextaDiv{
-margin-top: -10%;
+margin-top: -2%;
 width: 50%;
 margin-left: 0.5vw;
 }

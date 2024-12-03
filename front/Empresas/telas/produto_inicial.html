@@ -52,7 +52,7 @@
 <section id="s2">
     <img id="imagem_logo_cadastrado" src="../img/logo_inteiro.png" alt="logo">
 <h1 id="nome_cadastrado"></h1>
-<div><a href="./cadastro_produto.html"><button id="btn_footer"><strong>Adicionar produto</strong></button></a></div>
+<!-- <div><a href="./cadastro_produto.html"><button id="btn_footer"><strong>Adicionar produto</strong></button></a></div> -->
 </section>
 
 
@@ -62,7 +62,7 @@
 function logOut(){  
   if(confirm("Tem certeza que deseja sair da conta?")){
     localStorage.clear();
-    window.location.href = './login_cliente.html';
+    window.location.href = '../../inicial/front/inicial.html';
   } 
 }
   document.addEventListener('DOMContentLoaded', () => {
@@ -73,7 +73,7 @@ function logOut(){
  
    if(!nomeUser || !senhaUser || !codUser){
     alert("faça o login");
-    window.location.href = "./login_cliente.html"
+    window.location.href = "../../inicial/front/inicial.html"
    }
    
    
@@ -178,7 +178,7 @@ divCabecalho.appendChild(btn)
           throw new Error('Código da empresa não encontrado no localStorage.');
         }
         const nome = encodeURIComponent(valor);
-  
+        console.log(nome)
         const response = await fetch(`http://localhost:3000/produto/mostrar_nome/${nome}/${cod_empr}`);
         
         if (!response.ok) {
@@ -227,7 +227,7 @@ divCabecalho.appendChild(btn)
   
         return produtos;
       } catch (error) {
-        console.error('Erro ao buscar os dados:', error);
+        console.log('Erro ao buscar os dados:', error);
         return [];
       }
     };
@@ -386,3 +386,14 @@ carregarProdutos();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

@@ -24,144 +24,632 @@
         <img id="img_user" src="" alt="imagem_usuario">
         <div id="header_config">
         <h1 id="nome_user"></h1>
-        <a id="link_user" href="../config.html">configuração</a>
+        <a id="link_user" href="./config.html">configuração</a>
         </div>
         </div>
         </header>
     <div id="Formulario">
         <head>
-            <h1 id="Cabecalho">Nova compra</hr></h1>
+            <h1 id="Cabecalho">Orçamento</hr></h1>
+        
         </head>
 
         <section id="s1">
-            <div id="s1a">
-                <label id="s1l">Código da compra</label>
-                <input type="number" placeholder="Digite aqui">
-            </div>
             <div id="s1b">
-                <label id="s1l">Fornecedor</label>
-                <input type="text" placeholder="Digite aqui">
+                <label id="s1l">Cliente</label>
+                <select name="Fornecedor" id="fornecedor">
+           
+
+                </select>
             </div>
         </section>
 
         <section id="s2">
             <div id="valores">
-                <h1 id="vh1">Valor da última compra</h1>
-                <h1 id="vh2">Altura</h1>
-                <h1 id="vh3">Profundidade</h1>
-                <h1 id="vh4">Profundidade</h1>
-                <h1 id="vh5">Largura</h1>
+                <h1 id="vh1">Nome do produto</h1>
+                <h1 id="vh2">Descrição do produto</h1>
+                <h1 id="vh3">Quantidade</h1>
+                <h1 id="vh4">Valor un</h1>
+                <h1 id="vh5">Valor</h1>
             </div>
         </section>
         <section id="s3">
-            <div id="v2">
-                <input type="number" placeholder="Digite aqui" id="v2in"/>
-                <input type="text" placeholder="Digite aqui" id="v2in"/>
-                <input type="text" placeholder="Digite aqui" id="v2in"/>
-                <input type="text" placeholder="Digite aqui" id="v2in"/>
-                <input type="text" placeholder="Digite aqui" id="v2in"/>
-            </div>
-            <button id="Adicionar_itens"><a id="vai">+Adicionar itens</a></button>
+         
         </section>
+
+        <button id="Adicionar_itens"><a id="vai">+Adicionar itens</a></button>
+
         <div id="geral">
             <div id="ultl">
                 <div id="ult">
-                    <div class="campo">
-                        <label id="va">ICMS</label>
-                        <input type="number" placeholder="Digite aqui" id="input_ult"/>
-                    </div>
-                    <div class="campo">
-                        <label id="vb">COFINS</label>
-                        <input type="text" placeholder="Digite aqui" id="input_ult"/>
-                    </div>
-                    <div class="campo">
-                        <label id="vc">IPI</label>
-                        <input type="text" placeholder="Digite aqui" id="input_ult"/>
-                    </div>
-                    <div class="campo">
-                        <label id="vd">PIS</label>
-                        <input type="text" placeholder="Digite aqui" id="input_ult"/>
-                    </div>
+
+                  <div class="campo">
+                    <input type ="datetime-local" id="v2ina" class="data">
+                   </select>
+                </div>
                 </div>
             </div>
             <div id="ult2"></div>
         </div>
         <footer>
-            <label id="lab1">Observações</label>
-            <div id="obs-wrapper">
-                <textarea id="obs" placeholder="Digite aqui..."></textarea>
+            <label id="lab1">Parcelas</label>
+            <div id="parcelas">
+                <div id="valores_parcelas">
+                    <div id="parcelas_inputs">
+
+                    </div>
+                    <div id="calcular_parcelas">
+
+                    </div>
+                </div>
+                <div id="button_adicionar_parcelas">
+                <button id="adicionar_parcela">Adicionar parcela</button>
             </div>
-            <button id="OBS_a"><a id="vai">+Adicionar itens</a></button>
-            <button id="OBS_b"><a id="vai">+Adicionar itens</a></button>
+            </div>
+
+            <div id="ultimos">
+            <button id="OBS_a"><a id="vai">Exportar nota</a></button>
+            <button id="OBS_b"><a id="vai">Adicionar nova compra</a></button>
+            </div>
         </footer>
     </div>
     <script>
- function logOut(){  
-  if(confirm("Tem certeza que deseja sair da conta?")){
-    localStorage.clear();
-    window.location.href = './login_cliente.html';
-  } 
+function logOut(){  
+if(confirm("Tem certeza que deseja sair da conta?")){
+localStorage.clear();
+window.location.href = '../../inicial/front/inicial.html';
+} 
 }
 
 
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => 
+{
+    const ult2Div = document.getElementById("ult2");
 
-    const nomeUser = localStorage.getItem('nome') || 'Usuário';
-    const senhaUser = localStorage.getItem('senha');
-    const codUser = localStorage.getItem('cnpj') ;
- 
-   if(!nomeUser || !senhaUser || !codUser){
-    alert("faça o login");
-    window.location.href = "../../inicial/front/inicial.html"
-   }
-   
-   
-          
-          const loadFromLocalStorage = () => {
-            const nomeUser = localStorage.getItem('nome') || 'Usuário';
-      
-           
-            const nomeUserElement = document.getElementById('nome_user');
-            if (nomeUserElement) {
-              const primeiroNome = nomeUser.split(" ")[0];
-              nomeUserElement.textContent = `${primeiroNome}`;
-            }
-      
-            const imgUserElement = document.getElementById('img_user');
-async function loadImage(){
-  try {
-    const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
-    console.log(response);
-    const blob = await response.blob();
-    if (response.ok) {
-     imgUserElement.src =blob?URL.createObjectURL(blob):"../img/imagem_user.png";
-   
-      console.log('funcionou');
-    } else {
-      console.log(response);
-      alert("erro médio");
+        const nomeUser = localStorage.getItem('nome') || 'Usuário';
+        const senhaUser = localStorage.getItem('senha');
+        const codUser = localStorage.getItem('cnpj') ;
+    
+    if(!nomeUser || !senhaUser || !codUser)
+    {
+        alert("faça o login");
+        window.location.href = "../../inicial/front/inicial.html"
     }
-  } catch (error) {
-    imgUserElement.src = "../img/imagem_user.png";
-    console.log(error);
-  }  
+    
+    
+            
+        const loadFromLocalStorage = () => 
+{
+                const nomeUser = localStorage.getItem('nome') || 'Usuário';
+                const nomeUserElement = document.getElementById('nome_user');
+                if (nomeUserElement) {
+                const primeiroNome = nomeUser.split(" ")[0];
+                nomeUserElement.textContent = `${primeiroNome}`;
+                }
+                
+                const imgUserElement = document.getElementById('img_user');
+                async function loadImage()
+                {
+                try {
+                const response = await fetch(`http://localhost:3000/empresa/imagem/${nomeUser}`);
+                console.log(response);
+                const blob = await response.blob();
+                if (response.ok) {
+                imgUserElement.src =blob?URL.createObjectURL(blob):"/front/img/imagem_user.png";
+                
+                console.log('funcionou');
+                } 
+                else {
+                console.log(response);
+                alert("erro médio");
+                }
+                } 
+                catch (error) {
+                imgUserElement.src = "/front/img/imagem_user.png";
+                console.log(error);
+                }  
+                }
+            loadImage();
+};         
+            loadFromLocalStorage();   
+                    
+            const obsInput = document.getElementById('obs');
+            if (obsInput) {
+                obsInput.addEventListener('input', function () {
+                obsInput.scrollTop = obsInput.scrollHeight;
+                });
+
+            }
+
+            const cadastro = async () => {
+const select_fornecedor = document.getElementById("fornecedor");
+
+if (!select_fornecedor) {
+  console.error("Elemento select_fornecedor não encontrado!");
+  return;
 }
-loadImage();
-          };         
-          loadFromLocalStorage();  
-          
-          
-          
-          
-          const obsInput = document.getElementById('obs');
-          if (obsInput) {
-            obsInput.addEventListener('input', function () {
-              obsInput.scrollTop = obsInput.scrollHeight;
-            });
-          }
-        });
-      </script>
-      
+
+select_fornecedor.innerHTML = ""; // Limpar opções existentes.
+const emptyOption = document.createElement("option");
+emptyOption.value = "";
+emptyOption.textContent = "-- Selecione um fornecedor --";
+select_fornecedor.appendChild(emptyOption);
+try {
+  const response = await fetch(`http://localhost:3000/fornecedor/mostrar`);
+  if (!response.ok) throw new Error("Erro ao buscar fornecedores");
+
+  const res = await response.json();
+  const resultado = res.data;
+
+  console.log("Fornecedores recebidos:", resultado);
+
+  resultado.forEach(async (user) => {
+    const option_fornecedor = document.createElement("option");
+    option_fornecedor.text = user.razao_social;
+    option_fornecedor.value = user.razao_social;
+    option_fornecedor.id = "opt";
+    select_fornecedor.appendChild(option_fornecedor);
+
+
+  });
+
+
+  
+
+} catch (error) {
+  console.error("Erro ao carregar fornecedores:", error);
+}
+
+const Adicionar_itens = document.getElementById("Adicionar_itens");
+//section: s3
+//div_1: v2
+//select:select_nome_produto
+//descricao v2ina
+//descricao v2inb
+//descricao v2inc
+//descricao v2ind
+
+let quantidade_divs = 0;
+const section = document.getElementById("s3");
+
+document.getElementById("Adicionar_itens").addEventListener("click", () => {
+quantidade_divs += 1;
+
+const div = document.createElement("div");
+div.id = "v2"; // ID fixo
+div.className = `div${quantidade_divs}`; // Classe dinâmica
+
+const nome = document.createElement("select");
+nome.id = "select_nome_produto"; // ID fixo
+nome.className = `nome${quantidade_divs}`; // Classe dinâmica
+
+const descricao = document.createElement("input");
+descricao.id = "v2ina"; // ID fixo
+descricao.className = `descricao${quantidade_divs}`; // Classe dinâmica
+
+const quantidade = document.createElement("input");
+quantidade.id = "v2inb"; // ID fixo
+quantidade.className = `quantidade${quantidade_divs}`; // Classe dinâmica
+quantidade.type = "number"; // Garantir entrada numérica
+
+const valorun = document.createElement("input");
+valorun.id = "v2inc"; // ID fixo
+valorun.className = `valorun${quantidade_divs}`; // Classe dinâmica
+valorun.readOnly = true; // Campo somente leitura
+
+const valor = document.createElement("input");
+valor.id = "v2ind"; // ID fixo
+valor.className = `valor${quantidade_divs}`; // Classe dinâmica
+valor.readOnly = true; // Campo somente leitura
+
+section.appendChild(div);
+div.appendChild(nome);
+div.appendChild(descricao);
+div.appendChild(quantidade);
+div.appendChild(valorun);
+div.appendChild(valor);
+
+// Evento para calcular o valor total ao alterar a quantidade
+quantidade.addEventListener("input", () => {
+const valorUnico = parseFloat(valorun.value) || 0;
+const quantidadeAtual = parseFloat(quantidade.value) || 0;
+valor.value = (valorUnico * quantidadeAtual).toFixed(2);
+});
+
+// Evento para buscar o valor do produto ao selecionar
+nome.addEventListener("change", () => {
+const produtoSelecionado = nome.value;
+
+// Busca nas tabelas locais
+const produto = todosProdutos.find((p) => p.Nome === produtoSelecionado);
+if (produto) {
+  valorun.value = parseFloat(produto.valor).toFixed(2);
+
+  // Atualiza o valor total automaticamente
+  const quantidadeAtual = parseFloat(quantidade.value) || 0;
+  valor.value = (parseFloat(produto.valor) * quantidadeAtual).toFixed(2);
+}
+});
+});
+
+// Variável para armazenar todos os produtos das tabelas
+let todosProdutos = [];
+
+// Evento para popular os selects ao alterar o fornecedor
+select_fornecedor.addEventListener("change", async () => {
+const allSelects = document.querySelectorAll("#select_nome_produto");
+
+for (const select of allSelects) {
+select.innerHTML = ""; // Limpa as opções existentes
+
+const emptyOption = document.createElement("option");
+emptyOption.value = "";
+emptyOption.textContent = "-- Selecione um produto --";
+select.appendChild(emptyOption);
+}
+
+try {
+// Busca os produtos do fornecedor
+const response_a = await fetch(`http://localhost:3000/fornecedor/cod/${select_fornecedor.value}`);
+const response_b = await response_a.json();
+
+// Busca na tabela produto_fornecedor
+const responsa_a = await fetch(`http://localhost:3000/produto_fornecedor/mostrar/${response_b}`);
+const responsa_b = await responsa_a.json();
+const produtosFornecedor = responsa_b.data || [];
+
+// Busca na tabela produto_quantidade_fornecedor
+const responsb_a = await fetch(`http://localhost:3000/produto_quantidade_fornecedor/mostrar/${response_b}`);
+const responsb_b = await responsb_a.json();
+const produtosQuantidadeFornecedor = responsb_b.data || [];
+
+// Mescla os produtos das duas tabelas
+todosProdutos = [...produtosFornecedor, ...produtosQuantidadeFornecedor];
+
+// Adiciona os produtos ao select
+todosProdutos.forEach((user) => {
+  const opt_nomes = document.createElement("option");
+  opt_nomes.value = user.Nome;
+  opt_nomes.textContent = user.Nome;
+  allSelects.forEach((select) => {
+    select.appendChild(opt_nomes.cloneNode(true));
+  });
+});
+} catch (error) {
+console.error("Erro ao carregar produtos:", error);
+}
+});
+
+
+const buttonAdicionarParcela = document.getElementById("adicionar_parcela");
+const parcelasInputsDiv = document.getElementById("parcelas_inputs");
+
+let quantidadeParcelas = 0;
+
+buttonAdicionarParcela.addEventListener("click", () => {
+    quantidadeParcelas += 1;
+
+    // Criação de um contêiner para a nova parcela
+    const divParcela = document.createElement("div");
+    divParcela.id = "divParcela";
+    divParcela.className = `parcela parcela${quantidadeParcelas}`;
+
+    // Campo: Valor da parcela
+    const inputValorParcela = document.createElement("input");
+    inputValorParcela.type = "number";
+    inputValorParcela.placeholder = "Valor da parcela";
+    inputValorParcela.className = `valor_parcela${quantidadeParcelas}`;
+    inputValorParcela.required = true;
+
+    // Campo: Forma de pagamento (agora um input de texto)
+    const inputFormaPagamento = document.createElement("input");
+    inputFormaPagamento.type = "text";
+    inputFormaPagamento.placeholder = "Forma de pagamento";
+    inputFormaPagamento.className = `forma_pagamento${quantidadeParcelas}`;
+    inputFormaPagamento.required = true;
+
+    // Campo: Data de vencimento
+    const inputDataVencimento = document.createElement("input");
+    inputDataVencimento.type = "date";
+    inputDataVencimento.className = `data_vencimento${quantidadeParcelas}`;
+    inputDataVencimento.required = true;
+
+    const estado = document.createElement("select");
+    estado.id = "status_select";
+    estado.className = `status${quantidadeParcelas}`;
+
+    const opt1 = document.createElement("option");
+    opt1.value = "Ausente";
+    opt1.textContent = "Ausente";
+
+    const opt2 = document.createElement("option");
+    opt2.value = "Atrasado";
+    opt2.textContent = "Atrasado";
+
+    const opt3 = document.createElement("option");
+    opt3.value = "Pago";
+    opt3.textContent = "Pago";
+
+
+    // Adiciona os campos na div da parcela
+    divParcela.appendChild(inputValorParcela);
+    divParcela.appendChild(inputFormaPagamento);
+    divParcela.appendChild(inputDataVencimento);
+    divParcela.appendChild(estado);
+    estado.append(opt1)
+    estado.append(opt2)
+    estado.append(opt3)
+
+    // Adiciona a nova parcela à lista de parcelas
+    parcelasInputsDiv.appendChild(divParcela);
+});
+
+
+
+document.getElementById("OBS_b").addEventListener("click",async () => { 
+
+let compras = [];
+let parcelas = [];
+
+const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
+const cod_empr = await cod_um.json();
+
+const response_a = await fetch(`http://localhost:3000/fornecedor/cod/${select_fornecedor.value}`);
+const response_b = await response_a.json();
+
+const nomeProduto_a = await fetch(`http://localhost:3000/produto_quantidade_fornecedor/mostrar/${response_b}`);
+const nomeProduto_b = await nomeProduto_a.json();
+const nomeProduto_c = nomeProduto_b.data;
+const nomeProduto_d = nomeProduto_c[0];
+const nomeProduto = nomeProduto_d.Nome;
+
+const data = document.querySelector(".data")?.value;
+
+const estatus = document.getElementById("status_select").value;
+                                                            
+const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}`, {
+                    method: 'POST',                         
+                                      
+                });    
+                
+                                                             
+const pesquisa1 = await fetch(`http://localhost:3000/compras/procurar/${cod_empr}/${data}`);    
+const pesq = await pesquisa1.json();
+const teste = pesq.data;
+const cod_compra = teste[0].cod_compras;
+
+let compraItems = document.querySelectorAll("[class^='div']");
+
+compraItems.forEach((div) => {
+const nome = div.querySelector(`.nome${div.className.match(/\d+/)[0]}`)?.value || null;
+const descricao = div.querySelector(`.descricao${div.className.match(/\d+/)[0]}`)?.value || null;
+const quantidade = div.querySelector(`.quantidade${div.className.match(/\d+/)[0]}`)?.value || null;
+const valorun = div.querySelector(`.valorun${div.className.match(/\d+/)[0]}`)?.value || null;
+const valor = div.querySelector(`.valor${div.className.match(/\d+/)[0]}`)?.value || null;
+
+const data = document.querySelector(".data")?.value;
+
+
+
+compras.push({
+  nome,
+  descricao,
+  quantidade,
+  valorun,
+  valor,
+  cod_compra,
+});
+});
+
+
+let parcelaItems = document.querySelectorAll("[class^='parcela']");
+
+parcelaItems.forEach( (div) => {
+console.log("TESTE PARCELA ITEMS:",parcelaItems)
+
+const index = div.className.match(/\d+/)?.[0]; // Extrai o número da classe, ex.: "1"
+const valorParcela = div.querySelector(`.valor_parcela${index}`)?.value || null;
+const formaPagamento = div.querySelector(`.forma_pagamento${index}`)?.value || null;
+const dataVencimento = div.querySelector(`.data_vencimento${index}`)?.value || null;
+const estatus = document.querySelector(`.status${index}`)?.value || null;
+console.log(`Parcela ${index} - Valor:`, valorParcela);
+console.log(`Parcela ${index} - Forma de Pagamento:`, formaPagamento);
+console.log(`Parcela ${index} - Data de Vencimento:`, dataVencimento);
+
+
+
+parcelas.push({
+ valorParcela,
+ formaPagamento,
+ dataVencimento,
+ estatus,
+});
+
+console.log("TESTE PARCELAS CLASSE:",parcelas)
+});
+
+parcelas.forEach(async(parcela)=>{
+
+const valor = parcela.valorParcela;
+const forma = parcela.formaPagamento;
+const data = parcela.dataVencimento;
+const status = parcela.estatus;
+const fornecedor = select_fornecedor.value;
+
+const response = await fetch(`http://localhost:3000/parcela/${valor}/${forma}/${data}/${cod_empr}/${cod_compra}/${status}/${fornecedor}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+
+
+})
+
+compras.forEach(async(compras)=>
+{
+
+const pesquisaProdutoA = await fetch(`http://localhost:3000/produto_fornecedor/procurarNome/${response_b}/${compras.nome}`);
+const pesquisaProdutoB = await pesquisaProdutoA.json();
+const produto_b = pesquisaProdutoB.data;
+const produto = produto_b[0];
+console.log("Teste de objeto produto",produto);
+
+const pesquisaProdutoQuantidadeA = await fetch(`http://localhost:3000/produto_fornecedor/procurarNomeQuantidade/${response_b}/${compras.nome}`);
+const pesquisaProdutoQuantidadeB = await pesquisaProdutoQuantidadeA.json();
+const produto_quantidade_b = pesquisaProdutoQuantidadeB.data;
+const p_quantidade = produto_quantidade_b[0];
+console.log("Teste de objeto produto quantidade",produto_quantidade_b);
+
+
+if (produto_quantidade_b != 0) {
+console.log("Quantidade",pesquisaProdutoQuantidadeB.data);
+
+
+try {
+const data_um = produto_quantidade_b[0].Data;
+cosnole.log("data:",data_um)
+const data = data_um.replace("T", " ").replace("Z", "").split(".")[0];
+const response = await fetch(`http://localhost:3000/produto_quantidade/${cod_empr}/${p_quantidade.Nome}/${p_quantidade.valor}/${compras.quantidade}/${data}/${compras.descricao}/${cod_compra}/${select_fornecedor.value}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+
+}
+
+catch(error){
+console.log("erro",error);
+alert(error)
+}
+
+
+
+}
+if (produto != 0) {
+//   Produto:
+//   - Código do Produto: 8
+//   - Nome: "teste"
+//   - Quantidade: 12
+//   - Valor: 34
+
+// Dimensões:
+//   - Altura: 12 (Mts)
+//   - Comprimento: 12 (Mts)
+//   - Largura: 12 (Mts)
+
+// Fornecedor:
+//   - Código do Fornecedor: 8
+
+// Outros:
+//   - Data: "2024-12-02T03:00:00.000Z"
+//   - Observação: "teste"
+
+console.log("Medidas",pesquisaProdutoQuantidadeB.data);
+try {
+console.log(produto)
+const data_um = produto.Data;
+
+const data = data_um.replace("T", " ").replace("Z", "").split(".")[0];
+                                                                                    //  /:nome/:valor/:quantidade/:cod_empr/:altura/:comprimento/:largura/:a/:c/:l/:data/:obs
+const response = await fetch(`http://localhost:3000/produto/${produto.Nome}/${produto.valor}/${compras.quantidade}/${cod_empr}/${produto.Altura}/${produto.Comprimento}/${produto.Largura}/${produto.si_altura}/${produto.si_comprimento}/${produto.si_largura}/${data}/${compras.descricao}/${cod_compra}/${select_fornecedor.value}`, {
+method: 'POST',
+headers: {
+        'Content-Type': 'application/json',
+     }
+ });
+ 
+}
+
+catch(error){
+console.log("erro",error);
+alert(error)
+} 
+}
+})  
+});
+
+};
+
+const calcularTotalCompras = () => {
+    const valoresInputs = document.querySelectorAll("input[id='v2ind']");
+    let totalCompras = 0;
+
+    valoresInputs.forEach((input) => {
+        const valor = parseFloat(input.value) || 0; // Converte para número ou usa 0
+        totalCompras += valor;
+    });
+
+    // Atualiza a div com o total das compras
+    const ult2Div = document.getElementById("ult2");
+    if (ult2Div) {
+        ult2Div.textContent = `Valor total: R$ ${totalCompras.toFixed(2)}`;
+    }
+
+    console.log("Total de compras:", totalCompras);
+    return totalCompras;
+};
+
+// Função para calcular o total das parcelas
+const calcularTotalParcelas = () => {
+    const parcelasInputs = document.querySelectorAll("input[class*='valor_parcela']");
+    let totalParcelas = 0;
+
+    parcelasInputs.forEach((input) => {
+        const valorParcela = parseFloat(input.value) || 0;
+        totalParcelas += valorParcela;
+    });
+
+    console.log("Total de parcelas:", totalParcelas);
+    return totalParcelas;
+};
+
+// Função para calcular a diferença entre compras e parcelas
+const calcularDiferenca = () => {
+const totalCompras = calcularTotalCompras();
+const totalParcelas = calcularTotalParcelas();
+const saldoRestante = totalCompras - totalParcelas;
+
+console.log("Total de compras:", totalCompras);
+console.log("Total de parcelas:", totalParcelas);
+console.log("Saldo restante:", saldoRestante);
+
+const calcularParcelasDiv = document.getElementById("calcular_parcelas");
+if (calcularParcelasDiv) {
+    calcularParcelasDiv.textContent = `Saldo restante: R$ ${saldoRestante.toFixed(2)}`;
+} else {
+    console.log("Elemento #calcular_parcelas não encontrado!");
+}
+
+return saldoRestante;
+};
+
+// Evento para recalcular sempre que há alterações nos valores de compras
+document.getElementById("s3").addEventListener("input", (event) => {
+    if (event.target.matches("input[id='v2inb']") || event.target.matches("input[class*='valor_parcela']")) {
+        calcularDiferenca();
+    }
+});
+
+// Adicionar evento para recalcular quando as parcelas forem alteradas
+document.getElementById("parcelas_inputs").addEventListener("input", (event) => {
+    if (event.target.matches("input[class*='valor_parcela']")) {
+        calcularDiferenca();
+    }
+});
+
+
+cadastro();
+calcularTotalCompras();
+calcularTotalParcelas();
+calcularDiferenca();
+
+});
+    </script>
+    
 </body>
 
 </html>

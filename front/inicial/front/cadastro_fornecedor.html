@@ -90,17 +90,17 @@
 const data = await response.json();
 if(data.result == 2){
     alert("Fornecedor ja existe");
-    return
+   
 }
                 if (response.ok) {
-                    alert("Fornecedor cadastrado com sucesso");
+                    alert("Erro ao cadastrar fornecedor");
                 } 
                 else {
-                    alert("Erro ao cadastrar o fornecedor");
+                    alert("Fornecedor cadastrado com sucesso");
                 }
 
             } catch (error) {
-                alert("Erro ao cadastrar o fornecedor");
+                alert("Fornecedor cadastrado com sucesso");
 
                 console.log("Erro ao cadastrar o fornecedor");
             }

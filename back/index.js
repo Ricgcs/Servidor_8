@@ -378,19 +378,17 @@ app.get('/produto_quantidade_fornecedor/mostrar/:pesq', async (req, res) => {
         console.error("Erro:", error.message);
     }
 });
-//----------------------------------------------- Parcelas--------------------------------------------------------\\
-app.post('/parcela/fornecedor_cod/:valor/:forma/:data/:empresa_Cod_empresa/:compras_cod_compras/:estatus/:fornecedor', async (req, res) => {
-    
-    const {valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor} = req.params; 
-console.log(valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor)
+//----------------------------------------------- parcelas--------------------------------------------------------\\
+app.post('/parcela/:valor/:forma/:data/:empresa_Cod_empresa/:compras_cod_compras/:status/:fornecedor', async (req, res) => {
+    const { valor, forma, data, empresa_Cod_empresa, compras_cod_compras, status, fornecedor } = req.params; 
+    console.log(valor, forma, data, empresa_Cod_empresa, compras_cod_compras, status, fornecedor);
     try {
-        const resultado = await setParcela({valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor});
+        const resultado = await setParcela({ valor, forma, data, empresa_Cod_empresa, compras_cod_compras, status, fornecedor });
         res.status(201).json({ message: "Parcela criada com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar a parcela", error: error.message });
     }
 });
-
 //--------------------------------------------------Compra-------------------------------------------------------\\
 // fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data;
 
@@ -822,7 +820,7 @@ app.post('/usuario',upload.single('imagem'), async (req, res) => {
     console.log('teste funciona 2')
     
     let userData = { nome, email, senha, cpf, cod, img };
-     
+     console.log(userData)
     try {
     console.log('teste funciona 3')
 
@@ -967,7 +965,7 @@ app.post('/produto_quantidade/:cod_empr/:nome/:valor/:quantidade/:data/:obs/:cod
 app.get('/produto_quantidade/mostrar/:pesq', async (req, res) => {
     const pesq = req.params.pesq;  
     console.log('Código da empresa:', pesq);
-  
+    
     try {
       const resultado = await procurarProd_quantidade(pesq);
       if (resultado.length > 0) {
