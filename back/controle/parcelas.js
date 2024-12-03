@@ -15,12 +15,13 @@ export const getCarg = async () => {
     }
 };
 
-export const setParcela = async ({fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado}) => {
+export const setParcela = async ({valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor}) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO compras (fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado) VALUES (?, ?, ?, ?, ?, ?, ?);',
-            [fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado]
+            'INSERT INTO parcela (valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus, fornecedor)VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor]
+        
         );
         return result;
     } catch (error) {

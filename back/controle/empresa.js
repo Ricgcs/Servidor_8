@@ -63,9 +63,9 @@ export const getEmpresa = async (res) => {
 };
 export const setEmpr = async ({ Nome_fantasia, Razao_social, Email, CNPJ, Senha, img }) => {
     const con = await conexao();
-   
+    const imagen = img.buffer;
     try {
-        const imagen = img.buffer;
+        
         const [result] = await con.execute(
             'INSERT INTO empresa (Nome_fantasia, Razao_social, Email, CNPJ, Senha, imagen) VALUES (?,?,?,?,?,?)',
             [ Nome_fantasia, Razao_social, Email, CNPJ, Senha, imagen]

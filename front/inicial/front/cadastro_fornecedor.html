@@ -94,11 +94,14 @@ if(data.result == 2){
 }
                 if (response.ok) {
                     alert("Fornecedor cadastrado com sucesso");
-                } else {
+                } 
+                else {
                     alert("Erro ao cadastrar o fornecedor");
                 }
 
             } catch (error) {
+                alert("Erro ao cadastrar o fornecedor");
+
                 console.log("Erro ao cadastrar o fornecedor");
             }
         });

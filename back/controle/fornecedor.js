@@ -82,18 +82,23 @@ export const getFornecedor = async (res) => {
 
 export const setForn = async ({ razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha, img }) => {
     const con = await conexao();
+    console.log("passou");
     console.log(razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha)
     try {
         const imagen = img.buffer;
-        const [result] = await con.execute(
+        const result = await con.execute(
             'INSERT INTO fornecedor (razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha, imagen) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
             [ razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha, imagen ]
         );
+        console.log("result bd");
+        console.log("result bd");
+        console.log("result bd");
+        console.log("result bd");
+        console.log(result)
         return result;
     } catch (error) {
-        console.error('Erro ao inserir fornecedor:', error.message);
-        console.error({razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha, imagen});
-        throw error;
+        console.log('Erro ao inserir fornecedor:', error);
+        console.log({razao_social, nome_fantasia, cnpj, telefone,  cep, email, estado, cidade, bairro, senha, imagen});
     } 
 };
 

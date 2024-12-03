@@ -133,7 +133,6 @@ app.get('/fornecedor/imagem/:nome', async (req, res) => {
 
 app.post('/fornecedor',upload.single('img'), async (req, res) => {
 
-
     console.log('teste funciona')
     const nome_fantasia = req.body.nome_fantasia;
     const razao_social = req.body.razao_social;
@@ -156,16 +155,17 @@ app.post('/fornecedor',upload.single('img'), async (req, res) => {
         const validar = await validarFornecedor(cnpj);    
        if(validar == 1)
         {
+            console.log("pqp_____________________________________________________________________________")
         return res.status(200).json(2);
        }
        console.log("chegou aqui essa porra")
       const foda =  await setForn(fornData);
-        console.log(fornData)
+      console.log(foda)
+        console.log("segundo teste de campo",fornData)
         res.status(200).send('Fornecedor cadastrado com sucesso!');
-    } catch (error) {
-    console.log('teste funciona 4')
-
-        console.log('Erro ao cadastrar fornecedor:', error);
+    } 
+    catch (error) {
+            console.log('Erro ao cadastrar fornecedor:', error);
         res.status(500).send('Erro ao cadastrar fornecedor.');
     }
 });
@@ -378,14 +378,14 @@ app.get('/produto_quantidade_fornecedor/mostrar/:pesq', async (req, res) => {
         console.error("Erro:", error.message);
     }
 });
-//-------------------------------------------------Parcelas--------------------------------------------------------\\
-app.post('/parcela/fornecedor_cod/:empresa_Cod_empresa/:os_empresa_Cod_empresa/:produto_quantidade_fornecedor_Cod_produto/:produto_fornecedor_fornecedor_cod/:data/:estado', async (req, res) => {
+//----------------------------------------------- Parcelas--------------------------------------------------------\\
+app.post('/parcela/fornecedor_cod/:valor/:forma/:data/:empresa_Cod_empresa/:compras_cod_compras/:estatus/:fornecedor', async (req, res) => {
     
-    const {fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado} = req.params; 
-console.log(fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado)
+    const {valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor} = req.params; 
+console.log(valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor)
     try {
-        const resultado = await setParcela({fornecedor_cod, empresa_Cod_empresa, os_empresa_Cod_empresa, produto_quantidade_fornecedor_Cod_produto, produto_fornecedor_fornecedor_cod, data, estado});
-        res.status(201).json({ message: "Parcela criado com sucesso", data: resultado });
+        const resultado = await setParcela({valor, forma, data, empresa_Cod_empresa, compras_cod_compras, estatus,fornecedor});
+        res.status(201).json({ message: "Parcela criada com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar a parcela", error: error.message });
     }

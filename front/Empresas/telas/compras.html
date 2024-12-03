@@ -72,12 +72,7 @@
                     <div id="ult">
     
                       <div class="campo">
-                        <label id="vd">Status</label>
-                       <select name="status" class="status"  id="status_select">
-                        <option name="" value=""></option>
-                        <option name="ausente" value="ausente">ausente</option>
-                        <option name="atrasado" value="atrasado">atrasado</option>
-                        <option name="pago" value="pago">pago</option>
+                        <input type ="datetime-local" id="v2ina" class="data">
                        </select>
                     </div>
                     </div>
@@ -418,8 +413,7 @@ select_fornecedor.addEventListener("change", async () => {
     const data = document.querySelector(".data")?.value;
     const estatus = document.getElementById("status_select").value;
                                                                 
-                                                                
-  const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}/${estatus}`, {
+const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}/${estatus}`, {
                         method: 'POST',                         
                                           
                     });    
@@ -466,11 +460,26 @@ select_fornecedor.addEventListener("change", async () => {
      valorParcela,
      formaPagamento,
      dataVencimento,
-     estatus
+     estatus,
    });
    });
 
-  
+  parcelas.forEach(async(parcela)=>{
+    const valor = parcela.valorParcela;
+    const forma = parcela.formaPagamento;
+    const data = parcela.dataVencimento;
+    const status = parcela.estatus;
+    const fornecedor = select_fornecedor.value;
+    const response = await fetch(`http://localhost:3000/parcela/${valor}/${forma}/${data}/${cod_empr}/${cod_compra}/${status}/${fornecedor}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+
+
+  })
 
   compras.forEach(async(compras)=>
   {
@@ -626,13 +635,6 @@ if (produto != 0) {
     });
 
     
-
-// document.getElementById("adicionar_parcela").addEventListener("click", () => {
-
-// });
-
-
-
   cadastro();
   calcularTotalCompras();
     calcularTotalParcelas();
