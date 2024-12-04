@@ -508,3 +508,14 @@ footer{
     margin-left: 0.8vw;
 }
 
+
+select{
+    border-radius: 0.5vw;
+    border: 0.15vw solid black;
+    font-size: 1vw;
+    padding: 0.3vw;
+    background-color: #E7E7E7;
+    width: 8vw;
+    height: 2vw;
+    margin: 0 1vw 2vw 0;
+}

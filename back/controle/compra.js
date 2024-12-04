@@ -15,12 +15,12 @@ export const getCarg = async () => {
     }
 };
 
-export const setCompra = async ({fornecedor_cod, empresa_Cod_empresa, data}) => {
+export const setCompra = async ({fornecedor_cod, empresa_Cod_empresa, data, valorTotal}) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO compras (fornecedor_cod, empresa_Cod_empresa, data)VALUES (?, ?, ?)',
-            [fornecedor_cod, empresa_Cod_empresa, data]
+            'INSERT INTO compras (fornecedor_cod, empresa_Cod_empresa, data, valor_total)VALUES (?, ?, ?, ?)',
+            [fornecedor_cod, empresa_Cod_empresa, data,valorTotal]
             
         );
         return result;

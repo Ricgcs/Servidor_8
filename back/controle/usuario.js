@@ -52,6 +52,23 @@ export const getUser = async (res) => {
         }
     }
 };
+
+export const getNomeUser = async (cod) => {
+    try {
+        const sql = "SELECT Nome FROM cliente where Empresa_Cod_empresa = ?";
+        const [rows] = await con.query(sql,[cod]); 
+        console.log("Consulta realizada com sucesso");
+        return rows;
+    } catch (error) {
+        console.error("Erro no select_user", error);
+        if (res) {
+            res.status(500).json({ error: "Erro ao obter usuários" });
+        } else {
+            throw error;
+        } 
+    }
+};
+
 export const setUser = async ({ nome, email, senha, cpf, cod, img }) => {
     const con = await conexao();
     console.log(cod)

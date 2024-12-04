@@ -1,4 +1,4 @@
-import { conexao } from "../conexao.js";
+    import { conexao } from "../conexao.js";
 
 const con = await conexao(); 
 
@@ -14,12 +14,12 @@ export const getFunc = async () => {
     }
 };
 
-export const setFunc = async ({Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha}) => {
+export const setFunc = async ({ Nome, Email, Telefone, CPF, Cod_empresa, Cod_cargo, senha }) => {
     const con = await conexao();
     try {
         const [result] = await con.execute(
-            'INSERT INTO funcionario (Nome, Email, Telefone, foto, CPF, Empresa_Cod_empresa, cargo_Cod_cargo, senha)VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-            [Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha]
+            'INSERT INTO funcionario (Nome, Email, Telefone, CPF, Empresa_Cod_empresa, cargo_Cod_cargo, senha) VALUES ( ?, ?, ?, ?, ?, ?, ?)',
+            [Nome, Email, Telefone, CPF, Cod_empresa, Cod_cargo, senha]
         );
         return result;
     } catch (error) {
@@ -27,8 +27,6 @@ export const setFunc = async ({Nome, Email, Telefone, foto, CPF, Cod_empresa, Co
         throw error;
     }
 };
-
-
 export const delFunc = async(valor,nome)=>{
     try{
 const sql = `DELETE FROM funcionario WHERE ${valor} = ?`

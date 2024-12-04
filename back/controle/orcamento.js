@@ -2,6 +2,8 @@ import { conexao } from "../conexao.js";
 
 const con = await conexao(); 
 
+
+
 export const getOrcamento = async () => {
     try {
         const sql = "SELECT * FROM orcamento";
@@ -15,7 +17,36 @@ export const getOrcamento = async () => {
     }
 };
                 
-                    //orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entrega/:Empresa_Cod_empresa/
+export const setPrincipalOrcamento = async ( Data, cliente, Empresa_Cod_empresa) => {
+    const con = await conexao(); 
+    try {
+        const [result] = await con.execute(
+            'INSERT INTO principal_orcamento (Data, cliente, Empresa_Cod_empresa) VALUES (?, ?, ?)',
+            [Data, cliente, Empresa_Cod_empresa]
+        );
+        
+        return result;
+    } catch (error) {
+        console.error('Erro ao inserir o orçamento:', error.message);
+        throw error;
+    }
+};           
+
+export const getCodPrincipalOrcamento = async (Data, cod) => {
+    const con = await conexao(); 
+    try {
+        const [result] = await con.execute(
+            'Select cod from principal_orcamento where Data = ? and Empresa_Cod_empresa = ?',
+            [Data, cod]
+        );
+        
+        return result;
+    } catch (error) {
+        console.error('Erro ao inserir oo procurar orçamento:', error.message);
+        throw error;
+    }
+};          
+
 export const setOrcamento = async (Nome, Descricao, Valor, Desconto, Data_inicio, Data_entrega, Empresa_Cod_empresa) => {
     const con = await conexao(); 
     try {

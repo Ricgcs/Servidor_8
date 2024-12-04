@@ -1,11 +1,11 @@
 import express, { response } from "express";
 import bodyParser from "body-parser";
-import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod } from "../back/controle/usuario.js";
+import { atualizar, procurar, setUser, getUser, delUser, validarUser, login, qtd_clientes, avaliacao, procurarImagem_nome_cod, getNomeUser } from "../back/controle/usuario.js";
 import { setProd, getProd, procurarProd, procurarProdcod, atualizarProd, delProd, getnomeprod } from "../back/controle/produtos.js";
 import { setEmpr, procurarEmp, getEmpresa, procurarImagem_empresa, login_empresa, validarEmpresa, nomeCod } from "../back/controle/empresa.js";
 import { setCarg, procurarCargo,procurarSalario, procurarCodCargo, atualizarCargo, delCarg, getCarg } from "../back/controle/cargo.js";
 import { setFunc, procurarFunc, atualizarFunc, delFunc, getFunc } from "../back/controle/funcionario.js";
-import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento } from "./controle/orcamento.js";
+import { setOrcamento, getOrcamento, delOrcamento, procOrcamento, atualizarOrcamento, setPrincipalOrcamento, getCodPrincipalOrcamento } from "./controle/orcamento.js";
 import { getnomeprod_quantidade, procurarProd_quantidade, setProd_quantidade } from "./controle/produtos_quantidade.js";
 import { codNome_fornecedor, getFornecedor, login_fornecedor, Nome_fornecedor, nomeCod_fornecedor, procurarForn, procurarImagem_fornecedor, setForn, validarFornecedor } from "./controle/fornecedor.js";
 import { atualizarProd_fornecedor, delProd_fornecedor, getcod_nome_b, getnomeprod_fornecedor, getProd_fornecedor, procurarProd_fornecedor, procurarProdnome_fornecedor, setProd_fornecedor } from "./controle/produtos_fornecedor.js";
@@ -394,11 +394,11 @@ app.post('/parcela/:valor/:forma/:data/:empresa_Cod_empresa/:compras_cod_compras
 
 
 
-app.post('/compras/:fornecedor_cod/:empresa_Cod_empresa/:data', async (req, res) => {
-    const {fornecedor_cod, empresa_Cod_empresa, data} = req.params; 
-console.log(fornecedor_cod, empresa_Cod_empresa, data)
+app.post('/compras/:fornecedor_cod/:empresa_Cod_empresa/:data/:valorTotal', async (req, res) => {
+    const {fornecedor_cod, empresa_Cod_empresa, data,valorTotal} = req.params; 
+console.log(fornecedor_cod, empresa_Cod_empresa, data,valorTotal)
     try {
-        const resultado = await setCompra({fornecedor_cod, empresa_Cod_empresa, data});
+        const resultado = await setCompra({fornecedor_cod, empresa_Cod_empresa, data,valorTotal});
         res.status(201).json({ message: "Compra salva com sucesso", data: resultado });
     } catch (error) {
         res.status(500).json({ message: "Erro ao criar a compra", error: error.message });
@@ -923,6 +923,20 @@ app.get('/usuario/mostrar_todos', async (req, res) => {
       res.status(500).json({ message: "Erro ao buscar todos os usuários", error: error.message });
     }
   });
+
+  
+app.get('/usuario/mostrar_todos_cadastrados/:cod', async (req, res) => {
+    const cod = req.params.cod;
+    try {
+      const usuarios = await getNomeUser(cod);  
+      console.log('Usuários encontrados:', usuarios); 
+      res.status(200).json({data:usuarios});  
+    } catch (error) {
+      console.error('Erro ao buscar todos os usuários:', error);
+      res.status(500).json({ message: "Erro ao buscar todos os usuários", error: error.message });
+    }
+  });
+
   app.get('/usuario/logar/:cod/:nome/:senha', async (req, res) => {
     const cod = Number(req.params.cod);
     const nome = req.params.nome;
@@ -1126,27 +1140,29 @@ app.get('/cargo/mostrar_todos', async (req, res) => {
 });
 
 //---------------------------------------------Funcionário------------------------------------------\\
-app.post('/funcionario',upload.single('foto'), async (req, res) => {
-//Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha 
-    console.log('teste funciona')
+app.post('/funcionario', upload.single('foto'), async (req, res) => {
+    console.log('teste funciona');
+
     const Nome = req.body.Nome;
     const Telefone = Number(req.body.Telefone);
     const Email = req.body.Email;
     const CPF = Number(req.body.CPF);
     const senha = req.body.senha;    
-    const foto = req.file;
+
+    // Verificar se o arquivo foi enviado e usar o caminho do arquivo
+    const foto = req.file ? req.file.path : null;
+
     const Cod_empresa = Number(req.body.Cod_empresa);
     const Cod_cargo = Number(req.body.Cod_cargo);
-  
-    let funcData = {Nome, Email, Telefone, foto, CPF, Cod_empresa, Cod_cargo, senha};
-     
+
+    let funcData = { Nome, Email, Telefone, CPF, Cod_empresa, Cod_cargo, senha };
+    console.log(funcData);
+
     try {
-
         await setFunc(funcData);
-        console.log(funcData)
-        res.status(200).send('Funcionário criada com sucesso!');
+        console.log(funcData);
+        res.status(200).send('Funcionário criado com sucesso!');
     } catch (error) {
-
         console.error('Erro ao criar funcionário:', error);
         res.status(500).send('Erro ao criar funcionário.');
     }
@@ -1223,7 +1239,43 @@ app.post('/orcamento/:Nome/:Descricao/:Valor/:Desconto/:Data_inicio/:Data_entreg
         res.status(500).json({ message: "Erro ao criar o orçamento", error: error.message });
     }
 });
+//getCodPrincipalOrcamento
+app.post('/principalOrcamento/:Data/:cliente/:Empresa_Cod_empresa', async (req, res) => {
+   // Data, cliente_Cod_cliente, Empresa_Cod_empresa, valor_total
+    const {  Data, cliente, Empresa_Cod_empresa, valor_total} = req.params;
+    
+    console.log( Data, cliente, Empresa_Cod_empresa);
+    
+    try {
+       
+        const resultado = await setPrincipalOrcamento( Data, cliente, Empresa_Cod_empresa);
+       
 
+    } catch (error) {
+       
+        
+        res.status(500).json({ message: "Erro ao criar o orçamento", error: error.message });
+    }
+});
+
+
+app.get('/principalOrcamento/procurar/:cod/:hora', async (req, res) => {
+    const cod = req.params.cod; 
+    const hora = req.params.hora; 
+    console.log('Código do fornecedor:', cod);
+    console.log('NOme do fornecedor:', hora);
+  
+    try {
+      const resultado = await getCodPrincipalOrcamento(hora, cod);
+      if (resultado.length > 0) {
+        res.status(200).json({ data: resultado });
+      } else {
+        res.status(200).json({ data: 0 });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao procurar o produto', error: error.message });
+    }
+  });
 app.get('/orcamento/mostrarTodos', async(req,res) =>{
     try{
         const response =await getOrcamento();       
@@ -1249,6 +1301,36 @@ catch(error){
 }
 
 });
+//---------------------------------------------Ordem de serviço-----------------------------------------------------\\
+
+//  
+// empresa_Cod_empresa int(11) PK 
+// Obs varchar(3Cod_os int(11) AI PK00) 
+// Data_inicio date 
+// Data_fim date 
+// Fornecedor varchar(255) 
+// Cliente varchar(255) 
+// valor
+
+app.post('/os/:Data/:empresa_Cod_empresa/:Obs/:Cod_os/:Data_inicio/:Data_fim/:Fornecedor/:Cliente/:valor/:estado/:estado', async (req, res) => {
+    // Data, cliente_Cod_cliente, Empresa_Cod_empresa, valor_total
+     const { empresa_Cod_empresa, Obs, Cod_os, Data_inicio, Data_fim, Fornecedor, Cliente, valor} = req.params;
+     
+     console.log( empresa_Cod_empresa, Obs, Cod_os, Data_inicio, Data_fim, Fornecedor, Cliente, valor);
+     
+     try {
+        
+         const resultado = await setPrincipalOrcamento( empresa_Cod_empresa, Obs, Cod_os, Data_inicio, Data_fim, Fornecedor, Cliente, valor);
+        
+ 
+     } catch (error) {
+        
+         
+         res.status(500).json({ message: "Erro ao criar a os", error: error.message });
+     }
+ });
+ 
+ 
 
 //------------------------------------------------Servidor-----------------------------------------------------------\\
 app.listen(porta, host,  () => {

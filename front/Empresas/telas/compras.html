@@ -112,6 +112,7 @@
 
     document.addEventListener('DOMContentLoaded', () => 
     {
+      let totalCompras;
         const ult2Div = document.getElementById("ult2");
 
             const nomeUser = localStorage.getItem('nome') || 'Usuário';
@@ -414,8 +415,10 @@ select_fornecedor.addEventListener("change", async () => {
     const data = document.querySelector(".data")?.value;
 
     const estatus = document.getElementById("status_select").value;
-                                                                
-const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}`, {
+    
+  const  valorTotal  =  totalCompras;   
+  console.log(valorTotal)          
+const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_empr}/${data}/${valorTotal}`, {
                         method: 'POST',                         
                                           
                     });    
@@ -425,7 +428,7 @@ const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_
    const pesq = await pesquisa1.json();
    const teste = pesq.data;
    const cod_compra = teste[0].cod_compras;
-
+alert(cod_compra)
   let compraItems = document.querySelectorAll("[class^='div']");
 
   compraItems.forEach((div) => {
@@ -436,6 +439,7 @@ const response = await fetch(`http://localhost:3000/compras/${response_b}/${cod_
     const valor = div.querySelector(`.valor${div.className.match(/\d+/)[0]}`)?.value || null;
 
     const data = document.querySelector(".data")?.value;
+    
 
 
 
@@ -517,7 +521,7 @@ if (produto_quantidade_b != 0) {
 
  try {
   const data_um = produto_quantidade_b[0].Data;
-cosnole.log("data:",data_um)
+console.log("data:",data_um)
   const data = data_um.replace("T", " ").replace("Z", "").split(".")[0];
     const response = await fetch(`http://localhost:3000/produto_quantidade/${cod_empr}/${p_quantidade.Nome}/${p_quantidade.valor}/${compras.quantidade}/${data}/${compras.descricao}/${cod_compra}/${select_fornecedor.value}`, {
         method: 'POST',
@@ -582,9 +586,11 @@ if (produto != 0) {
 
   };
 
+
    const calcularTotalCompras = () => {
+    totalCompras = 0;
         const valoresInputs = document.querySelectorAll("input[id='v2ind']");
-        let totalCompras = 0;
+        
 
         valoresInputs.forEach((input) => {
             const valor = parseFloat(input.value) || 0; // Converte para número ou usa 0

@@ -36,18 +36,18 @@
         <section id="s1">
             <div id="s1b">
                 <label id="s1l">Cliente</label>
-                <input list="nome_cliente_list" id="nomes_de_cliente" name="nome_cliente">
+                <select name="" id="nome_cliente_list">
+                    <option value="">Selecione o usuário</option>
+                </select>
 
-                <datalist id="nome_cliente_list">
-                 
-                </datalist>
+           
             </div>
         </section>
 
         <section id="s2">
             <div id="valores">
 
-                <label id="lab_descricao">Código produto</label>
+                <label id="lab_descricao">Descrição</label>
                 
                 <label class="copia">Quantidade</label>
                 
@@ -61,7 +61,7 @@
         <section id="s3">
             <div id="testando">
                 <!-- <div id="cod_nome_cabecalho"> -->
-                <input list="cod_nome" id="cod" type="number" placeholder="Digite o código do produto">
+                <input list="cod_nome" id="cod" type="text" placeholder="Digite a descrição">
                 
             <!-- </div> -->
                 <input id="quantidade" type="number" min="1" placeholder="Digite a quantidade">
@@ -113,7 +113,7 @@
             </div>
 
             <div id="fot">
-                <button id="OBS_a">Em desenvolvimento</button>
+             
                 <button id="OBS_b">Gerar PDF</button>
                 <button id="OBS_c">Adicionar orçamento</button>
             </div>
@@ -130,7 +130,7 @@ function logOut(){
 }
 
 
-
+///usuario/mostrar_todos_cadastrados/:cod
         document.addEventListener('DOMContentLoaded',async () => {
 
     const calcDescontoElement = document.getElementById('calc_desconto');
@@ -178,17 +178,20 @@ function logOut(){
 
     const cod_um = await fetch(`http://localhost:3000/empresa/cod/${nomeUser}`);
     const cod_empr = await cod_um.json();
-  const nomes = 'http://localhost:3000/usuario/mostrar_todos';
+  const nomes = `http://localhost:3000/usuario/mostrar_todos_cadastrados/${cod_empr}`;
   const caixa_nome = document.getElementById('nome_cliente_list');
   
   try {
     const users = await fetch(nomes); 
     const nome_usuario = await users.json();
-    console.log(nome_usuario);
+    const n1 = nome_usuario.data;
+    const n2 = n1.Nome;
+    console.log("USUARIO",n2);
     
-    nome_usuario.forEach((nome_usuario) => {
+    n1.forEach((nome_usuario) => {
       const option = document.createElement('option'); 
       option.text = nome_usuario.Nome; 
+      
       caixa_nome.appendChild(option);
     });
   } catch (error) {
@@ -275,7 +278,7 @@ loadImage();
 
                 button.addEventListener('click',async (event)=>{
                      
-                const nomeCliente = document.getElementById('nomes_de_cliente').value;
+                const nomeCliente = document.getElementById('nome_cliente_list').value;
                 const descricao = document.getElementById('obs').value;
                 const quantidade = document.getElementById('quantidade').value;
                 const valor = document.getElementById('valor').value;
@@ -327,7 +330,7 @@ loadImage();
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    const nomeCliente = document.getElementById('nomes_de_cliente').value;
+    const nomeCliente = document.getElementById('nome_cliente_list').value;
     const descricao = document.getElementById('obs').value;
     const quantidade = document.getElementById('quantidade').value;
     const valor = document.getElementById('valor').value;

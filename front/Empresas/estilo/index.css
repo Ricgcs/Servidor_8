@@ -17,10 +17,10 @@
     
     background-color: black;
     width: 100%;
+    height: 10%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-   
+    align-items: center; 
     
 }
 
@@ -31,21 +31,23 @@
     margin-left: 1vw;
     
 }
+
 #header_links{
 
-    width: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 2vw;
-    
-    }
-    
+width: 40%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-left: 2vw;
+
+}
+
 #header_button{
     text-decoration: none;
     background-color: transparent;
     color: white;
     font-family: 'Montserrate';
+   
 }
 
 button:hover{
@@ -56,13 +58,15 @@ button:hover{
 .imagem_teste{
     display: inline;
     color: white;
-margin-top: -0,6vw;
-width: 15%;
-margin-left: 10%;
+    margin-top: -0,6vw;
+    width: 15%;
+    margin-left: 10%;
 
 
 }
-
+#nomes_de_clientes{
+    height: 20%;
+}
 #nome_user{
     font-size: 1vw;
     color: white;
@@ -76,7 +80,8 @@ margin-left: 10%;
         #img_user{
         display: inline;
         color: white;
-        margin-top: 0.6vw;
+        margin-top: -0,6vw;
+        margin-right: 0.3vw;
         width: 3vw;
         height: 3vw;
         border-radius: 2vw;
@@ -93,6 +98,7 @@ margin-left: 10%;
     height: 1.5vw;
     width: 1.5vw;
     }
+
 a{
 display: flex;
 text-decoration: none;
@@ -136,7 +142,7 @@ input, textarea {
     font-size: 1vw;
     padding: 0.3vw;
     background-color: #E7E7E7;
-    margin: 0 1vw 2vw 0;
+    margin: 0 1vw 0 0;
 }
 
 body {
@@ -153,10 +159,11 @@ body {
 #s2{
     margin-top: -1vw;
 }
+
+
 div {
     font-size: 0.6vw;
     color: white;
-    background-color: black;
     padding: 0.7vw;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -180,41 +187,28 @@ div {
     color: black;
 }
 
-#vh1 {}
-
-#vh2 {
-    margin-left: 8vw;
+#vh1 {
 }
 
-#vh3 {
-    margin-left: 5vw;
-}
-
-#vh4 {
-    margin-left: 4vw;
-}
-
-#vh5 {
-    margin-left: 5vw;
-}
 
 #menu {
     margin: 0 0 5vw 0;
 }
 
 #Formulario {
+    
     color: black;
     border-radius: 0.5vw;
     background-color: white;
-    padding: 2.6vw;
+    padding: 2vw;
     width: 60%;
     height: 90%;
     
 }
 
 #lab1 {
-    display: block;
-    margin-top: -2vw;
+   
+   
 }
 
 #Cabecalho {
@@ -227,8 +221,8 @@ hr {
 }
 #s3{
     margin-left: -0.59vw;
-    height: 10%;
-    overflow: auto;
+    padding: 0px;
+ 
 
 }
 #Adicionar_itens {
@@ -247,9 +241,6 @@ hr {
 
 #ult2 {
     width: 30%;
-    background-color: transparent;
-    font-size: 1vw;
-    color: black;
 }
 
 #input_ult {
@@ -257,34 +248,43 @@ hr {
 }
 
 label {
-    color: black;
-    
+    color: black;    
 }
 
 #obs-wrapper {
-    width: 60%;
-    height: 5vw;
-    
-    display: block;
-    overflow: hidden;
-    position: relative;
-    background-color: transparent;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;   
+    padding: 0px;
+    width: 100%;
+    height: 30%;
 }
 
 #obs {
-    width: 90%;
-    height: 90%;
-    border:0.2vw solid black;
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     resize: none;
     scrollbar-width: none; 
+    border: none;
+    margin: 0px;
+    
+    
+    
 }
 
 #obs::-webkit-scrollbar {
     width: 0px; 
 }
 
-#menu_button:hover {}
+#menu_button:hover {
+
+}
 
 #menu_button {
     background-color: transparent;
@@ -298,6 +298,7 @@ label {
 
 #s1 {
     display: flex;
+    margin-bottom: 1vw;
     margin-top: -2vw;
 }
 
@@ -307,6 +308,7 @@ label {
 
 #s1b {
     background-color: transparent;
+    display: flex;
 }
 
 #s1l {
@@ -318,22 +320,11 @@ label {
 
 #vai {
     cursor: pointer;
+    display: flex;
 }
 
-#v2ina {
-    width: 100%;
-}
-
-#v2inb {
-    width: 40%;
-}
-
-#v2inc {
-    width: 40%;
-}
-
-#v2ind {
-    width: 40%;
+#v2in {
+    width: 80%;
 }
 
 #va {
@@ -355,13 +346,15 @@ label {
 #ultl {
     display: flex;
     background: transparent;
+
 }
 
 #ult {
     display: flex;
     background-color: transparent;
+    justify-content: space-between;
     margin-left: -1vw;
-    flex-wrap: wrap;
+ 
 }
 
 .campo {
@@ -373,21 +366,152 @@ label {
     width: 15%;
 }
 
-#OBS_b {
-    background-color: #DA4200;
-    border-radius: 0.6vw;
-    padding: 0.5vw;
-    border: none;
-    margin-left: 1vw;
+select{
+    border: black solid 0.15vw;
+    height: 100%;
+    width: 5.1vw;
+    font-size: 1.5vw;
+    border-radius: 1vw;
+}
+
+
+footer{
+    height: 100%;
+    width: 100%;
+    margin-top: -2vw; 
+}
+
+
+#fot{
+    width: 100%;
+    float: right;
+    display: flex;
+    justify-content: right;
+
 }
 
 #OBS_a {
-    background-color: #DA4200;
+    background: rgba(218, 66, 0, 1);
     border-radius: 0.5vw;
     padding: 0.6vw;
     border: none;
-    margin-left: 70%;
-    height: 100%;
+    font-size: 1vw;
+    
+}
+
+#OBS_b {
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 1vw; 
+    margin-left: 1vw;
+
+  
+}
+
+#OBS_c {
+    background: rgba(218, 66, 0, 1);
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    border: none;
+    font-size: 1vw; 
+    margin-left: 1vw;
+}
+
+#dates {
+    display: flex;
+    background-color: white;
+    margin-top: -1vw;
+}
+
+#data_inicio{
+    display: flex;
+    flex-direction: row;
+}
+
+#data_entrega{
+    display: flex;
+    flex-direction: row;    
+    margin-left: 2vw;
+ }
+ 
+#estado{
+    margin-left: 2vw;
+}
+
+ #datas1{
+    display: flex;
+    flex-direction: row;
+    width: 77%;    
+    justify-content: space-between;
+ 
+ }
+
+ #datas2{
+    display: flex;
+    flex-direction: row;
+    
+ }
+
+#teste{
+    margin-left: -2vw;
+    display: flex;
+}
+
+#lab_descricao{
+    
+
+}
+
+#lab_quantidade{
+  margin-left: 10vw;
+}
+
+#lab_valor{
+   
+}
+
+#lab_desconto{
+ 
+}
+
+#testando{   
+    display: flex;
+}
+
+.copia{
+    margin-left: 10vw;
+}
+
+#pseudo_calc{
+    width: 100%;
+    display: flex;
+    justify-content: right;    
+   
+}
+
+#corpo_pseudo_calc{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+
+#barra{
+    border:solid black 0.1vw;
+}
+
+#cod_nome_cabecalho{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#cod_nome{
+    color: black;
+    font-size: 1vw;
+    margin-left: 0.8vw;
 }
 
 
@@ -398,71 +522,6 @@ select{
     padding: 0.3vw;
     background-color: #E7E7E7;
     width: 8vw;
+    height: 2vw;
     margin: 0 1vw 2vw 0;
-}
-
-#select_nome_produto{
-    width: 75%;
-}
-
-#parcelas{
-    background-color: white;
-}
-
-#adicionar_parcela{
-    background-color: #DA4200;
-    border-radius: 0.5vw;
-    padding: 0.6vw;
-    border: none;
-}
-
-#valores_parcelas{
-    background-color: white;
-    display: flex;
-    height: 20%;
-}
-
-#ultimos{
-    
-    background-color: white; 
-    display: flex;
-    height: 3vw;
-    
-}
-
-#button_adicionar_parcelas{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    background-color: white;
-}
-
-#parcelas_inputs{
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 70%;
-    height: 4vw;
-    background-color: rgb(255, 255, 255);
-    overflow: auto;
-   margin-left: -2.4vw;
-
-}
-
-#calcular_parcelas{
-    display: flex;
-    align-items: center;
-    width: 30%;
-    height: 100%;
-    background-color: white;
-    font-size: 1vw;
-    color: black;
-    margin-left: 1vw;
-    
-}
-
-#divParcela{
-    background-color: white;
-display: flex;
-margin-bottom: -2vw;
 }
